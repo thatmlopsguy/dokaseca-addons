@@ -14,7 +14,7 @@ spec:
           - clusters:
               values:
                 addonChart: headlamp
-                addonChartVersion: 0.29.1
+                addonChartVersion: 0.30.1
                 addonChartRepository: https://headlamp-k8s.github.io/headlamp
                 addonChartNamespace: kube-system
               selector:
@@ -27,13 +27,13 @@ spec:
                 matchLabels:
                   environment: dev
               values:
-                addonChartVersion: 0.29.1
+                addonChartVersion: 0.30.1
           - clusters:
               selector:
                 matchLabels:
                   environment: prod
               values:
-                addonChartVersion: 0.29.1
+                addonChartVersion: 0.30.1
   template:
     metadata:
       name: addon-{{name}}-{{values.addonChart}}
