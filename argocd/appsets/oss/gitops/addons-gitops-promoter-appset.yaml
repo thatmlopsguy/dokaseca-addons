@@ -47,7 +47,7 @@ spec:
           path: 'kustomize/{{values.addonKustomize}}/{{values.addonKustomizeVersion}}'
           targetRevision: '{{metadata.annotations.addons_repo_revision}}'
       destination:
-        namespace: '{{values.addonChartNamespace}}'
+        namespace: '{{values.addonKustomizeNamespace}}'
         name: '{{name}}'
       syncPolicy:
         automated: {}
