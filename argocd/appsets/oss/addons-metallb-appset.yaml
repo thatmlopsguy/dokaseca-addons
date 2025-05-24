@@ -69,8 +69,6 @@ spec:
               - $values/environments/default/addons/{{values.addonChart}}/extras.yaml
               - $values/environments/{{metadata.labels.environment}}/addons/{{values.addonChart}}/extras.yaml
               - $values/clusters/{{name}}/addons/{{values.addonChart}}/extras.yaml
-
-
       destination:
         namespace: '{{values.addonChartNamespace}}'
         name: '{{name}}'
