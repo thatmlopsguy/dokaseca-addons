@@ -19,6 +19,8 @@ spec:
                 addonChartVersion: 0.14.8
                 addonChartRepository: https://metallb.github.io/metallb
                 addonChartNamespace: metallb-system
+                addonChartRepositoryExtra: https://thatmlopsguy.github.io/helm-charts
+                addonChartExtraVersion: 0.1.0
               selector:
                 matchExpressions:
                   - key: enable_metallb
@@ -30,12 +32,14 @@ spec:
                   environment: dev
               values:
                 addonChartVersion: 0.14.8
+                addonChartExtraVersion: 0.1.0
           - clusters:
               selector:
                 matchLabels:
                   environment: prod
               values:
                 addonChartVersion: 0.14.8
+                addonChartExtraVersion: 0.1.0
   template:
     metadata:
       name: addon-{{name}}-{{values.addonChart}}
@@ -56,8 +60,8 @@ spec:
               - $values/environments/{{metadata.labels.environment}}/addons/{{values.addonChart}}/values.yaml
               - $values/clusters/{{name}}/addons/{{values.addonChart}}/values.yaml
         - chart: '{{values.addonChart}}-extras'
-          repoURL: '{{metadata.annotations.addons_extras_repo_url}}'
-          targetRevision: '{{values.addonChartVersion}}'
+          repoURL: '{{values.addonChartRepositoryExtra}}'
+          targetRevision: '{{values.addonChartExtraVersion}}'
           helm:
             releaseName: '{{values.addonChart}}-extras'
             ignoreMissingValueFiles: true
