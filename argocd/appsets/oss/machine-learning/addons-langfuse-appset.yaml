@@ -2,7 +2,7 @@
 apiVersion: argoproj.io/v1alpha1
 kind: ApplicationSet
 metadata:
-  name: addons-devlake
+  name: addons-langfuse
   namespace: argocd
 spec:
   syncPolicy:
@@ -13,12 +13,13 @@ spec:
         generators:
           - clusters:
               values:
-                addonChart: devlake
-                addonChartVersion: 1.0.2-beta8
-                addonChartRepository: https://apache.github.io/incubator-devlake-helm-chart
+                addonChart: langfuse
+                addonChartVersion: 1.2.12
+                addonChartRepository: https://langfuse.github.io/langfuse-k8s
+                addonChartNamespace: langfuse
               selector:
                 matchExpressions:
-                  - key: enable_devlake
+                  - key: enable_langfuse
                     operator: In
                     values: ['true']
           - clusters:
@@ -26,13 +27,13 @@ spec:
                 matchLabels:
                   environment: dev
               values:
-                addonChartVersion: 1.0.2-beta8
+                addonChartVersion: 1.2.12
           - clusters:
               selector:
                 matchLabels:
                   environment: prod
               values:
-                addonChartVersion: 1.0.2-beta6
+                addonChartVersion: 1.2.12
   template:
     metadata:
       name: addon-{{name}}-{{values.addonChart}}
@@ -53,10 +54,9 @@ spec:
               - $values/environments/{{metadata.labels.environment}}/addons/{{values.addonChart}}/values.yaml
               - $values/clusters/{{name}}/addons/{{values.addonChart}}/values.yaml
       destination:
-        namespace: '{{values.addonChart}}'
+        namespace: '{{values.addonChartNamespace}}'
         name: '{{name}}'
       syncPolicy:
         automated: {}
         syncOptions:
           - CreateNamespace=true
-          - ServerSideApply=true # Big CRDs.
