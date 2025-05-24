@@ -2,7 +2,7 @@
 apiVersion: argoproj.io/v1alpha1
 kind: ApplicationSet
 metadata:
-  name: addons-argo-cd-image-updater
+  name: addons-kepler
   namespace: argocd
 spec:
   syncPolicy:
@@ -13,12 +13,15 @@ spec:
         generators:
           - clusters:
               values:
-                addonChart: argocd-image-updater
-                addonChartVersion: 0.12.0
-                addonChartRepository: https://argoproj.github.io/argo-helm
+                addonChart: kepler
+                addonChartVersion: 0.6.0
+                addonChartRepository: https://sustainable-computing-io.github.io/kepler-helm-chart
               selector:
                 matchExpressions:
-                  - key: enable_argo_cd_image_updater
+                  - key: enable_kepler
+                    operator: In
+                    values: ['true']
+                  - key: enable_kube_prometheus_stack
                     operator: In
                     values: ['true']
           - clusters:
@@ -26,13 +29,13 @@ spec:
                 matchLabels:
                   environment: dev
               values:
-                addonChartVersion: 0.12.1
+                addonChartVersion: 0.6.0
           - clusters:
               selector:
                 matchLabels:
                   environment: prod
               values:
-                addonChartVersion: 0.12.0
+                addonChartVersion: 0.6.0
   template:
     metadata:
       name: addon-{{name}}-{{values.addonChart}}
@@ -52,6 +55,8 @@ spec:
               - $values/environments/default/addons/{{values.addonChart}}/values.yaml
               - $values/environments/{{metadata.labels.environment}}/addons/{{values.addonChart}}/values.yaml
               - $values/clusters/{{name}}/addons/{{values.addonChart}}/values.yaml
+            values: |
+              clusterName: {{metadata.annotations.cluster_name}}
       destination:
         namespace: '{{values.addonChart}}'
         name: '{{name}}'
