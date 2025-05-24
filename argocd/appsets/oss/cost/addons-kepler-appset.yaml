@@ -55,8 +55,6 @@ spec:
               - $values/environments/default/addons/{{values.addonChart}}/values.yaml
               - $values/environments/{{metadata.labels.environment}}/addons/{{values.addonChart}}/values.yaml
               - $values/clusters/{{name}}/addons/{{values.addonChart}}/values.yaml
-            values: |
-              clusterName: {{metadata.annotations.cluster_name}}
       destination:
         namespace: '{{values.addonChart}}'
         name: '{{name}}'
@@ -64,4 +62,3 @@ spec:
         automated: {}
         syncOptions:
           - CreateNamespace=true
-          - ServerSideApply=true # Big CRDs.
