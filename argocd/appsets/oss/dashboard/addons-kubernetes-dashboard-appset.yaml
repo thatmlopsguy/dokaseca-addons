@@ -16,7 +16,7 @@ spec:
                 addonChart: kubernetes-dashboard
                 addonChartVersion: 7.12.0
                 addonChartRepository: https://kubernetes.github.io/dashboard
-                addonChartNamespace: kubernetes-dashboard
+                addonChartNamespace: kube-system
               selector:
                 matchExpressions:
                   - key: enable_kubernetes_dashboard
