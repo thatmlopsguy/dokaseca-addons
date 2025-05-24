@@ -6,6 +6,12 @@ The Catalog is a library of curated Helm charts to create Kubernetes resources v
 |-------------------|----------------------------|------------------|---------------------------------------------------------------------------------|------------------------|
 | Portal            | Backstage                  | backstage        |                                                                                 |                        |
 | Auth Provider     | Keycloak                   | Keycloak         |                                                                                 |                        |
+| Dashboard         | komoplane                  | komoplane        |                                                                                 |                        |
+| Dashboard         | dapr dashboard             |                  |                                                                                 |                        |
+| Dashboard         | headlamp                   |                  |                                                                                 |                        |
+| Dashboard         | kubernetes dashboard       |                  |                                                                                 |                        |
+| Dashboard         | Altinity dashboard         |                  |                                                                                 |                        |
+| Dashboard         | helm dashboard             |                  |                                                                                 |                        |
 | CI Tool           | GitHub Actions             | -                |                                                                                 |                        |
 | CD Tool           | ArgoCD                     | argocd           | GitOps Continuous Delivery                                                      |                        |
 | CD Tool           | Argo Rollouts              | argo-rollouts    | Progressive Delivery Tool                                                       |                        |
