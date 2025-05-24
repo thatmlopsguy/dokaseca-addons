@@ -15,7 +15,7 @@ spec:
               values:
                 addonChart: headlamp
                 addonChartVersion: 0.30.1
-                addonChartRepository: https://headlamp-k8s.github.io/headlamp
+                addonChartRepository: https://kubernetes-sigs.github.io/headlamp
                 addonChartNamespace: kube-system
               selector:
                 matchExpressions:
