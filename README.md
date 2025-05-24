@@ -1,4 +1,4 @@
-# Docka Seca Addons
+# Doka Seca Addons
 
 The Catalog is a library of curated Helm charts to create Kubernetes resources via [gitops bridge](https://github.com/gitops-bridge-dev) using argocd.
 
