@@ -39,7 +39,7 @@ spec:
                 addonKustomizeVersion: v0.3.0
   template:
     metadata:
-      name: addon-{{name}}-{{values.addonChart}}
+      name: addon-{{name}}-{{values.addonKustomize}}
     spec:
       project: addons
       source:
