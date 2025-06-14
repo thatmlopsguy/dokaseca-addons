@@ -15,7 +15,7 @@ spec:
               values:
                 addonKustomize: gitops-promoter
                 addonKustomizeNamespace: promoter-system
-                addonKustomizeVersion: v0.4.0
+                addonKustomizeVersion: v0.5.0
               selector:
                 matchExpressions:
                   - key: enable_gitops_promoter
@@ -28,7 +28,7 @@ spec:
               values:
                 addonKustomize: gitops-promoter
                 addonKustomizeNamespace: promoter-system
-                addonKustomizeVersion: v0.4.0
+                addonKustomizeVersion: v0.5.0
           - clusters:
               selector:
                 matchLabels:
