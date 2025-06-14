@@ -12,6 +12,7 @@ The Catalog is a library of curated Helm charts to create Kubernetes resources v
 | Dashboard         | kubernetes dashboard       |                  |                                                                                 |                         |
 | Dashboard         | Altinity dashboard         |                  |                                                                                 |                         |
 | Dashboard         | helm dashboard             |                  |                                                                                 |                         |
+| Dashboard         | OCM dashboard              |                  |                                                                                 |                         |
 | CI Tool           | GitHub Actions             | -                |                                                                                 |                         |
 | CD Tool           | ArgoCD                     | argocd           | GitOps Continuous Delivery                                                      |                         |
 | CD Tool           | Argo Rollouts              | argo-rollouts    | Progressive Delivery Tool                                                       |                         |
@@ -45,3 +46,9 @@ The Catalog is a library of curated Helm charts to create Kubernetes resources v
 | Chaos Engineering | Chaos Mesh                 | chaos-mesh       |                                                                                 |                         |
 | Chaos Engineering | Litmus                     | litmus           |                                                                                 |                         |
 | Disaster Recovery | Velero                     | velero           |                                                                                 |                         |
+| Workflows         | temporal                   | temporal         |                                                                                 |                         |
+| Workflows         | airflow                    | airflow          |                                                                                 |                         |
+| Machine Learning  | ollama                     | ollama           |                                                                                 |                         |
+| Machine Learning  | langfuse                   | langfuse         |                                                                                 |                         |
+| Machine Learning  | kgateway                   | kgateway-system  |                                                                                 |                         |
+| Machine Learning  | litellm                    | litellm          |                                                                                 |                         |
