@@ -14,7 +14,7 @@ spec:
           - clusters:
               values:
                 addonChart: argocd-image-updater
-                addonChartVersion: 0.12.0
+                addonChartVersion: 0.12.2
                 addonChartRepository: https://argoproj.github.io/argo-helm
               selector:
                 matchExpressions:
@@ -26,13 +26,13 @@ spec:
                 matchLabels:
                   environment: dev
               values:
-                addonChartVersion: 0.12.1
+                addonChartVersion: 0.12.2
           - clusters:
               selector:
                 matchLabels:
                   environment: prod
               values:
-                addonChartVersion: 0.12.0
+                addonChartVersion: 0.12.2
   template:
     metadata:
       name: addon-{{name}}-{{values.addonChart}}
