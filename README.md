@@ -57,6 +57,7 @@ The Catalog is a library of curated Helm charts to create Kubernetes resources v
 | Disaster Recovery | velero                     | velero           |                                                                                 |                         |
 | Workflows         | temporal                   | temporal         |                                                                                 |                         |
 | Workflows         | airflow                    | airflow          |                                                                                 |                         |
+| Workflows         | Argo Workflows             | argo             |                                                                                 |                         |
 | Machine Learning  | ollama                     | ollama           |                                                                                 |                         |
 | Machine Learning  | langfuse                   | langfuse         |                                                                                 |                         |
 | Machine Learning  | kgateway                   | kgateway-system  |                                                                                 |                         |
