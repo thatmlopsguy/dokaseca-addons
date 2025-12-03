@@ -48,7 +48,7 @@ jobs:
             - Updated addon versions to their latest releases
 
             Please review the changes before merging.
-          branch: watchdog/update-addons
+          branch: watchdog-${{ github.run_id }}
           delete-branch: true
           labels: |
             automated
