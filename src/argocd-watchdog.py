@@ -327,6 +327,7 @@ def update(
 
     updates_made = 0
     updates_skipped = 0
+    markdown_rows = []
 
     for dep in config['dependencies']:
         dep_name = dep.get('name', 'Unknown')
@@ -407,9 +408,26 @@ def update(
                 f"[{status_style}]{status}[/{status_style}]"
             )
 
+            # Add to markdown table if updated or would be updated
+            if "Updated" in status or "Would update" in status:
+                markdown_rows.append(f"| {dep_name} | {file_path.name} | {current_ver} | {latest_version or 'N/A'} | {status.replace('→', '').replace('✓', '').strip()} |")
+
     console.print("\n")
     console.print(table)
     console.print("\n")
+
+    # Output markdown table for GitHub Actions
+    if markdown_rows:
+        markdown_table = "| Dependency | File | Old Version | New Version | Status |\n"
+        markdown_table += "|------------|------|-------------|-------------|--------|\n"
+        markdown_table += "\n".join(markdown_rows)
+
+        # Write to file for GitHub Actions to read
+        with open("update-summary.md", "w") as f:
+            f.write(markdown_table)
+
+        if verbose:
+            console.print("[blue]Markdown summary written to update-summary.md[/blue]\n")
 
     if updates_made > 0:
         if not apply:
