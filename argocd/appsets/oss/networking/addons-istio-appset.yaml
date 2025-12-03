@@ -61,7 +61,7 @@ spec:
           repoURL: '{{values.addonChartRepository}}'
           targetRevision: '{{values.addonChartVersion}}'
           helm:
-            releaseName: '{{values.addonChartPrefix}}-{{chart}}'
+            releaseName: '{{values.addonChart}}-{{chart}}'
             ignoreMissingValueFiles: true
             valueFiles:
               - $values/environments/default/addons/{{values.addonChart}}/values-{{chart}}.yaml
