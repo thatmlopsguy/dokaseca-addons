@@ -1,5 +1,7 @@
 # Doka Seca Addons
 
+[![ArgoCD Watchdog](https://github.com/thatmlopsguy/dokaseca-addons/actions/workflows/watchdog.yml/badge.svg)](https://github.com/thatmlopsguy/dokaseca-addons/actions/workflows/watchdog.yml)
+
 The Catalog is a library of curated Helm charts to create Kubernetes resources via [gitops bridge](https://github.com/gitops-bridge-dev) using argocd.
 
 ## Available Addons
