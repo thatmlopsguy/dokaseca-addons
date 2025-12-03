@@ -2,7 +2,7 @@
 apiVersion: argoproj.io/v1alpha1
 kind: ApplicationSet
 metadata:
-  name: addons-victoria-logs
+  name: addons-jaeger
   namespace: argocd
 spec:
   syncPolicy:
@@ -13,14 +13,13 @@ spec:
         generators:
           - clusters:
               values:
-                addonChart: victoria-logs-single
-                # helm search repo vm/victoria-logs-single -l
-                addonChartVersion: 0.9.6
-                addonChartRepository: https://victoriametrics.github.io/helm-charts
+                addonChart: jaeger
+                addonChartVersion: 3.4.0
+                addonChartRepository: https://jaegertracing.github.io/helm-charts
                 addonChartNamespace: monitoring
               selector:
                 matchExpressions:
-                  - key: enable_victoria_logs
+                  - key: enable_jaeger
                     operator: In
                     values: ['true']
           - clusters:
@@ -28,13 +27,13 @@ spec:
                 matchLabels:
                   environment: dev
               values:
-                addonChartVersion: 0.9.6
+                addonChartVersion: 3.4.0 # watchdog this
           - clusters:
               selector:
                 matchLabels:
                   environment: prod
               values:
-                addonChartVersion: 0.9.6
+                addonChartVersion: 3.4.0
   template:
     metadata:
       name: addon-{{name}}-{{values.addonChart}}
@@ -61,3 +60,4 @@ spec:
         automated: {}
         syncOptions:
           - CreateNamespace=true
+          - ServerSideApply=true # Big CRDs.

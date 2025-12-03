@@ -1,0 +1,566 @@
+dependencies:
+  # Chaos Engineering
+  - name: chaos-mesh
+    source:
+      file: argocd/appsets/oss/chaos-engineering/addons-chaos-mesh-appset.yaml
+    repository: 
+      type: rss
+      url: https://artifacthub.io/api/v1/packages/helm/chaos-mesh/chaos-mesh/feed/rss
+  
+  - name: litmus
+    source:
+      file: argocd/appsets/oss/chaos-engineering/addons-litmus-appset.yaml
+    repository:
+      type: rss
+      url: https://artifacthub.io/api/v1/packages/helm/litmuschaos/litmus/feed/rss
+  
+  # Compliance
+  - name: kyverno
+    source:
+      file: argocd/appsets/oss/compliance/addons-kyverno-appset.yaml
+    repository:
+      type: rss
+      url: https://artifacthub.io/api/v1/packages/helm/kyverno/kyverno/feed/rss
+  
+  - name: kyverno-policies
+    source:
+      file: argocd/appsets/oss/compliance/addons-kyverno-policies-appset.yaml
+    repository:
+      type: rss
+      url: https://artifacthub.io/api/v1/packages/helm/kyverno/kyverno-policies/feed/rss
+  
+  - name: policy-reporter
+    source:
+      file: argocd/appsets/oss/compliance/addons-kyverno-policy-reporter-appset.yaml
+    repository:
+      type: rss
+      url: https://artifacthub.io/api/v1/packages/helm/policy-reporter/policy-reporter/feed/rss
+  
+  - name: polaris
+    source:
+      file: argocd/appsets/oss/compliance/addons-polaris-appset.yaml
+    repository:
+      type: rss
+      url: https://artifacthub.io/api/v1/packages/helm/fairwinds-stable/polaris/feed/rss
+  
+  - name: connaisseur
+    source:
+      file: argocd/appsets/oss/compliance/addons-connaisseur-appset.yaml
+    repository:
+      type: rss
+      url: https://artifacthub.io/api/v1/packages/helm/connaisseur/connaisseur/feed/rss
+  
+  # Cost Management
+  - name: opencost
+    source:
+      file: argocd/appsets/oss/cost/addons-opencost-appset.yaml
+    repository:
+      type: rss
+      url: https://artifacthub.io/api/v1/packages/helm/opencost/opencost/feed/rss
+  
+  - name: kepler
+    source:
+      file: argocd/appsets/oss/cost/addons-kepler-appset.yaml
+    repository:
+      type: rss
+      url: https://artifacthub.io/api/v1/packages/helm/kepler/kepler/feed/rss
+  
+  - name: kube-green
+    source:
+      file: argocd/appsets/oss/cost/addons-kube-green-appset.yaml
+    repository:
+      type: rss
+      url: https://artifacthub.io/api/v1/packages/helm/kube-green/kube-green/feed/rss
+  
+  # Dashboards
+  - name: kubernetes-dashboard
+    source:
+      file: argocd/appsets/oss/dashboard/addons-kubernetes-dashboard-appset.yaml
+    repository:
+      type: rss
+      url: https://artifacthub.io/api/v1/packages/helm/k8s-dashboard/kubernetes-dashboard/feed/rss
+  
+  - name: headlamp
+    source:
+      file: argocd/appsets/oss/dashboard/addons-headlamp-appset.yaml
+    repository:
+      type: rss
+      url: https://artifacthub.io/api/v1/packages/helm/headlamp/headlamp/feed/rss
+  
+  - name: helm-dashboard
+    source:
+      file: argocd/appsets/oss/dashboard/addons-helm-dashboard-appset.yaml
+    repository:
+      type: rss
+      url: https://artifacthub.io/api/v1/packages/helm-plugin/helm-dashboard/dashboard/feed/rss
+  
+  - name: komoplane
+    source:
+      file: argocd/appsets/oss/dashboard/addons-komoplane-appset.yaml
+    repository:
+      type: rss
+      url: https://artifacthub.io/api/v1/packages/helm/komodor/komoplane/feed/rss
+  
+  - name: dapr-dashboard
+    source:
+      file: argocd/appsets/oss/dashboard/addons-dapr-dashboard-appset.yaml
+    repository:
+      type: rss
+      url: https://artifacthub.io/api/v1/packages/helm/dapr/dapr-dashboard/feed/rss
+  
+  # Cluster Management
+  - name: vcluster
+    source:
+      file: argocd/appsets/oss/cluster/addons-vcluster-appset.yaml
+    repository:
+      type: rss
+      url: https://artifacthub.io/api/v1/packages/helm/loft/vcluster/feed/rss
+  
+  - name: cluster-api-operator
+    source:
+      file: argocd/appsets/oss/cluster/addons-capi-operator-appset.yaml
+    repository:
+      type: rss
+      url: https://artifacthub.io/api/v1/packages/helm/cluster-api-operator/cluster-api-operator/feed/rss
+  
+  # Observability - Agents
+  - name: alloy
+    source:
+      file: argocd/appsets/oss/observability/agents/addons-alloy-appset.yaml
+    repository:
+      type: rss
+      url: https://artifacthub.io/api/v1/packages/helm/grafana/alloy/feed/rss
+  
+  - name: vector
+    source:
+      file: argocd/appsets/oss/observability/agents/addons-vector-appset.yaml
+    repository:
+      type: rss
+      url: https://artifacthub.io/api/v1/packages/helm/vector/vector/feed/rss
+  
+  - name: opentelemetry-operator
+    source:
+      file: argocd/appsets/oss/observability/agents/addons-otel-operator-appset.yaml
+    repository:
+      type: rss
+      url: https://artifacthub.io/api/v1/packages/helm/opentelemetry-helm/opentelemetry-operator/feed/rss
+  
+  # Observability - Logs
+  - name: loki
+    source:
+      file: argocd/appsets/oss/observability/logs/addons-loki-appset.yaml
+    repository:
+      type: rss
+      url: https://artifacthub.io/api/v1/packages/helm/grafana/loki/feed/rss
+  
+  - name: logging-operator
+    source:
+      file: argocd/appsets/oss/observability/logs/addons-logging-operator-appset.yaml
+    repository:
+      type: rss
+      url: https://artifacthub.io/api/v1/packages/helm/kube-logging/logging-operator/feed/rss
+  
+  # Observability - Metrics
+  - name: kube-prometheus-stack
+    source:
+      file: argocd/appsets/oss/observability/metrics/addons-kube-prometheus-stack-appset.yaml
+    repository:
+      type: rss
+      url: https://artifacthub.io/api/v1/packages/helm/prometheus-community/kube-prometheus-stack/feed/rss
+  
+  - name: victoria-metrics-k8s-stack
+    source:
+      file: argocd/appsets/oss/observability/metrics/addons-victoria-metrics-k8s-stack-appset.yaml
+    repository:
+      type: rss
+      url: https://artifacthub.io/api/v1/packages/helm/victoriametrics/victoria-metrics-k8s-stack/feed/rss
+  
+  # Other
+  - name: keda
+    source:
+      file: argocd/appsets/oss/other/addons-keda-appset.yaml
+    repository:
+      type: rss
+      url: https://artifacthub.io/api/v1/packages/helm/kedacore/keda/feed/rss
+  
+  # GitOps
+  - name: argocd-image-updater
+    source:
+      file: argocd/appsets/oss/gitops/addons-argo-cd-image-updater-appset.yaml
+    repository:
+      type: rss
+      url: https://artifacthub.io/api/v1/packages/helm/argo/argocd-image-updater/feed/rss
+  
+  - name: kargo
+    source:
+      file: argocd/appsets/oss/gitops/addons-kargo-appset.yaml
+    repository:
+      type: rss
+      url: https://artifacthub.io/api/v1/packages/helm/kargo/kargo/feed/rss
+  
+  # Networking
+  - name: traefik
+    source:
+      file: argocd/appsets/oss/networking/addons-traefik-appset.yaml
+    repository:
+      type: rss
+      url: https://artifacthub.io/api/v1/packages/helm/traefik/traefik/feed/rss
+  
+  - name: cilium
+    source:
+      file: argocd/appsets/oss/networking/addons-cilium-appset.yaml
+    repository:
+      type: rss
+      url: https://artifacthub.io/api/v1/packages/helm/cilium/cilium/feed/rss
+  
+  - name: metallb
+    source:
+      file: argocd/appsets/oss/networking/addons-metallb-appset.yaml
+    repository:
+      type: rss
+      url: https://artifacthub.io/api/v1/packages/helm/metallb/metallb/feed/rss
+  
+  - name: istio
+    source:
+      file: argocd/appsets/oss/networking/addons-istio-appset.yaml
+    repository:
+      type: rss
+      url: https://artifacthub.io/api/v1/packages/helm/istio-official/base/feed/rss
+  
+  - name: ingress-nginx
+    source:
+      file: argocd/appsets/oss/networking/addons-ingress-nginx-appset.yaml
+    repository:
+      type: rss
+      url: https://artifacthub.io/api/v1/packages/helm/ingress-nginx/ingress-nginx/feed/rss
+  
+  # Databases
+  - name: cloudnative-pg
+    source:
+      file: argocd/appsets/oss/databases/addons-cloudnative-pg-appset.yaml
+    repository:
+      type: rss
+      url: https://artifacthub.io/api/v1/packages/helm/cloudnative-pg/cloudnative-pg/feed/rss
+  
+  # Disaster Recovery
+  - name: velero
+    source:
+      file: argocd/appsets/oss/disaster-recovery/addons-velero-appset.yaml
+    repository:
+      type: rss
+      url: https://artifacthub.io/api/v1/packages/helm/vmware-tanzu/velero/feed/rss
+  
+  # Workflows
+  - name: argo-workflows
+    source:
+      file: argocd/appsets/oss/worfklows/addons-argo-workflows-appset.yaml
+    repository:
+      type: rss
+      url: https://artifacthub.io/api/v1/packages/helm/argo/argo-workflows/feed/rss
+  
+  - name: temporal
+    source:
+      file: argocd/appsets/oss/worfklows/addons-temporal-appset.yaml
+    repository:
+      type: rss
+      url: https://artifacthub.io/api/v1/packages/helm/temporalio/temporal/feed/rss
+  
+  - name: airflow
+    source:
+      file: argocd/appsets/oss/worfklows/addons-airflow-appset.yaml
+    repository:
+      type: rss
+      url: https://artifacthub.io/api/v1/packages/helm/apache-airflow/airflow/feed/rss
+  
+  # Delivery / CI/CD
+  - name: argo-cd
+    source:
+      file: argocd/appsets/oss/delivery/addons-argo-cd-appset.yaml
+    repository:
+      type: rss
+      url: https://artifacthub.io/api/v1/packages/helm/argo/argo-cd/feed/rss
+  
+  - name: argo-rollouts
+    source:
+      file: argocd/appsets/oss/delivery/addons-argo-rollouts-appset.yaml
+    repository:
+      type: rss
+      url: https://artifacthub.io/api/v1/packages/helm/argo/argo-rollouts/feed/rss
+  
+  - name: devlake
+    source:
+      file: argocd/appsets/oss/delivery/addons-devlake-appset.yaml
+    repository:
+      type: rss
+      url: https://artifacthub.io/api/v1/packages/helm/apache-incubator-devlake-helm-chart/devlake/feed/rss
+  
+  - name: keptn
+    source:
+      file: argocd/appsets/oss/delivery/addons-keptn-appset.yaml
+    repository:
+      type: rss
+      url: https://artifacthub.io/api/v1/packages/helm/lifecycle-toolkit/keptn/feed/rss
+  
+  # Security
+  - name: cert-manager
+    source:
+      file: argocd/appsets/oss/security/addons-cert-manager-appset.yaml
+    repository:
+      type: rss
+      url: https://artifacthub.io/api/v1/packages/helm/cert-manager/cert-manager/feed/rss
+  
+  - name: external-secrets
+    source:
+      file: argocd/appsets/oss/security/addons-external-secrets-appset.yaml
+    repository:
+      type: rss
+      url: https://artifacthub.io/api/v1/packages/helm/external-secrets-operator/external-secrets/feed/rss
+  
+  - name: trivy-operator
+    source:
+      file: argocd/appsets/oss/security/addons-trivy-appset.yaml
+    repository:
+      type: rss
+      url: https://artifacthub.io/api/v1/packages/helm/trivy-operator/trivy-operator/feed/rss
+  
+  - name: tracee
+    source:
+      file: argocd/appsets/oss/security/addons-tracee-appset.yaml
+    repository:
+      type: rss
+      url: https://artifacthub.io/api/v1/packages/helm/trivy-operator/tracee/feed/rss
+  
+  - name: kubearmor
+    source:
+      file: argocd/appsets/oss/security/addons-kubearmor-appset.yaml
+    repository:
+      type: rss
+      url: https://artifacthub.io/api/v1/packages/helm/kubearmor/kubearmor-operator/feed/rss
+  
+  - name: tetragon
+    source:
+      file: argocd/appsets/oss/security/addons-tetragon-appset.yaml
+    repository:
+      type: rss
+      url: https://artifacthub.io/api/v1/packages/helm/cilium/tetragon/feed/rss
+  
+  - name: falco
+    source:
+      file: argocd/appsets/oss/security/addons-falco-appset.yaml
+    repository:
+      type: rss
+      url: https://artifacthub.io/api/v1/packages/helm/falcosecurity/falco/feed/rss
+  
+  # Utilities
+  - name: reloader
+    source:
+      file: argocd/appsets/oss/utilities/addons-reloader-appset.yaml
+    repository:
+      type: rss
+      url: https://artifacthub.io/api/v1/packages/helm/stakater/reloader/feed/rss
+  
+  - name: kured
+    source:
+      file: argocd/appsets/oss/utilities/addons-kured-appset.yaml
+    repository:
+      type: rss
+      url: https://artifacthub.io/api/v1/packages/helm/kured/kured/feed/rss
+  
+  - name: goldilocks
+    source:
+      file: argocd/appsets/oss/utilities/addons-goldilocks-appset.yaml
+    repository:
+      type: rss
+      url: https://artifacthub.io/api/v1/packages/helm/fairwinds-stable/goldilocks/feed/rss
+  
+  - name: reflector
+    source:
+      file: argocd/appsets/oss/utilities/addons-reflector-appset.yaml
+    repository:
+      type: rss
+      url: https://artifacthub.io/api/v1/packages/helm/emberstack/reflector/feed/rss
+  
+  # Storage
+  - name: openebs
+    source:
+      file: argocd/appsets/oss/storage/addons-openebs-appset.yaml
+    repository:
+      type: rss
+      url: https://artifacthub.io/api/v1/packages/helm/openebs/openebs/feed/rss
+    
+  # Databases
+  - name: atlas-operator
+    source:
+      file: argocd/appsets/oss/databases/addons-atlas-operator-appset.yaml
+    repository:
+      type: oci
+      url: oci://ghcr.io/ariga/charts/atlas-operator
+  
+  - name: clickhouse-operator
+    source:
+      file: argocd/appsets/oss/databases/addons-clickhouse-operator-appset.yaml
+    repository:
+      type: rss
+      url: https://artifacthub.io/api/v1/packages/helm/altinity-clickhouse-operator/altinity-clickhouse-operator/feed/rss
+  
+  # Messaging
+  - name: nats
+    source:
+      file: argocd/appsets/oss/messaging/addons-nats-appset.yaml
+    repository:
+      type: rss
+      url: https://artifacthub.io/api/v1/packages/helm/nats/nats/feed/rss
+  
+  - name: strimzi-kafka-operator
+    source:
+      file: argocd/appsets/oss/messaging/addons-strimzi-appset.yaml
+    repository:
+      type: rss
+      url: https://artifacthub.io/api/v1/packages/helm/strimzi/strimzi-kafka-operator/feed/rss
+  
+  - name: rabbitmq-cluster-operator
+    source:
+      file: argocd/appsets/oss/messaging/addons-rabbitmq-operator-appset.yaml
+    repository:
+      type: rss
+      url: https://artifacthub.io/api/v1/packages/helm/bitnami/rabbitmq-cluster-operator/feed/rss
+  
+  # Networking
+  - name: kube-vip
+    source:
+      file: argocd/appsets/oss/networking/addons-kube-vip-appset.yaml
+    repository:
+      type: rss
+      url: https://artifacthub.io/api/v1/packages/helm/kube-vip/kube-vip/feed/rss
+  
+  - name: ngrok-operator
+    source:
+      file: argocd/appsets/oss/networking/addons-ngrok-appset.yaml
+    repository:
+      type: rss
+      url: https://artifacthub.io/api/v1/packages/helm/ngrok/ngrok-operator/feed/rss
+  
+  - name: skupper
+    source:
+      file: argocd/appsets/oss/networking/addons-skupper-appset.yaml
+    repository:
+      type: rss
+      url: https://artifacthub.io/api/v1/packages/helm/skupper/skupper/feed/rss
+  
+  # Platform Engineering
+  - name: crossplane
+    source:
+      file: argocd/appsets/oss/platform-engineering/addons-crossplane-appset.yaml
+    repository:
+      type: rss
+      url: https://artifacthub.io/api/v1/packages/helm/crossplane/crossplane/feed/rss
+  
+  - name: dapr
+    source:
+      file: argocd/appsets/oss/platform-engineering/addons-dapr-appset.yaml
+    repository:
+      type: rss
+      url: https://artifacthub.io/api/v1/packages/helm/dapr/dapr/feed/rss
+  
+  - name: karpor
+    source:
+      file: argocd/appsets/oss/platform-engineering/addons-karpor-appset.yaml
+    repository:
+      type: rss
+      url: https://artifacthub.io/api/v1/packages/helm/kusionstack/karpor/feed/rss
+    
+  - name: kro
+    source:
+      file: argocd/appsets/oss/platform-engineering/addons-kro-appset.yaml
+    repository:
+      type: rss
+      url: https://artifacthub.io/api/v1/packages/helm/kro/kro/feed/rss
+  
+  # Machine Learning
+  - name: ollama
+    source:
+      file: argocd/appsets/oss/machine-learning/addons-ollama-appset.yaml
+    repository:
+      type: rss
+      url: https://artifacthub.io/api/v1/packages/helm/ollama-helm/ollama/feed/rss
+  
+  - name: langfuse
+    source:
+      file: argocd/appsets/oss/machine-learning/addons-langfuse-appset.yaml
+    repository:
+      type: rss
+      url: https://artifacthub.io/api/v1/packages/helm/langfuse-k8s/langfuse/feed/rss
+  
+  - name: litellm
+    source:
+      file: argocd/appsets/oss/machine-learning/addons-litellm-appset.yaml
+    repository:
+      type: rss
+      url: https://artifacthub.io/api/v1/packages/helm/litellm/litellm/feed/rss
+  
+  - name: kgateway
+    source:
+      file: argocd/appsets/oss/machine-learning/addons-kgateway-appset.yaml
+    repository:
+      type: rss
+      url: https://artifacthub.io/api/v1/packages/helm/kgateway/kgateway/feed/rss
+  
+  # Observability - Tracing
+  - name: tempo
+    source:
+      file: argocd/appsets/oss/observability/tracing/addons-tempo-appset.yaml
+    repository:
+      type: rss
+      url: https://artifacthub.io/api/v1/packages/helm/grafana/tempo/feed/rss
+  
+  - name: jaeger
+    source:
+      file: argocd/appsets/oss/observability/tracing/addons-jaeger-appset.yaml
+    repository:
+      type: rss
+      url: https://artifacthub.io/api/v1/packages/helm/jaegertracing/jaeger/feed/rss
+  
+  - name: zipkin
+    source:
+      file: argocd/appsets/oss/observability/tracing/addons-zipkin-appset.yaml
+    repository:
+      type: rss
+      url: https://artifacthub.io/api/v1/packages/helm/zipkin/zipkin/feed/rss
+  
+  # Observability
+  - name: grafana-operator
+    source:
+      file: argocd/appsets/oss/observability/addons-grafana-operator-appset.yaml
+    repository:
+      type: rss
+      url: https://artifacthub.io/api/v1/packages/helm/grafana/grafana-operator/feed/rss
+  
+  - name: kiali-operator
+    source:
+      file: argocd/appsets/oss/observability/addons-kiali-appset.yaml
+    repository:
+      type: rss
+      url: https://artifacthub.io/api/v1/packages/helm/kiali/kiali-operator/feed/rss
+  
+  - name: pyroscope
+    source:
+      file: argocd/appsets/oss/observability/profiles/addons-pyroscope-appset.yaml
+    repository:
+      type: rss
+      url: https://artifacthub.io/api/v1/packages/helm/grafana/pyroscope/feed/rss
+  
+  - name: victoria-logs-single
+    source:
+      file: argocd/appsets/oss/observability/logs/addons-victoria-logs-appset.yaml
+    repository:
+      type: rss
+      url: https://artifacthub.io/api/v1/packages/helm/victoriametrics/victoria-logs-single/feed/rss
+  
+  # Other
+  - name: open-feature-operator
+    source:
+      file: argocd/appsets/oss/other/addons-open-feature-appset.yaml
+    repository:
+      type: rss
+      url: https://artifacthub.io/api/v1/packages/helm/open-feature-operator/open-feature-operator/feed/rss
+  

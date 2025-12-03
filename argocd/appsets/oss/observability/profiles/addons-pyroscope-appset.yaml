@@ -2,7 +2,7 @@
 apiVersion: argoproj.io/v1alpha1
 kind: ApplicationSet
 metadata:
-  name: addons-tempo
+  name: addons-pyroscope
   namespace: argocd
 spec:
   syncPolicy:
@@ -13,13 +13,13 @@ spec:
         generators:
           - clusters:
               values:
-                addonChart: tempo
-                addonChartVersion: 1.18.2
+                addonChart: pyroscope
+                addonChartVersion: 1.12.0
                 addonChartRepository: https://grafana.github.io/helm-charts
                 addonChartNamespace: monitoring
               selector:
                 matchExpressions:
-                  - key: enable_tempo
+                  - key: enable_pyroscope
                     operator: In
                     values: ['true']
           - clusters:
@@ -27,13 +27,13 @@ spec:
                 matchLabels:
                   environment: dev
               values:
-                addonChartVersion: 1.18.2
+                addonChartVersion: 1.12.0 # watchdog this
           - clusters:
               selector:
                 matchLabels:
                   environment: prod
               values:
-                addonChartVersion: 1.18.2
+                addonChartVersion: 1.12.0
   template:
     metadata:
       name: addon-{{name}}-{{values.addonChart}}

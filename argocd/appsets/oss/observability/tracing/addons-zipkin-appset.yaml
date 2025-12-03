@@ -2,7 +2,7 @@
 apiVersion: argoproj.io/v1alpha1
 kind: ApplicationSet
 metadata:
-  name: addons-jaeger
+  name: addons-zipkin
   namespace: argocd
 spec:
   syncPolicy:
@@ -13,13 +13,12 @@ spec:
         generators:
           - clusters:
               values:
-                addonChart: jaeger
-                addonChartVersion: 3.4.0
-                addonChartRepository: https://jaegertracing.github.io/helm-charts
-                addonChartNamespace: monitoring
+                addonChart: zipkin
+                addonChartVersion: 0.3.4
+                addonChartRepository: https://zipkin.io/zipkin-helm
               selector:
                 matchExpressions:
-                  - key: enable_jaeger
+                  - key: enable_zipkin
                     operator: In
                     values: ['true']
           - clusters:
@@ -27,13 +26,13 @@ spec:
                 matchLabels:
                   environment: dev
               values:
-                addonChartVersion: 3.4.0
+                addonChartVersion: 0.3.4 # watchdog this
           - clusters:
               selector:
                 matchLabels:
                   environment: prod
               values:
-                addonChartVersion: 3.4.0
+                addonChartVersion: 0.3.4
   template:
     metadata:
       name: addon-{{name}}-{{values.addonChart}}
@@ -54,7 +53,7 @@ spec:
               - $values/environments/{{metadata.labels.environment}}/addons/{{values.addonChart}}/values.yaml
               - $values/clusters/{{name}}/addons/{{values.addonChart}}/values.yaml
       destination:
-        namespace: '{{values.addonChartNamespace}}'
+        namespace: '{{values.addonChart}}'
         name: '{{name}}'
       syncPolicy:
         automated: {}

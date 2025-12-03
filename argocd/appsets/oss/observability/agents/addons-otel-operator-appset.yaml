@@ -2,7 +2,7 @@
 apiVersion: argoproj.io/v1alpha1
 kind: ApplicationSet
 metadata:
-  name: addons-grafana-operator
+  name: addons-otel-operator
   namespace: argocd
 spec:
   syncPolicy:
@@ -13,14 +13,13 @@ spec:
         generators:
           - clusters:
               values:
-                addonChart: grafana-operator
-                addonChartVersion: v5.16.0
-                #addonChartRepository: ghcr.io/grafana/helm-charts
-                addonChartRepository: https://github.com/grafana/grafana-operator
-                addonChartNamespace: monitoring
+                addonChart: opentelemetry-operator
+                addonChartVersion: 0.81.1
+                addonChartRepository: https://open-telemetry.github.io/opentelemetry-helm-charts
+                addonChartNamespace: opentelemetry-operator-system
               selector:
                 matchExpressions:
-                  - key: enable_grafana_operator
+                  - key: enable_opentelemetry_operator
                     operator: In
                     values: ['true']
           - clusters:
@@ -28,13 +27,13 @@ spec:
                 matchLabels:
                   environment: dev
               values:
-                addonChartVersion: v5.16.0
+                addonChartVersion: 0.81.1 # watchdog this
           - clusters:
               selector:
                 matchLabels:
                   environment: prod
               values:
-                addonChartVersion: v5.16.0
+                addonChartVersion: 0.81.1
   template:
     metadata:
       name: addon-{{name}}-{{values.addonChart}}
@@ -44,9 +43,9 @@ spec:
         - repoURL: '{{metadata.annotations.addons_repo_url}}'
           targetRevision: '{{metadata.annotations.addons_repo_revision}}'
           ref: values
-        - repoURL: '{{values.addonChartRepository}}'
+        - chart: '{{values.addonChart}}'
+          repoURL: '{{values.addonChartRepository}}'
           targetRevision: '{{values.addonChartVersion}}'
-          path: deploy/helm/grafana-operator
           helm:
             releaseName: '{{values.addonChart}}'
             ignoreMissingValueFiles: true
