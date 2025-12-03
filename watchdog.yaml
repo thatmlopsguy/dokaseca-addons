@@ -70,7 +70,7 @@ dependencies:
       file: argocd/appsets/oss/cost/addons-kube-green-appset.yaml
     repository:
       type: rss
-      url: https://artifacthub.io/api/v1/packages/helm/kube-green/kube-green/feed/rss
+      url: https://artifacthub.io/api/v1/packages/helm/kube-green-official/kube-green/feed/rss
   
   # Dashboards
   - name: kubernetes-dashboard
