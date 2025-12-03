@@ -26,7 +26,7 @@ console = Console()
 def load_config(config_path: Path) -> dict:
     """Load the watchdog configuration file."""
     try:
-        with open(config_path, 'r') as f:
+        with open(config_path, "r") as f:
             return yaml.safe_load(f)
     except Exception as e:
         console.print(f"[red]Error loading config file: {e}[/red]")
@@ -43,11 +43,11 @@ def fetch_rss_versions(rss_url: str) -> list[str]:
         versions = []
 
         # Parse RSS feed for version numbers
-        for item in root.findall('.//item'):
-            title = item.find('title')
+        for item in root.findall(".//item"):
+            title = item.find("title")
             if title is not None and title.text:
                 # Extract version from title (assuming format like "chaos-mesh 2.7.0")
-                match = re.search(r'(\d+\.\d+\.\d+)', title.text)
+                match = re.search(r"(\d+\.\d+\.\d+)", title.text)
                 if match:
                     versions.append(match.group(1))
 
@@ -65,15 +65,15 @@ def find_watchdog_lines(file_path: Path) -> list[tuple[int, str, str]]:
         List of tuples: (line_number, field_name, current_version)
     """
     try:
-        with open(file_path, 'r') as f:
+        with open(file_path, "r") as f:
             lines = f.readlines()
 
         watchdog_lines = []
         for i, line in enumerate(lines, start=1):
-            if '# watchdog this' in line:
+            if "# watchdog this" in line:
                 # Extract field name and version
                 # Pattern: addonChartVersion: 2.7.0 # watchdog this
-                match = re.match(r'\s*(\w+):\s*([^\s#]+)', line)
+                match = re.match(r"\s*(\w+):\s*([^\s#]+)", line)
                 if match:
                     field_name = match.group(1)
                     current_version = match.group(2)
@@ -104,20 +104,17 @@ def check(
         "watchdog.yaml",
         "--config",
         "-c",
-        help="Path to the watchdog configuration file"
+        help="Path to the watchdog configuration file",
     ),
     verbose: bool = typer.Option(
-        False,
-        "--verbose",
-        "-v",
-        help="Enable verbose output"
+        False, "--verbose", "-v", help="Enable verbose output"
     ),
     dry_run: bool = typer.Option(
         False,
         "--dry-run",
         "-n",
-        help="Show what would be checked without making any changes"
-    )
+        help="Show what would be checked without making any changes",
+    ),
 ):
     """
     Check for new versions based on watchdog configuration.
@@ -134,7 +131,7 @@ def check(
     console.print(f"[blue]Loading configuration from {config_file}...[/blue]")
     config = load_config(config_file)
 
-    if 'dependencies' not in config:
+    if "dependencies" not in config:
         console.print("[red]Error: No 'dependencies' section in config file[/red]")
         raise typer.Exit(1)
 
@@ -147,10 +144,10 @@ def check(
 
     updates_available = 0
 
-    for dep in config['dependencies']:
-        dep_name = dep.get('name', 'Unknown')
-        source_file = dep.get('source', {}).get('file')
-        repo_info = dep.get('repository', {})
+    for dep in config["dependencies"]:
+        dep_name = dep.get("name", "Unknown")
+        source_file = dep.get("source", {}).get("file")
+        repo_info = dep.get("repository", {})
 
         if not source_file:
             console.print(f"[yellow]Warning: No source file for {dep_name}[/yellow]")
@@ -169,13 +166,15 @@ def check(
 
         if not watchdog_lines:
             if verbose:
-                console.print(f"[yellow]No watchdog markers found in {file_path}[/yellow]")
+                console.print(
+                    f"[yellow]No watchdog markers found in {file_path}[/yellow]"
+                )
             continue
 
         # Fetch available versions
         available_versions = []
-        if repo_info.get('type') == 'rss':
-            rss_url = repo_info.get('url')
+        if repo_info.get("type") == "rss":
+            rss_url = repo_info.get("url")
             if rss_url:
                 available_versions = fetch_rss_versions(rss_url)
 
@@ -203,7 +202,7 @@ def check(
                 str(file_path.name),
                 current_ver,
                 latest_version or "N/A",
-                f"[{status_style}]{status}[/{status_style}]"
+                f"[{status_style}]{status}[/{status_style}]",
             )
 
     console.print("\n")
@@ -211,15 +210,23 @@ def check(
     console.print("\n")
 
     if updates_available > 0:
-        console.print(f"[yellow]Found {updates_available} update(s) available![/yellow]")
+        console.print(
+            f"[yellow]Found {updates_available} update(s) available![/yellow]"
+        )
         sys.exit(1)
     else:
         console.print("[green]All dependencies are up to date![/green]")
         sys.exit(0)
 
 
-def update_version_in_file(file_path: Path, line_num: int, field_name: str,
-                          old_version: str, new_version: str, dry_run: bool = False) -> bool:
+def update_version_in_file(
+    file_path: Path,
+    line_num: int,
+    field_name: str,
+    old_version: str,
+    new_version: str,
+    dry_run: bool = False,
+) -> bool:
     """
     Update a version in a YAML file.
 
@@ -235,7 +242,7 @@ def update_version_in_file(file_path: Path, line_num: int, field_name: str,
         True if update was successful (or would be in dry-run mode)
     """
     try:
-        with open(file_path, 'r') as f:
+        with open(file_path, "r") as f:
             lines = f.readlines()
 
         if line_num > len(lines):
@@ -249,7 +256,7 @@ def update_version_in_file(file_path: Path, line_num: int, field_name: str,
 
         if not dry_run:
             lines[line_num - 1] = updated_line
-            with open(file_path, 'w') as f:
+            with open(file_path, "w") as f:
                 f.writelines(lines)
 
         return True
@@ -264,26 +271,23 @@ def update(
         "watchdog.yaml",
         "--config",
         "-c",
-        help="Path to the watchdog configuration file"
+        help="Path to the watchdog configuration file",
     ),
     verbose: bool = typer.Option(
-        False,
-        "--verbose",
-        "-v",
-        help="Enable verbose output"
+        False, "--verbose", "-v", help="Enable verbose output"
     ),
     dry_run: bool = typer.Option(
         False,
         "--dry-run",
         "-n",
-        help="Show what would be updated without making any changes"
+        help="Show what would be updated without making any changes",
     ),
     apply: bool = typer.Option(
         False,
         "--apply",
         "-a",
-        help="Apply the updates (required to actually modify files)"
-    )
+        help="Apply the updates (required to actually modify files)",
+    ),
 ):
     """
     Update versions in files based on watchdog configuration.
@@ -295,11 +299,15 @@ def update(
     """
     # Validate flags
     if dry_run and apply:
-        console.print("[red]Error: Cannot use both --dry-run and --apply together[/red]")
+        console.print(
+            "[red]Error: Cannot use both --dry-run and --apply together[/red]"
+        )
         raise typer.Exit(1)
 
     if not dry_run and not apply:
-        console.print("[yellow]No action specified. Use --dry-run to preview or --apply to update files.[/yellow]")
+        console.print(
+            "[yellow]No action specified. Use --dry-run to preview or --apply to update files.[/yellow]"
+        )
         raise typer.Exit(1)
 
     if dry_run:
@@ -314,7 +322,7 @@ def update(
     console.print(f"[blue]Loading configuration from {config_file}...[/blue]")
     config = load_config(config_file)
 
-    if 'dependencies' not in config:
+    if "dependencies" not in config:
         console.print("[red]Error: No 'dependencies' section in config file[/red]")
         raise typer.Exit(1)
 
@@ -329,10 +337,10 @@ def update(
     updates_skipped = 0
     markdown_rows = []
 
-    for dep in config['dependencies']:
-        dep_name = dep.get('name', 'Unknown')
-        source_file = dep.get('source', {}).get('file')
-        repo_info = dep.get('repository', {})
+    for dep in config["dependencies"]:
+        dep_name = dep.get("name", "Unknown")
+        source_file = dep.get("source", {}).get("file")
+        repo_info = dep.get("repository", {})
 
         if not source_file:
             console.print(f"[yellow]Warning: No source file for {dep_name}[/yellow]")
@@ -351,13 +359,15 @@ def update(
 
         if not watchdog_lines:
             if verbose:
-                console.print(f"[yellow]No watchdog markers found in {file_path}[/yellow]")
+                console.print(
+                    f"[yellow]No watchdog markers found in {file_path}[/yellow]"
+                )
             continue
 
         # Fetch available versions
         available_versions = []
-        if repo_info.get('type') == 'rss':
-            rss_url = repo_info.get('url')
+        if repo_info.get("type") == "rss":
+            rss_url = repo_info.get("url")
             if rss_url:
                 available_versions = fetch_rss_versions(rss_url)
 
@@ -372,8 +382,12 @@ def update(
                     if version.parse(latest_version) > version.parse(current_ver):
                         # Update needed
                         success = update_version_in_file(
-                            file_path, line_num, field_name,
-                            current_ver, latest_version, dry_run=not apply
+                            file_path,
+                            line_num,
+                            field_name,
+                            current_ver,
+                            latest_version,
+                            dry_run=not apply,
                         )
 
                         if success:
@@ -405,12 +419,14 @@ def update(
                 str(file_path.name),
                 current_ver,
                 latest_version or "N/A",
-                f"[{status_style}]{status}[/{status_style}]"
+                f"[{status_style}]{status}[/{status_style}]",
             )
 
             # Add to markdown table if updated or would be updated
             if "Updated" in status or "Would update" in status:
-                markdown_rows.append(f"| {dep_name} | {file_path.name} | {current_ver} | {latest_version or 'N/A'} | {status.replace('→', '').replace('✓', '').strip()} |")
+                markdown_rows.append(
+                    f"| {dep_name} | {file_path.name} | {current_ver} | {latest_version or 'N/A'} | {status.replace('→', '').replace('✓', '').strip()} |"
+                )
 
     console.print("\n")
     console.print(table)
@@ -427,14 +443,20 @@ def update(
             f.write(markdown_table)
 
         if verbose:
-            console.print("[blue]Markdown summary written to update-summary.md[/blue]\n")
+            console.print(
+                "[blue]Markdown summary written to update-summary.md[/blue]\n"
+            )
 
     if updates_made > 0:
         if not apply:
-            console.print(f"[blue]Would update {updates_made} version(s) (dry-run mode)[/blue]")
+            console.print(
+                f"[blue]Would update {updates_made} version(s) (dry-run mode)[/blue]"
+            )
             console.print("[dim]Run with --apply to actually modify files[/dim]")
         else:
-            console.print(f"[green]Successfully updated {updates_made} version(s)![/green]")
+            console.print(
+                f"[green]Successfully updated {updates_made} version(s)![/green]"
+            )
     else:
         console.print("[green]No updates needed - all versions are current![/green]")
 
@@ -448,8 +470,8 @@ def validate(
         "watchdog.yaml",
         "--config",
         "-c",
-        help="Path to the watchdog configuration file"
-    )
+        help="Path to the watchdog configuration file",
+    ),
 ):
     """
     Validate the watchdog configuration file.
@@ -467,21 +489,23 @@ def validate(
     except Exception:
         raise typer.Exit(1)
 
-    if 'dependencies' not in config:
+    if "dependencies" not in config:
         console.print("[red]✗ No 'dependencies' section in config file[/red]")
         raise typer.Exit(1)
 
-    console.print(f"[green]✓ Config file is valid YAML[/green]")
-    console.print(f"[green]✓ Found {len(config['dependencies'])} dependencies[/green]\n")
+    console.print("[green]✓ Config file is valid YAML[/green]")
+    console.print(
+        f"[green]✓ Found {len(config['dependencies'])} dependencies[/green]\n"
+    )
 
     errors = 0
-    for i, dep in enumerate(config['dependencies'], 1):
-        dep_name = dep.get('name', f'Dependency #{i}')
+    for i, dep in enumerate(config["dependencies"], 1):
+        dep_name = dep.get("name", f"Dependency #{i}")
         console.print(f"[cyan]Checking {dep_name}...[/cyan]")
 
-        source_file = dep.get('source', {}).get('file')
+        source_file = dep.get("source", {}).get("file")
         if not source_file:
-            console.print(f"  [red]✗ No source file specified[/red]")
+            console.print("  [red]✗ No source file specified[/red]")
             errors += 1
             continue
 
@@ -496,19 +520,21 @@ def validate(
         # Check for watchdog markers
         watchdog_lines = find_watchdog_lines(file_path)
         if watchdog_lines:
-            console.print(f"  [green]✓ Found {len(watchdog_lines)} watchdog marker(s)[/green]")
+            console.print(
+                f"  [green]✓ Found {len(watchdog_lines)} watchdog marker(s)[/green]"
+            )
             for line_num, field_name, current_ver in watchdog_lines:
                 console.print(f"    Line {line_num}: {field_name} = {current_ver}")
         else:
-            console.print(f"  [yellow]⚠ No watchdog markers found[/yellow]")
+            console.print("  [yellow]⚠ No watchdog markers found[/yellow]")
 
         # Check repository configuration
-        repo_info = dep.get('repository', {})
-        if repo_info.get('type') == 'rss':
-            if repo_info.get('url'):
-                console.print(f"  [green]✓ RSS feed configured[/green]")
+        repo_info = dep.get("repository", {})
+        if repo_info.get("type") == "rss":
+            if repo_info.get("url"):
+                console.print("  [green]✓ RSS feed configured[/green]")
             else:
-                console.print(f"  [red]✗ RSS feed URL missing[/red]")
+                console.print("  [red]✗ RSS feed URL missing[/red]")
                 errors += 1
 
         console.print()

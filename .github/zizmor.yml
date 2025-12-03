@@ -1,0 +1,4 @@
+rules:
+  artipacked:
+    ignore:
+      - watchdog.yml:19:9

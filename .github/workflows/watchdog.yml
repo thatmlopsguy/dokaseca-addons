@@ -32,7 +32,7 @@ jobs:
       - name: Check for changes
         id: git-check
         run: |
-          git diff --exit-code || echo "changes=true" >> $GITHUB_OUTPUT
+          git diff --exit-code || echo "changes=true" >> "$GITHUB_OUTPUT"
 
       - name: Read update summary
         if: steps.git-check.outputs.changes == 'true'
@@ -40,10 +40,12 @@ jobs:
         run: |
           if [ -f update-summary.md ]; then
             delimiter="$(openssl rand -hex 8)"
-            echo "summary<<${delimiter}" >> "$GITHUB_OUTPUT"
-            cat update-summary.md >> "$GITHUB_OUTPUT"
-            echo "" >> "$GITHUB_OUTPUT"
-            echo "${delimiter}" >> "$GITHUB_OUTPUT"
+            {
+              echo "summary<<${delimiter}"
+              cat update-summary.md
+              echo ""
+              echo "${delimiter}"
+            } >> "$GITHUB_OUTPUT"
           fi
 
       - name: Create Pull Request
