@@ -40,11 +40,10 @@ jobs:
         run: |
           if [ -f update-summary.md ]; then
             delimiter="$(openssl rand -hex 8)"
-            {
-              echo "summary<<${delimiter}"
-              cat update-summary.md
-              echo "${delimiter}"
-            } >> "$GITHUB_OUTPUT"
+            echo "summary<<${delimiter}" >> "$GITHUB_OUTPUT"
+            cat update-summary.md >> "$GITHUB_OUTPUT"
+            echo "" >> "$GITHUB_OUTPUT"
+            echo "${delimiter}" >> "$GITHUB_OUTPUT"
           fi
 
       - name: Create Pull Request
