@@ -1,0 +1,77 @@
+---
+apiVersion: argoproj.io/v1alpha1
+kind: ApplicationSet
+metadata:
+  name: addons-istio
+  namespace: argocd
+spec:
+  syncPolicy:
+    preserveResourcesOnDeletion: false
+  generators:
+    - matrix:
+        generators:
+          - list:
+              elements:
+                - chart: base
+                  syncWave: '0'
+                - chart: istiod
+                  syncWave: '1'
+                - chart: cni
+                  syncWave: '2'
+                - chart: ztunnel
+                  syncWave: '3'
+          - merge:
+              mergeKeys: [server]
+              generators:
+                - clusters:
+                    values:
+                      addonChart: istio
+                      addonChartVersion: 1.28.0
+                      addonChartRepository: https://istio-release.storage.googleapis.com/charts
+                      addonChartNamespace: istio-system
+                    selector:
+                      matchExpressions:
+                        - key: enable_istio
+                          operator: In
+                          values: ['true']
+                - clusters:
+                    selector:
+                      matchLabels:
+                        environment: dev
+                    values:
+                      addonChartVersion: 1.28.0
+                - clusters:
+                    selector:
+                      matchLabels:
+                        environment: prod
+                    values:
+                      addonChartVersion: 1.24.3
+  template:
+    metadata:
+      name: addon-{{name}}-{{chart}}
+      annotations:
+        argocd.argoproj.io/sync-wave: '{{syncWave}}'
+    spec:
+      project: addons
+      sources:
+        - repoURL: '{{metadata.annotations.addons_repo_url}}'
+          targetRevision: '{{metadata.annotations.addons_repo_revision}}'
+          ref: values
+        - chart: '{{chart}}'
+          repoURL: '{{values.addonChartRepository}}'
+          targetRevision: '{{values.addonChartVersion}}'
+          helm:
+            releaseName: '{{values.addonChartPrefix}}-{{chart}}'
+            ignoreMissingValueFiles: true
+            valueFiles:
+              - $values/environments/default/addons/{{values.addonChart}}/values-{{chart}}.yaml
+              - $values/environments/{{metadata.labels.environment}}/addons/values-{{chart}}.yaml
+              - $values/clusters/{{name}}/addons/{{values.addonChart}}/values-{{chart}}.yaml
+      destination:
+        namespace: '{{values.addonChartNamespace}}'
+        name: '{{name}}'
+      syncPolicy:
+        automated: {}
+        syncOptions:
+          - CreateNamespace=true
+          - ServerSideApply=true # Big CRDs.
