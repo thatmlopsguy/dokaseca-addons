@@ -39,10 +39,11 @@ jobs:
         id: summary
         run: |
           if [ -f update-summary.md ]; then
+            delimiter="$(openssl rand -hex 8)"
             {
-              echo 'summary<<EOF'
+              echo "summary<<${delimiter}"
               cat update-summary.md
-              echo 'EOF'
+              echo "${delimiter}"
             } >> "$GITHUB_OUTPUT"
           fi
 
