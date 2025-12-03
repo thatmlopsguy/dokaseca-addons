@@ -39,9 +39,11 @@ jobs:
         id: summary
         run: |
           if [ -f update-summary.md ]; then
-            echo "summary<<EOF" >> $GITHUB_OUTPUT
-            cat update-summary.md >> $GITHUB_OUTPUT
-            echo "EOF" >> $GITHUB_OUTPUT
+            {
+              echo 'summary<<EOF'
+              cat update-summary.md
+              echo 'EOF'
+            } >> "$GITHUB_OUTPUT"
           fi
 
       - name: Create Pull Request
