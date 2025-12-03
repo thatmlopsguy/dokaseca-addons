@@ -28,7 +28,7 @@ spec:
               values:
                 addonKustomize: gateway-api
                 addonKustomizeNamespace: kube-system
-                addonKustomizeVersion: v1.4.0
+                addonKustomizeVersion: v1.4.0 # watchdog this
           - clusters:
               selector:
                 matchLabels:

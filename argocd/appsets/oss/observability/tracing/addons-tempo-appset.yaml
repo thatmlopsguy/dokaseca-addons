@@ -2,7 +2,7 @@
 apiVersion: argoproj.io/v1alpha1
 kind: ApplicationSet
 metadata:
-  name: addons-zipkin
+  name: addons-tempo
   namespace: argocd
 spec:
   syncPolicy:
@@ -13,12 +13,13 @@ spec:
         generators:
           - clusters:
               values:
-                addonChart: zipkin
-                addonChartVersion: 0.3.4
-                addonChartRepository: https://zipkin.io/zipkin-helm
+                addonChart: tempo
+                addonChartVersion: 1.18.2
+                addonChartRepository: https://grafana.github.io/helm-charts
+                addonChartNamespace: monitoring
               selector:
                 matchExpressions:
-                  - key: enable_zipkin
+                  - key: enable_tempo
                     operator: In
                     values: ['true']
           - clusters:
@@ -26,13 +27,13 @@ spec:
                 matchLabels:
                   environment: dev
               values:
-                addonChartVersion: 0.3.4
+                addonChartVersion: 1.18.2 # watchdog this
           - clusters:
               selector:
                 matchLabels:
                   environment: prod
               values:
-                addonChartVersion: 0.3.4
+                addonChartVersion: 1.18.2
   template:
     metadata:
       name: addon-{{name}}-{{values.addonChart}}
@@ -53,7 +54,7 @@ spec:
               - $values/environments/{{metadata.labels.environment}}/addons/{{values.addonChart}}/values.yaml
               - $values/clusters/{{name}}/addons/{{values.addonChart}}/values.yaml
       destination:
-        namespace: '{{values.addonChart}}'
+        namespace: '{{values.addonChartNamespace}}'
         name: '{{name}}'
       syncPolicy:
         automated: {}

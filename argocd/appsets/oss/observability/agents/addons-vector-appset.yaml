@@ -2,7 +2,7 @@
 apiVersion: argoproj.io/v1alpha1
 kind: ApplicationSet
 metadata:
-  name: addons-pyroscope
+  name: addons-vector
   namespace: argocd
 spec:
   syncPolicy:
@@ -13,13 +13,13 @@ spec:
         generators:
           - clusters:
               values:
-                addonChart: pyroscope
-                addonChartVersion: 1.12.0
-                addonChartRepository: https://grafana.github.io/helm-charts
+                addonChart: vector
+                addonChartVersion: 0.40.0
+                addonChartRepository: https://helm.vector.dev
                 addonChartNamespace: monitoring
               selector:
                 matchExpressions:
-                  - key: enable_pyroscope
+                  - key: enable_vector
                     operator: In
                     values: ['true']
           - clusters:
@@ -27,13 +27,13 @@ spec:
                 matchLabels:
                   environment: dev
               values:
-                addonChartVersion: 1.12.0
+                addonChartVersion: 0.40.0 # watchdog this
           - clusters:
               selector:
                 matchLabels:
                   environment: prod
               values:
-                addonChartVersion: 1.12.0
+                addonChartVersion: 0.40.0
   template:
     metadata:
       name: addon-{{name}}-{{values.addonChart}}

@@ -2,7 +2,7 @@
 apiVersion: argoproj.io/v1alpha1
 kind: ApplicationSet
 metadata:
-  name: addons-kiali-operator
+  name: addons-victoria-logs
   namespace: argocd
 spec:
   syncPolicy:
@@ -13,16 +13,14 @@ spec:
         generators:
           - clusters:
               values:
-                addonChart: kiali-operator
-                addonChartVersion: 2.6.0
-                addonChartRepository: https://kiali.org/helm-charts
-                addonChartNamespace: kiali-operator
+                addonChart: victoria-logs-single
+                # helm search repo vm/victoria-logs-single -l
+                addonChartVersion: 0.9.6
+                addonChartRepository: https://victoriametrics.github.io/helm-charts
+                addonChartNamespace: monitoring
               selector:
                 matchExpressions:
-                  - key: enable_istio
-                    operator: In
-                    values: ['true']
-                  - key: enable_kiali
+                  - key: enable_victoria_logs
                     operator: In
                     values: ['true']
           - clusters:
@@ -30,13 +28,13 @@ spec:
                 matchLabels:
                   environment: dev
               values:
-                addonChartVersion: 2.6.0
+                addonChartVersion: 0.9.6 # watchdog this
           - clusters:
               selector:
                 matchLabels:
                   environment: prod
               values:
-                addonChartVersion: 2.6.0
+                addonChartVersion: 0.9.6
   template:
     metadata:
       name: addon-{{name}}-{{values.addonChart}}
@@ -63,4 +61,3 @@ spec:
         automated: {}
         syncOptions:
           - CreateNamespace=true
-          - ServerSideApply=true # Big CRDs.

@@ -2,7 +2,7 @@
 apiVersion: argoproj.io/v1alpha1
 kind: ApplicationSet
 metadata:
-  name: addons-victoria-metrics-k8s-stack
+  name: addons-logging-operator
   namespace: argocd
 spec:
   syncPolicy:
@@ -13,13 +13,14 @@ spec:
         generators:
           - clusters:
               values:
-                addonChart: victoria-metrics-k8s-stack
-                addonChartVersion: 0.36.1
-                addonChartRepository: https://victoriametrics.github.io/helm-charts
-                addonChartNamespace: monitoring
+                addonChart: logging-operator
+                # helm show chart oci://ghcr.io/kube-logging/helm-charts/logging-operator
+                addonChartVersion: 5.1.1
+                addonChartRepository: ghcr.io/kube-logging/helm-charts
+                addonChartNamespace: logging
               selector:
                 matchExpressions:
-                  - key: enable_victoria_metrics_k8s_stack
+                  - key: enable_logging_operator
                     operator: In
                     values: ['true']
           - clusters:
@@ -27,13 +28,13 @@ spec:
                 matchLabels:
                   environment: dev
               values:
-                addonChartVersion: 0.36.1
+                addonChartVersion: 5.1.1 # watchdog this
           - clusters:
               selector:
                 matchLabels:
                   environment: prod
               values:
-                addonChartVersion: 0.36.1
+                addonChartVersion: 5.1.1
   template:
     metadata:
       name: addon-{{name}}-{{values.addonChart}}
@@ -61,17 +62,3 @@ spec:
         syncOptions:
           - CreateNamespace=true
           - ServerSideApply=true # Big CRDs.
-      # https://docs.victoriametrics.com/helm/victoriametrics-operator/
-          - RespectIgnoreDifferences=true
-      ignoreDifferences:
-        - group: ""
-          kind: Secret
-          name: victoria-metrics-k8s-stack-victoria-metrics-operator-validation
-          namespace: monitoring
-          jsonPointers:
-            - /data
-        - group: admissionregistration.k8s.io
-          kind: ValidatingWebhookConfiguration
-          name: victoria-metrics-k8s-stack-victoria-metrics-operator-admission
-          jqPathExpressions:
-          - '.webhooks[]?.clientConfig.caBundle'
