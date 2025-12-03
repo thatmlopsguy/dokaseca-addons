@@ -8,9 +8,8 @@ based on comments marked with '# watchdog this'.
 
 import re
 import sys
-from pathlib import Path
-from typing import Optional
 import xml.etree.ElementTree as ET
+from pathlib import Path
 
 import requests
 import typer
@@ -26,11 +25,11 @@ console = Console()
 def load_config(config_path: Path) -> dict:
     """Load the watchdog configuration file."""
     try:
-        with open(config_path, "r") as f:
+        with open(config_path) as f:
             return yaml.safe_load(f)
     except Exception as e:
         console.print(f"[red]Error loading config file: {e}[/red]")
-        raise typer.Exit(1)
+        raise typer.Exit(1)  # noqa: B904
 
 
 def fetch_rss_versions(rss_url: str) -> list[str]:
@@ -65,7 +64,7 @@ def find_watchdog_lines(file_path: Path) -> list[tuple[int, str, str]]:
         List of tuples: (line_number, field_name, current_version)
     """
     try:
-        with open(file_path, "r") as f:
+        with open(file_path) as f:
             lines = f.readlines()
 
         watchdog_lines = []
@@ -85,7 +84,7 @@ def find_watchdog_lines(file_path: Path) -> list[tuple[int, str, str]]:
         return []
 
 
-def get_latest_version(versions: list[str]) -> Optional[str]:
+def get_latest_version(versions: list[str]) -> str | None:
     """Get the latest version from a list of version strings."""
     if not versions:
         return None
@@ -100,15 +99,13 @@ def get_latest_version(versions: list[str]) -> Optional[str]:
 
 @app.command()
 def check(
-    config_file: Path = typer.Option(
+    config_file: Path = typer.Option(  # noqa: B008
         "watchdog.yaml",
         "--config",
         "-c",
         help="Path to the watchdog configuration file",
     ),
-    verbose: bool = typer.Option(
-        False, "--verbose", "-v", help="Enable verbose output"
-    ),
+    verbose: bool = typer.Option(False, "--verbose", "-v", help="Enable verbose output"),
     dry_run: bool = typer.Option(
         False,
         "--dry-run",
@@ -166,9 +163,7 @@ def check(
 
         if not watchdog_lines:
             if verbose:
-                console.print(
-                    f"[yellow]No watchdog markers found in {file_path}[/yellow]"
-                )
+                console.print(f"[yellow]No watchdog markers found in {file_path}[/yellow]")
             continue
 
         # Fetch available versions
@@ -180,7 +175,7 @@ def check(
 
         latest_version = get_latest_version(available_versions)
 
-        for line_num, field_name, current_ver in watchdog_lines:
+        for _line_num, _field_name, current_ver in watchdog_lines:
             status = "✓ Up to date"
             status_style = "green"
 
@@ -210,9 +205,7 @@ def check(
     console.print("\n")
 
     if updates_available > 0:
-        console.print(
-            f"[yellow]Found {updates_available} update(s) available![/yellow]"
-        )
+        console.print(f"[yellow]Found {updates_available} update(s) available![/yellow]")
         sys.exit(1)
     else:
         console.print("[green]All dependencies are up to date![/green]")
@@ -222,7 +215,6 @@ def check(
 def update_version_in_file(
     file_path: Path,
     line_num: int,
-    field_name: str,
     old_version: str,
     new_version: str,
     dry_run: bool = False,
@@ -242,7 +234,7 @@ def update_version_in_file(
         True if update was successful (or would be in dry-run mode)
     """
     try:
-        with open(file_path, "r") as f:
+        with open(file_path) as f:
             lines = f.readlines()
 
         if line_num > len(lines):
@@ -267,15 +259,13 @@ def update_version_in_file(
 
 @app.command()
 def update(
-    config_file: Path = typer.Option(
+    config_file: Path = typer.Option(  # noqa: B008
         "watchdog.yaml",
         "--config",
         "-c",
         help="Path to the watchdog configuration file",
     ),
-    verbose: bool = typer.Option(
-        False, "--verbose", "-v", help="Enable verbose output"
-    ),
+    verbose: bool = typer.Option(False, "--verbose", "-v", help="Enable verbose output"),
     dry_run: bool = typer.Option(
         False,
         "--dry-run",
@@ -299,15 +289,11 @@ def update(
     """
     # Validate flags
     if dry_run and apply:
-        console.print(
-            "[red]Error: Cannot use both --dry-run and --apply together[/red]"
-        )
+        console.print("[red]Error: Cannot use both --dry-run and --apply together[/red]")
         raise typer.Exit(1)
 
     if not dry_run and not apply:
-        console.print(
-            "[yellow]No action specified. Use --dry-run to preview or --apply to update files.[/yellow]"
-        )
+        console.print("[yellow]No action specified. Use --dry-run to preview or --apply to update files.[/yellow]")
         raise typer.Exit(1)
 
     if dry_run:
@@ -359,9 +345,7 @@ def update(
 
         if not watchdog_lines:
             if verbose:
-                console.print(
-                    f"[yellow]No watchdog markers found in {file_path}[/yellow]"
-                )
+                console.print(f"[yellow]No watchdog markers found in {file_path}[/yellow]")
             continue
 
         # Fetch available versions
@@ -443,20 +427,14 @@ def update(
             f.write(markdown_table)
 
         if verbose:
-            console.print(
-                "[blue]Markdown summary written to update-summary.md[/blue]\n"
-            )
+            console.print("[blue]Markdown summary written to update-summary.md[/blue]\n")
 
     if updates_made > 0:
         if not apply:
-            console.print(
-                f"[blue]Would update {updates_made} version(s) (dry-run mode)[/blue]"
-            )
+            console.print(f"[blue]Would update {updates_made} version(s) (dry-run mode)[/blue]")
             console.print("[dim]Run with --apply to actually modify files[/dim]")
         else:
-            console.print(
-                f"[green]Successfully updated {updates_made} version(s)![/green]"
-            )
+            console.print(f"[green]Successfully updated {updates_made} version(s)![/green]")
     else:
         console.print("[green]No updates needed - all versions are current![/green]")
 
@@ -466,18 +444,21 @@ def update(
 
 @app.command()
 def validate(
-    config_file: Path = typer.Option(
-        "watchdog.yaml",
-        "--config",
-        "-c",
-        help="Path to the watchdog configuration file",
-    ),
+    config_file: Path | None = None,
 ):
     """
     Validate the watchdog configuration file.
 
     Checks that the configuration file is valid and all referenced files exist.
     """
+    if config_file is None:
+        config_file = typer.Option(
+            "watchdog.yaml",
+            "--config",
+            "-c",
+            help="Path to the watchdog configuration file",
+        )
+
     if not config_file.exists():
         console.print(f"[red]Error: Config file not found: {config_file}[/red]")
         raise typer.Exit(1)
@@ -487,16 +468,14 @@ def validate(
     try:
         config = load_config(config_file)
     except Exception:
-        raise typer.Exit(1)
+        raise typer.Exit(1)  # noqa: B904
 
     if "dependencies" not in config:
         console.print("[red]✗ No 'dependencies' section in config file[/red]")
         raise typer.Exit(1)
 
     console.print("[green]✓ Config file is valid YAML[/green]")
-    console.print(
-        f"[green]✓ Found {len(config['dependencies'])} dependencies[/green]\n"
-    )
+    console.print(f"[green]✓ Found {len(config['dependencies'])} dependencies[/green]\n")
 
     errors = 0
     for i, dep in enumerate(config["dependencies"], 1):
@@ -520,9 +499,7 @@ def validate(
         # Check for watchdog markers
         watchdog_lines = find_watchdog_lines(file_path)
         if watchdog_lines:
-            console.print(
-                f"  [green]✓ Found {len(watchdog_lines)} watchdog marker(s)[/green]"
-            )
+            console.print(f"  [green]✓ Found {len(watchdog_lines)} watchdog marker(s)[/green]")
             for line_num, field_name, current_ver in watchdog_lines:
                 console.print(f"    Line {line_num}: {field_name} = {current_ver}")
         else:
