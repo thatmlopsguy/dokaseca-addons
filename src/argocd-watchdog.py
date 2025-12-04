@@ -56,6 +56,113 @@ def fetch_rss_versions(rss_url: str) -> list[str]:
         return []
 
 
+def fetch_oci_versions(oci_url: str) -> list[str]:
+    """
+    Fetch available versions from an OCI registry.
+
+    Supports OCI URLs in the format: oci://registry/repository/image
+    Currently supports ghcr.io with anonymous access.
+    Handles pagination to retrieve all tags.
+    """
+    try:
+        # Parse OCI URL: oci://ghcr.io/ariga/charts/atlas-operator
+        if oci_url.startswith("oci://"):
+            oci_url = oci_url[6:]  # Remove 'oci://' prefix
+
+        parts = oci_url.split("/", 1)
+        if len(parts) != 2:
+            console.print(f"[yellow]Warning: Invalid OCI URL format: {oci_url}[/yellow]")
+            return []
+
+        registry = parts[0]
+        repository = parts[1]
+
+        # Get anonymous token for the registry
+        token = _get_oci_token(registry, repository)
+
+        # Fetch all tags from the registry (with pagination)
+        all_tags = []
+        tags_url: str | None = f"https://{registry}/v2/{repository}/tags/list"
+        headers = {}
+        if token:
+            headers["Authorization"] = f"Bearer {token}"
+
+        while tags_url:
+            response = requests.get(tags_url, headers=headers, timeout=10)
+            response.raise_for_status()
+
+            data = response.json()
+            tags = data.get("tags", [])
+            all_tags.extend(tags)
+
+            # Check for pagination via Link header
+            tags_url = _get_next_page_url(response, registry)
+
+        # Filter to only include valid semver-like versions
+        # Supports both with and without 'v' prefix (e.g., 1.2.3, v1.2.3)
+        # Excludes pre-release versions like -alpha, -beta, -rc, -main unless they're the only option
+        versions = []
+        for tag in all_tags:
+            # Match semantic versions with optional 'v' prefix (e.g., 1.2.3, v1.2.3)
+            # Exclude pre-release suffixes like -alpha, -beta, -rc, -main
+            if re.match(r"^v?\d+\.\d+\.\d+$", tag):
+                # Strip 'v' prefix for consistent version comparison
+                versions.append(tag.lstrip("v"))
+
+        return versions
+    except Exception as e:
+        console.print(f"[yellow]Warning: Could not fetch OCI tags: {e}[/yellow]")
+        return []
+
+
+def _get_next_page_url(response: requests.Response, registry: str) -> str | None:
+    """
+    Extract the next page URL from the Link header for OCI registry pagination.
+
+    The Link header format is: <url>; rel="next"
+    """
+    link_header = response.headers.get("Link", "")
+    if not link_header:
+        return None
+
+    # Parse Link header: </v2/repo/tags/list?last=tag&n=100>; rel="next"
+    match = re.search(r'<([^>]+)>;\s*rel="next"', link_header)
+    if match:
+        next_path = match.group(1)
+        # Handle relative URLs
+        if next_path.startswith("/"):
+            return f"https://{registry}{next_path}"
+        return next_path
+    return None
+
+
+def _get_oci_token(registry: str, repository: str) -> str | None:
+    """
+    Get an authentication token for an OCI registry.
+
+    Supports anonymous token retrieval for public repositories.
+    """
+    try:
+        if registry == "ghcr.io":
+            # GitHub Container Registry token endpoint
+            token_url = f"https://ghcr.io/token?scope=repository:{repository}:pull"
+            response = requests.get(token_url, timeout=10)
+            response.raise_for_status()
+            return response.json().get("token")
+        elif registry in ("registry.hub.docker.com", "docker.io"):
+            # Docker Hub token endpoint
+            token_url = f"https://auth.docker.io/token?service=registry.docker.io&scope=repository:{repository}:pull"
+            response = requests.get(token_url, timeout=10)
+            response.raise_for_status()
+            return response.json().get("token")
+        else:
+            # Try without authentication for other registries
+            return None
+    except Exception as e:
+        console.print(f"[yellow]Warning: Could not get OCI token: {e}[/yellow]")
+        return None
+
+
 def find_watchdog_lines(file_path: Path) -> list[tuple[int, str, str]]:
     """
     Find lines in YAML file marked with '# watchdog this'.
@@ -168,10 +275,12 @@ def check(
 
         # Fetch available versions
         available_versions = []
-        if repo_info.get("type") == "rss":
-            rss_url = repo_info.get("url")
-            if rss_url:
-                available_versions = fetch_rss_versions(rss_url)
+        repo_type = repo_info.get("type")
+        repo_url = repo_info.get("url")
+        if repo_type == "rss" and repo_url:
+            available_versions = fetch_rss_versions(repo_url)
+        elif repo_type == "oci" and repo_url:
+            available_versions = fetch_oci_versions(repo_url)
 
         latest_version = get_latest_version(available_versions)
 
@@ -225,7 +334,6 @@ def update_version_in_file(
     Args:
         file_path: Path to the file to update
         line_num: Line number to update (1-indexed)
-        field_name: Name of the field being updated
         old_version: Current version to replace
         new_version: New version to set
         dry_run: If True, don't actually modify the file
@@ -350,14 +458,16 @@ def update(
 
         # Fetch available versions
         available_versions = []
-        if repo_info.get("type") == "rss":
-            rss_url = repo_info.get("url")
-            if rss_url:
-                available_versions = fetch_rss_versions(rss_url)
+        repo_type = repo_info.get("type")
+        repo_url = repo_info.get("url")
+        if repo_type == "rss" and repo_url:
+            available_versions = fetch_rss_versions(repo_url)
+        elif repo_type == "oci" and repo_url:
+            available_versions = fetch_oci_versions(repo_url)
 
         latest_version = get_latest_version(available_versions)
 
-        for line_num, field_name, current_ver in watchdog_lines:
+        for line_num, _field_name, current_ver in watchdog_lines:
             status = "⊘ Skipped"
             status_style = "dim"
 
@@ -506,11 +616,18 @@ def validate(
 
         # Check repository configuration
         repo_info = dep.get("repository", {})
-        if repo_info.get("type") == "rss":
+        repo_type = repo_info.get("type")
+        if repo_type == "rss":
             if repo_info.get("url"):
                 console.print("  [green]✓ RSS feed configured[/green]")
             else:
                 console.print("  [red]✗ RSS feed URL missing[/red]")
+                errors += 1
+        elif repo_type == "oci":
+            if repo_info.get("url"):
+                console.print("  [green]✓ OCI registry configured[/green]")
+            else:
+                console.print("  [red]✗ OCI registry URL missing[/red]")
                 errors += 1
 
         console.print()

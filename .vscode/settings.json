@@ -1,7 +1,12 @@
 {
     "cSpell.words": [
         "capi",
+        "cloudnative",
+        "dapr",
+        "komoplane",
         "metallb",
-        "traefik"
+        "pyroscope",
+        "traefik",
+        "zipkin"
     ]
 }

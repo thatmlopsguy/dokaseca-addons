@@ -52,20 +52,21 @@ This catalog contains **kubernetes addons** organized by category, all deployabl
 
 ### Databases
 
-| Tool                       | Namespace        | Description                                    |
-|----------------------------|------------------|------------------------------------------------|
-| atlas-operator             | atlas-operator   | Database schema migration operator            |
-| altinity-clickhouse-operator | kube-system    | ClickHouse database operator                  |
-| cloudnative-pg             | cnpg-system      | PostgreSQL operator for Kubernetes           |
+| Tool                         | Namespace      | Description                        |
+|------------------------------|----------------|------------------------------------|
+| atlas-operator               | atlas-operator | Database schema migration operator |
+| altinity-clickhouse-operator | kube-system    | ClickHouse database operator       |
+| cloudnative-pg               | cnpg-system    | PostgreSQL operator for Kubernetes |
 
 ### Delivery
 
-| Tool                       | Namespace        | Description                                    |
-|----------------------------|------------------|------------------------------------------------|
-| argo-cd                    | argocd           | GitOps continuous delivery                     |
-| argo-rollouts              | argo-rollouts    | Progressive delivery tool                      |
-| devlake                    | devlake          | DevOps metrics and analytics                   |
-| keptn                      | keptn-system     | Cloud-native application lifecycle orchestration |
+| Tool          | Namespace     | Description                                      |
+|---------------|---------------|--------------------------------------------------|
+| argo-cd       | argocd        | GitOps continuous delivery                       |
+| argo-rollouts | argo-rollouts | Progressive delivery tool                        |
+| argo-events   | argo-events   | Event-driven automation for Kubernetes           |
+| devlake       | devlake       | DevOps metrics and analytics                     |
+| keptn         | keptn-system  | Cloud-native application lifecycle orchestration |
 
 ### Disaster Recovery
 
@@ -83,64 +84,65 @@ This catalog contains **kubernetes addons** organized by category, all deployabl
 
 ### Machine Learning
 
-| Tool                       | Namespace        | Description                                    |
-|----------------------------|------------------|------------------------------------------------|
-| kgateway                   | kgateway-system  | Kubernetes API gateway for ML workloads       |
-| langfuse                   | langfuse         | LLM engineering platform                       |
-| litellm                    | litellm          | Unified API for 100+ LLMs                     |
-| ollama                     | ollama           | Run large language models locally             |
+| Tool     | Namespace       | Description                             |
+|----------|-----------------|-----------------------------------------|
+| kgateway | kgateway-system | Kubernetes API gateway for ML workloads |
+| langfuse | langfuse        | LLM engineering platform                |
+| litellm  | litellm         | Unified API for 100+ LLMs               |
+| ollama   | ollama          | Run large language models locally       |
 
 ### Messaging
 
-| Tool                       | Namespace        | Description                                    |
-|----------------------------|------------------|------------------------------------------------|
-| nats                       | nats             | High-performance messaging system             |
-| rabbitmq-cluster-operator  | rabbitmq-system  | RabbitMQ cluster operator                     |
-| strimzi-kafka-operator     | kafka            | Apache Kafka on Kubernetes                   |
+| Tool                      | Namespace       | Description                       |
+|---------------------------|-----------------|-----------------------------------|
+| nats                      | nats            | High-performance messaging system |
+| rabbitmq-cluster-operator | rabbitmq-system | RabbitMQ cluster operator         |
+| strimzi-kafka-operator    | kafka           | Apache Kafka on Kubernetes        |
 
 ### Networking
 
-| Tool                       | Namespace        | Description                                    |
-|----------------------------|------------------|------------------------------------------------|
-| cilium                     | kube-system      | eBPF-based networking and security            |
-| ingress-nginx              | ingress-nginx    | NGINX Ingress Controller                      |
-| istio-base                 | istio-system     | Istio service mesh base components            |
-| istio-gateway              | istio-ingress    | Istio gateway for traffic management          |
-| istiod                     | istio-system     | Istio service mesh control plane              |
-| kube-vip                   | kube-system      | Virtual IP and load balancer for Kubernetes   |
-| metallb                    | metallb-system   | Load balancer implementation for bare metal   |
-| ngrok-operator             | ngrok            | Secure tunnels to localhost                   |
-| skupper                    | skupper          | Multi-cloud communication for Kubernetes      |
-| traefik                    | traefik          | Modern HTTP reverse proxy and load balancer   |
+| Tool           | Namespace      | Description                                 |
+|----------------|----------------|---------------------------------------------|
+| cilium         | kube-system    | eBPF-based networking and security          |
+| ingress-nginx  | ingress-nginx  | NGINX Ingress Controller                    |
+| istio-base     | istio-system   | Istio service mesh base components          |
+| istio-gateway  | istio-ingress  | Istio gateway for traffic management        |
+| istiod         | istio-system   | Istio service mesh control plane            |
+| kube-vip       | kube-system    | Virtual IP and load balancer for Kubernetes |
+| metallb        | metallb-system | Load balancer implementation for bare metal |
+| ngrok-operator | ngrok          | Secure tunnels to localhost                 |
+| skupper        | skupper        | Multi-cloud communication for Kubernetes    |
+| traefik        | traefik        | Modern HTTP reverse proxy and load balancer |
 
 ### Observability
 
-| Tool                       | Namespace                        | Description                                    |
-|----------------------------|----------------------------------|------------------------------------------------|
-| alloy                      | monitoring                       | OpenTelemetry collector distribution           |
-| grafana-operator           | monitoring                       | Kubernetes operator for Grafana               |
-| jaeger                     | monitoring                       | Distributed tracing system                     |
-| kiali-operator             | kiali-operator                   | Service mesh observability                     |
-| kube-prometheus-stack      | monitoring                       | Complete monitoring stack with Prometheus     |
-| logging-operator           | logging                          | Log management operator                        |
-| loki                       | monitoring                       | Log aggregation system                         |
-| opentelemetry-operator     | opentelemetry-operator-system    | OpenTelemetry operator                         |
-| pyroscope                  | monitoring                       | Continuous profiling platform                  |
-| tempo                      | monitoring                       | Distributed tracing backend                    |
-| vector                     | monitoring                       | High-performance observability data pipeline   |
-| victoria-logs-single       | monitoring                       | Fast and cost-effective log database          |
-| victoria-metrics-k8s-stack| monitoring                       | Monitoring solution and time series database  |
-| zipkin                     | zipkin                           | Distributed tracing system                     |
+| Tool                       | Namespace                     | Description                                  |
+|----------------------------|-------------------------------|----------------------------------------------|
+| alloy                      | monitoring                    | OpenTelemetry collector distribution         |
+| fluent-bit                 | monitoring                    | Lightweight log processor and forwarder      |
+| grafana-operator           | monitoring                    | Kubernetes operator for Grafana              |
+| jaeger                     | monitoring                    | Distributed tracing system                   |
+| kiali-operator             | kiali-operator                | Service mesh observability                   |
+| kube-prometheus-stack      | monitoring                    | Complete monitoring stack with Prometheus    |
+| logging-operator           | logging                       | Log management operator                      |
+| loki                       | monitoring                    | Log aggregation system                       |
+| opentelemetry-operator     | opentelemetry-operator-system | OpenTelemetry operator                       |
+| pyroscope                  | monitoring                    | Continuous profiling platform                |
+| tempo                      | monitoring                    | Distributed tracing backend                  |
+| vector                     | monitoring                    | High-performance observability data pipeline |
+| victoria-logs-single       | monitoring                    | Fast and cost-effective log database         |
+| victoria-metrics-k8s-stack | monitoring                    | Monitoring solution and time series database |
+| zipkin                     | zipkin                        | Distributed tracing system                   |
 
 ### Platform Engineering
 
-| Tool                       | Namespace            | Description                                    |
-|----------------------------|----------------------|------------------------------------------------|
-| crossplane                 | crossplane-system    | Universal control plane for cloud resources   |
-| dapr                       | dapr-system          | Event-driven, portable runtime for microservices |
-| karpor                     | karpor               | Kubernetes resource explorer                   |
-| koreo                      | koreo                | Kubernetes resource orchestration              |
-| kro                        | kro                  | Kubernetes resource optimization               |
+| Tool       | Namespace         | Description                                      |
+|------------|-------------------|--------------------------------------------------|
+| crossplane | crossplane-system | Universal control plane for cloud resources      |
+| dapr       | dapr-system       | Event-driven, portable runtime for microservices |
+| karpor     | karpor            | Kubernetes resource explorer                     |
+| koreo      | koreo             | Kubernetes resource orchestration                |
+| kro        | kro               | Kubernetes resource optimization                 |
 
 ### Portal
 
@@ -150,15 +152,15 @@ This catalog contains **kubernetes addons** organized by category, all deployabl
 
 ### Security
 
-| Tool                       | Namespace        | Description                                    |
-|----------------------------|------------------|------------------------------------------------|
-| cert-manager               | cert-manager     | Kubernetes certificate management              |
-| external-secrets           | external-secrets | Kubernetes external secrets management         |
-| falco                      | falco            | Runtime security monitoring                    |
-| kubearmor                  | kubearmor        | Runtime security enforcement system            |
-| tetragon                   | kube-system      | eBPF-based security observability             |
-| tracee                     | tracee-system    | Linux runtime security and forensics          |
-| trivy-operator             | trivy-system     | Kubernetes security scanning                   |
+| Tool             | Namespace        | Description                            |
+|------------------|------------------|----------------------------------------|
+| cert-manager     | cert-manager     | Kubernetes certificate management      |
+| external-secrets | external-secrets | Kubernetes external secrets management |
+| falco            | falco            | Runtime security monitoring            |
+| kubearmor        | kubearmor        | Runtime security enforcement system    |
+| tetragon         | kube-system      | eBPF-based security observability      |
+| tracee           | tracee-system    | Linux runtime security and forensics   |
+| trivy-operator   | trivy-system     | Kubernetes security scanning           |
 
 ### Storage
 
