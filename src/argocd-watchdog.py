@@ -368,7 +368,6 @@ def update(
                         success = update_version_in_file(
                             file_path,
                             line_num,
-                            field_name,
                             current_ver,
                             latest_version,
                             dry_run=not apply,
