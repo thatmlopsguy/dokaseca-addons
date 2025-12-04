@@ -3,8 +3,11 @@
         "capi",
         "cloudnative",
         "dapr",
+        "kiali",
         "komoplane",
         "metallb",
+        "openobserve",
+        "opensearch",
         "pyroscope",
         "traefik",
         "zipkin"

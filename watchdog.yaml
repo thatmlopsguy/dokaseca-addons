@@ -437,6 +437,13 @@ dependencies:
       type: rss
       url: https://artifacthub.io/api/v1/packages/helm/kiali/kiali-operator/feed/rss
 
+  - name: opensearch
+    source:
+      file: argocd/appsets/oss/observability/addons-opensearch-appset.yaml
+    repository:
+      type: rss
+      url: https://artifacthub.io/api/v1/packages/helm/opensearch-project/opensearch/feed/rss
+
   # Other
   - name: open-feature-operator
     source:
