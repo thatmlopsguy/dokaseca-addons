@@ -8,6 +8,7 @@
         "metallb",
         "openobserve",
         "opensearch",
+        "perses",
         "pyroscope",
         "traefik",
         "zipkin"

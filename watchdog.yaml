@@ -422,13 +422,27 @@ dependencies:
       type: rss
       url: https://artifacthub.io/api/v1/packages/helm/victoriametrics/victoria-traces-single/feed/rss
 
-  # Observability
+  # Observability - Dashboards
   - name: grafana-operator
     source:
-      file: argocd/appsets/oss/observability/addons-grafana-operator-appset.yaml
+      file: argocd/appsets/oss/observability/dashboards/addons-grafana-operator-appset.yaml
     repository:
       type: rss
       url: https://artifacthub.io/api/v1/packages/helm/grafana/grafana-operator/feed/rss
+
+  - name: perses
+    source:
+      file: argocd/appsets/oss/observability/dashboards/addons-perses-appset.yaml
+    repository:
+      type: rss
+      url: https://artifacthub.io/api/v1/packages/helm/perses/perses/feed/rss
+
+  - name: opensearch-dashboards
+    source:
+      file: argocd/appsets/oss/observability/dashboards/addons-opensearch-dashboards-appset.yaml
+    repository:
+      type: rss
+      url: https://artifacthub.io/api/v1/packages/helm/opensearch-project-helm-charts/opensearch-dashboards/feed/rss
 
   - name: kiali-operator
     source:
@@ -442,7 +456,7 @@ dependencies:
       file: argocd/appsets/oss/observability/addons-opensearch-appset.yaml
     repository:
       type: rss
-      url: https://artifacthub.io/api/v1/packages/helm/opensearch-project/opensearch/feed/rss
+      url: https://artifacthub.io/api/v1/packages/helm/opensearch-project-helm-charts/opensearch/feed/rss
 
   # Other
   - name: open-feature-operator
