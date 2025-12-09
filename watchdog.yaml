@@ -145,6 +145,13 @@ dependencies:
       type: rss
       url: https://artifacthub.io/api/v1/packages/helm/altinity-clickhouse-operator/altinity-clickhouse-operator/feed/rss
 
+  - name: weaviate
+    source:
+      file: argocd/appsets/oss/databases/addons-weaviate-appset.yaml
+    repository:
+      type: rss
+      url: https://artifacthub.io/api/v1/packages/helm/weaviate/weaviate/feed/rss
+
   # Delivery
   - name: argo-cd
     source:
@@ -239,6 +246,13 @@ dependencies:
     repository:
       type: oci
       url: oci://ghcr.io/kgateway-dev/charts/kgateway
+
+  - name: vllm-stack
+    source:
+      file: argocd/appsets/oss/machine-learning/addons-vllm-stack-appset.yaml
+    repository:
+      type: rss
+      url: https://artifacthub.io/api/v1/packages/helm/vllm-production-stack/vllm-stack/feed/rss
 
   # Messaging
   - name: nats

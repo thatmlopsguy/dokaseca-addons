@@ -5,12 +5,23 @@
         "dapr",
         "kiali",
         "komoplane",
+        "kuberay",
         "metallb",
         "openobserve",
         "opensearch",
         "perses",
         "pyroscope",
         "traefik",
+        "vllm",
         "zipkin"
-    ]
+    ],
+    "files.exclude": {
+        "**/.git": true,
+        "**/.svn": true,
+        "**/.hg": true,
+        "**/.DS_Store": true,
+        "**/Thumbs.db": true,
+        "**/ruff_cache": true,
+        "**/.venv": true
+    }
 }
