@@ -19,7 +19,7 @@
   <a href="https://github.com/thatmlopsguy/dokaseca-addons/issues"><img src="https://img.shields.io/github/issues/thatmlopsguy/dokaseca-addons.svg" alt="GitHub issues"></a>
   <a href="https://github.com/thatmlopsguy/dokaseca-addons/pulls"><img src="https://img.shields.io/github/issues-pr/thatmlopsguy/dokaseca-addons" alt="GitHub PRs"></a>
   <a href="https://github.com/thatmlopsguy/dokaseca-addons/blob/main/LICENSE"><img src="https://img.shields.io/badge/License-Apache%202.0-blue.svg" alt="License"></a>
-  <a href="https://thatmlopsguy.github.io/dokaseca-addons/"><img src="https://img.shields.io/website-up-down-green-red/http/shields.io.svg" alt="Website"></a>
+  <a href="https://thatmlopsguy.github.io/dokaseca-control-plane/"><img src="https://img.shields.io/website-up-down-green-red/http/shields.io.svg" alt="Website"></a>
   <a href="https://github.com/thatmlopsguy/dokaseca-addons/actions/workflows/pre-commit.yml"><img src="https://github.com/thatmlopsguy/dokaseca-addons/workflows/Pre-commit%20Checks/badge.svg" alt="Pre-commit"></a>
   <a href="https://github.com/thatmlopsguy/dokaseca-addons/actions/workflows/watchdog.yml"><img src="https://github.com/thatmlopsguy/dokaseca-addons/actions/workflows/watchdog.yml/badge.svg" alt="ArgoCD Watchdog"></a>
 </div>
