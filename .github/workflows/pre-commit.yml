@@ -3,8 +3,12 @@ name: Pre-commit Checks
 on:
   push:
     branches: [main, develop]
+    paths-ignore:
+      - ".vscode/**"
   pull_request:
     branches: [main, develop]
+    paths-ignore:
+      - ".vscode/**"
 
 jobs:
   pre-commit:

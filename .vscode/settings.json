@@ -21,7 +21,7 @@
         "**/.hg": true,
         "**/.DS_Store": true,
         "**/Thumbs.db": true,
-        "**/ruff_cache": true,
+        "**/.ruff_cache": true,
         "**/.venv": true
     }
 }
