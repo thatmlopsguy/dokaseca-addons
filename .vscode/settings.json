@@ -3,6 +3,7 @@
         "capi",
         "cloudnative",
         "dapr",
+        "envoyproxy",
         "kiali",
         "komoplane",
         "kuberay",
