@@ -13,7 +13,8 @@ spec:
         generators:
           - clusters:
               values:
-                addonChart: gateway-helm
+                addonChart: envoy
+                addonChartName: gateway-helm
                 addonChartVersion: 1.6.1
                 addonChartRepository: docker.io/envoyproxy
                 addonChartNamespace: envoy-gateway-system
@@ -43,7 +44,7 @@ spec:
         - repoURL: '{{metadata.annotations.addons_repo_url}}'
           targetRevision: '{{metadata.annotations.addons_repo_revision}}'
           ref: values
-        - chart: '{{values.addonChart}}'
+        - chart: '{{values.addonChartName}}'
           repoURL: '{{values.addonChartRepository}}'
           targetRevision: '{{values.addonChartVersion}}'
           helm:
