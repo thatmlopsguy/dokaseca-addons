@@ -61,3 +61,4 @@ spec:
         automated: {}
         syncOptions:
           - CreateNamespace=true
+          - ServerSideApply=true # https://gateway.envoyproxy.io/docs/install/install-argocd/
