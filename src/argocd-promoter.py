@@ -1,9 +1,9 @@
 #!/usr/bin/env python3
 """
-ArgoCD Watchdog - Automated Version Checker for ApplicationSets
+ArgoCD Promoter - Automated Version Checker for ApplicationSets
 
 This script monitors ArgoCD ApplicationSet files for version updates
-based on comments marked with '# watchdog this'.
+based on comments marked with '# promote this'.
 """
 
 import re
@@ -18,12 +18,12 @@ from packaging import version
 from rich.console import Console
 from rich.table import Table
 
-app = typer.Typer(help="ArgoCD ApplicationSet version watchdog")
+app = typer.Typer(help="ArgoCD ApplicationSet version Promoter")
 console = Console()
 
 
 def load_config(config_path: Path) -> dict:
-    """Load the watchdog configuration file."""
+    """Load the promoter configuration file."""
     try:
         with open(config_path) as f:
             return yaml.safe_load(f)
@@ -168,9 +168,9 @@ def _get_oci_token(registry: str, repository: str) -> str | None:
         return None
 
 
-def find_watchdog_lines(file_path: Path) -> list[tuple[int, str, str]]:
+def find_promoter_lines(file_path: Path) -> list[tuple[int, str, str]]:
     """
-    Find lines in YAML file marked with '# watchdog this'.
+    Find lines in YAML file marked with '# promote this'.
 
     Returns:
         List of tuples: (line_number, field_name, current_version)
@@ -179,18 +179,18 @@ def find_watchdog_lines(file_path: Path) -> list[tuple[int, str, str]]:
         with open(file_path) as f:
             lines = f.readlines()
 
-        watchdog_lines = []
+        promoter_lines = []
         for i, line in enumerate(lines, start=1):
-            if "# watchdog this" in line:
+            if "# promote this" in line:
                 # Extract field name and version
-                # Pattern: addonChartVersion: 2.7.0 # watchdog this
+                # Pattern: addonChartVersion: 2.7.0 # promote this
                 match = re.match(r"\s*(\w+):\s*([^\s#]+)", line)
                 if match:
                     field_name = match.group(1)
                     current_version = match.group(2)
-                    watchdog_lines.append((i, field_name, current_version))
+                    promoter_lines.append((i, field_name, current_version))
 
-        return watchdog_lines
+        return promoter_lines
     except Exception as e:
         console.print(f"[yellow]Warning: Could not read file {file_path}: {e}[/yellow]")
         return []
@@ -212,10 +212,10 @@ def get_latest_version(versions: list[str]) -> str | None:
 @app.command()
 def check(
     config_file: Path = typer.Option(  # noqa: B008
-        "watchdog.yaml",
+        "promoter.yaml",
         "--config",
         "-c",
-        help="Path to the watchdog configuration file",
+        help="Path to the promoter configuration file",
     ),
     verbose: bool = typer.Option(False, "--verbose", "-v", help="Enable verbose output"),
     dry_run: bool = typer.Option(
@@ -226,9 +226,9 @@ def check(
     ),
 ):
     """
-    Check for new versions based on watchdog configuration.
+    Check for new versions based on promoter configuration.
 
-    Reads the configuration file, finds files with '# watchdog this' comments,
+    Reads the configuration file, finds files with '# promote this' comments,
     and checks for available updates from the specified repositories.
     """
     if dry_run:
@@ -270,12 +270,12 @@ def check(
         if verbose:
             console.print(f"\n[blue]Checking {dep_name}...[/blue]")
 
-        # Find lines marked with watchdog
-        watchdog_lines = find_watchdog_lines(file_path)
+        # Find lines marked with promoter
+        promoter_lines = find_promoter_lines(file_path)
 
-        if not watchdog_lines:
+        if not promoter_lines:
             if verbose:
-                console.print(f"[yellow]No watchdog markers found in {file_path}[/yellow]")
+                console.print(f"[yellow]No promoter markers found in {file_path}[/yellow]")
             continue
 
         # Fetch available versions
@@ -289,7 +289,7 @@ def check(
 
         latest_version = get_latest_version(available_versions)
 
-        for _line_num, _field_name, current_ver in watchdog_lines:
+        for _line_num, _field_name, current_ver in promoter_lines:
             status = "✓ Up to date"
             status_style = "green"
 
@@ -373,10 +373,10 @@ def update_version_in_file(
 @app.command()
 def update(
     config_file: Path = typer.Option(  # noqa: B008
-        "watchdog.yaml",
+        "promoter.yaml",
         "--config",
         "-c",
-        help="Path to the watchdog configuration file",
+        help="Path to the promoter configuration file",
     ),
     verbose: bool = typer.Option(False, "--verbose", "-v", help="Enable verbose output"),
     dry_run: bool = typer.Option(
@@ -393,9 +393,9 @@ def update(
     ),
 ):
     """
-    Update versions in files based on watchdog configuration.
+    Update versions in files based on promoter configuration.
 
-    Automatically updates version strings in files marked with '# watchdog this'
+    Automatically updates version strings in files marked with '# promote this'
     to their latest available versions.
 
     Requires --apply flag to actually modify files.
@@ -453,12 +453,12 @@ def update(
         if verbose:
             console.print(f"\n[blue]Processing {dep_name}...[/blue]")
 
-        # Find lines marked with watchdog
-        watchdog_lines = find_watchdog_lines(file_path)
+        # Find lines marked with promoter
+        promoter_lines = find_promoter_lines(file_path)
 
-        if not watchdog_lines:
+        if not promoter_lines:
             if verbose:
-                console.print(f"[yellow]No watchdog markers found in {file_path}[/yellow]")
+                console.print(f"[yellow]No promoter markers found in {file_path}[/yellow]")
             continue
 
         # Fetch available versions
@@ -472,7 +472,7 @@ def update(
 
         latest_version = get_latest_version(available_versions)
 
-        for line_num, _field_name, current_ver in watchdog_lines:
+        for line_num, _field_name, current_ver in promoter_lines:
             status = "⊘ Skipped"
             status_style = "dim"
 
@@ -561,16 +561,16 @@ def validate(
     config_file: Path | None = None,
 ):
     """
-    Validate the watchdog configuration file.
+    Validate the promoter configuration file.
 
     Checks that the configuration file is valid and all referenced files exist.
     """
     if config_file is None:
         config_file = typer.Option(
-            "watchdog.yaml",
+            "promoter.yaml",
             "--config",
             "-c",
-            help="Path to the watchdog configuration file",
+            help="Path to the promoter configuration file",
         )
 
     if not config_file.exists():
@@ -610,14 +610,14 @@ def validate(
 
         console.print(f"  [green]✓ Source file exists: {file_path}[/green]")
 
-        # Check for watchdog markers
-        watchdog_lines = find_watchdog_lines(file_path)
-        if watchdog_lines:
-            console.print(f"  [green]✓ Found {len(watchdog_lines)} watchdog marker(s)[/green]")
-            for line_num, field_name, current_ver in watchdog_lines:
+        # Check for promoter markers
+        promoter_lines = find_promoter_lines(file_path)
+        if promoter_lines:
+            console.print(f"  [green]✓ Found {len(promoter_lines)} promoter marker(s)[/green]")
+            for line_num, field_name, current_ver in promoter_lines:
                 console.print(f"    Line {line_num}: {field_name} = {current_ver}")
         else:
-            console.print("  [yellow]⚠ No watchdog markers found[/yellow]")
+            console.print("  [yellow]⚠ No promoter markers found[/yellow]")
 
         # Check repository configuration
         repo_info = dep.get("repository", {})

@@ -1,5 +1,5 @@
 [project]
-name = "argocd-watchdog"
+name = "argocd-promoter"
 version = "0.1.0"
 description = "Automated Version Updater for ArgoCD ApplicationSets"
 readme = "README.md"

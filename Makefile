@@ -16,5 +16,5 @@ pre-commit-install: ## Install pre-commit git-hooks
 pre-commit-update: ## Update pre-commit git-hooks
 	@uvx prek autoupdate
 
-argocd-watchdog-update: ## Update ArgoCD ApplicationSet definitions from watchdog.yaml
-	@uv run src/argocd-watchdog.py update --dry-run
+argocd-promoter-update: ## Update ArgoCD ApplicationSet definitions from promoter.yaml
+	@uv run src/argocd-promoter.py update --dry-run
