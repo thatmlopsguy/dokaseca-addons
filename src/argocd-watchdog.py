@@ -61,7 +61,7 @@ def fetch_oci_versions(oci_url: str) -> list[str]:
     Fetch available versions from an OCI registry.
 
     Supports OCI URLs in the format: oci://registry/repository/image
-    Currently supports ghcr.io with anonymous access.
+    Currently supports ghcr.io and docker.io with anonymous access.
     Handles pagination to retrieve all tags.
     """
     try:
@@ -80,9 +80,14 @@ def fetch_oci_versions(oci_url: str) -> list[str]:
         # Get anonymous token for the registry
         token = _get_oci_token(registry, repository)
 
+        # Determine the actual API endpoint (Docker Hub uses registry-1.docker.io)
+        api_registry = registry
+        if registry == "docker.io":
+            api_registry = "registry-1.docker.io"
+
         # Fetch all tags from the registry (with pagination)
         all_tags = []
-        tags_url: str | None = f"https://{registry}/v2/{repository}/tags/list"
+        tags_url: str | None = f"https://{api_registry}/v2/{repository}/tags/list"
         headers = {}
         if token:
             headers["Authorization"] = f"Bearer {token}"
@@ -96,7 +101,7 @@ def fetch_oci_versions(oci_url: str) -> list[str]:
             all_tags.extend(tags)
 
             # Check for pagination via Link header
-            tags_url = _get_next_page_url(response, registry)
+            tags_url = _get_next_page_url(response, api_registry)
 
         # Filter to only include valid semver-like versions
         # Supports both with and without 'v' prefix (e.g., 1.2.3, v1.2.3)

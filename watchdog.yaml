@@ -333,6 +333,13 @@ dependencies:
       type: rss
       url: https://artifacthub.io/api/v1/packages/helm/skupper/skupper/feed/rss
 
+  - name: envoy
+    source:
+      file: argocd/appsets/oss/networking/addons-envoy-appset.yaml
+    repository:
+      type: oci
+      url: oci://docker.io/envoyproxy/gateway-helm
+
   # Observability - Agents
   - name: alloy
     source:
