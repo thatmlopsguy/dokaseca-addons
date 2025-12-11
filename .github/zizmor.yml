@@ -1,4 +1,4 @@
 rules:
   artipacked:
     ignore:
-      - watchdog.yml:19:9
+      - promoter.yml:19:9
