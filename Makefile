@@ -14,7 +14,7 @@ pre-commit-install: ## Install pre-commit git-hooks
 	@uvx prek install
 
 pre-commit-update: ## Update pre-commit git-hooks
-	@uvx prek autoupdate
+	@uvx pre-commit-update
 
 argocd-promoter-update: ## Update ArgoCD ApplicationSet definitions from promoter.yaml
 	@uv run src/argocd-promoter.py update --dry-run

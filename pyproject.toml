@@ -39,3 +39,10 @@ ignore = [
 
 [tool.ruff.lint.isort]
 known-first-party = ["argocd_watchdog"]
+
+[tool.pre-commit-update]
+dry_run = false
+verbose = true
+warnings = true
+preview = false
+jobs = 10
