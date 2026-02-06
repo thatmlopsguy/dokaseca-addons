@@ -640,7 +640,12 @@ dependencies:
       type: rss
       url: https://artifacthub.io/api/v1/packages/helm/apache-airflow/airflow/feed/rss
 
-
+  - name: dagster
+    source:
+      file: argocd/appsets/oss/workflows/addons-dagster-appset.yaml
+    repository:
+      type: rss
+      url: https://artifacthub.io/api/v1/packages/helm/dagster/dagster/feed/rss
 
 
 

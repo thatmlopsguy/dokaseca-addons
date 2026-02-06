@@ -237,11 +237,12 @@ This catalog contains **kubernetes addons** organized by category, all deployabl
 
 ### Workflows
 
-| Tool           | Namespace | Description                                      |
-|----------------|-----------|--------------------------------------------------|
-| airflow        | airflow   | Platform for developing and scheduling workflows |
-| argo-workflows | argo      | Kubernetes-native workflow engine                |
-| temporal       | temporal  | Durable execution for microservices              |
+| Tool           | Namespace | Description                                                |
+|----------------|-----------|------------------------------------------------------------|
+| airflow        | airflow   | Platform for developing and scheduling workflows           |
+| argo-workflows | argo      | Kubernetes-native workflow engine                          |
+| temporal       | temporal  | Durable execution for microservices                        |
+| dagster        | dagster   | Data orchestrator for machine learning, analytics, and ETL |
 
 ## Usage
 
