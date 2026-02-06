@@ -213,6 +213,12 @@ This catalog contains **kubernetes addons** organized by category, all deployabl
 | minio-operator             | minio-operator   | High performance object storage                |
 | openebs                    | openebs          | Kubernetes native storage                      |
 
+### Testing
+
+| Tool                       | Namespace        | Description                                    |
+|----------------------------|------------------|------------------------------------------------|
+| report-portal              | report-portal    | Test report aggregation and visualization      |
+
 ### Utilities
 
 | Tool       | Namespace   | Description                                        |

@@ -581,6 +581,14 @@ dependencies:
       type: rss
       url: https://artifacthub.io/api/v1/packages/helm/openebs/openebs/feed/rss
 
+  # Testing
+  - name: report-portal
+    source:
+      file: argocd/appsets/oss/testing/addons-report-portal-appset.yaml
+    repository:
+      type: rss
+      url: https://artifacthub.io/api/v1/packages/helm/reportportal-io/reportportal/feed/rss
+
   # Utilities
   - name: reloader
     source:
