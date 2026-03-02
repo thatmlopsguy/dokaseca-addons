@@ -240,6 +240,13 @@ dependencies:
       type: oci
       url: oci://ghcr.io/berriai/litellm-helm
 
+  - name: litellm-operator
+    source:
+      file: argocd/appsets/oss/machine-learning/addons-litellm-operator-appset.yaml
+    repository:
+      type: rss
+      url: https://artifacthub.io/api/v1/packages/helm/litellm-operator/litellm-operator/feed/rss
+
   - name: kgateway
     source:
       file: argocd/appsets/oss/machine-learning/addons-kgateway-appset.yaml
