@@ -38,13 +38,15 @@ DoKa Seca provides an opinionated, production-ready framework that automates the
 
 This project serves as both a personal learning journey into modern DevOps practices and a comprehensive resource for platform engineers and developers interested in rapidly spinning up production-grade Kubernetes environments. Here you'll find real-world implementations of GitOps workflows, infrastructure as code, observability stacks, and cloud-native security practices - all designed to run efficiently in local development or homelab environments while following enterprise-grade patterns and best practices.
 
-DoKa Seca consists of 3 GitHub repositories:
+DoKa Seca consists of 5 GitHub repositories:
 
-| Repository                                                                       | Description                                         |
-|----------------------------------------------------------------------------------|-----------------------------------------------------|
-| [dokaseca-control-plane](https://github.com/thatmlopsguy/dokaseca-control-plane) | Control plane infrastructure and cluster management |
-| [dokaseca-addons](https://github.com/thatmlopsguy/dokaseca-addons)               | Platform addons and Kubernetes extensions           |
-| [dokaseca-workloads](https://github.com/thatmlopsguy/dokaseca-workloads)         | Application workloads and deployments               |
+| Repository                                                                         | Description                                         |
+|------------------------------------------------------------------------------------|-----------------------------------------------------|
+| [dokaseca-control-plane](https://github.com/thatmlopsguy/dokaseca-control-plane)   | Control plane infrastructure and cluster management |
+| [dokaseca-addons](https://github.com/thatmlopsguy/dokaseca-addons)                 | Platform addons and Kubernetes extensions           |
+| [dokaseca-workloads](https://github.com/thatmlopsguy/dokaseca-workloads)           | Application workloads and deployments               |
+| [dokaseca-portal](https://github.com/thatmlopsguy/dokaseca-portal)                 | Backstage project (TBD) (optional)                  |
+| [dokaseca-portal-catalog](https://github.com/thatmlopsguy/dokaseca-portal-catalog) | Backstage Catalog (TBD) (optional)                  |
 
 The Catalog is a library of curated Helm charts to create Kubernetes resources via [gitops bridge](https://github.com/gitops-bridge-dev) using argocd.
 
@@ -96,11 +98,12 @@ This catalog contains **kubernetes addons** organized by category, all deployabl
 
 ### Databases
 
-| Tool                         | Namespace      | Description                        |
-|------------------------------|----------------|------------------------------------|
-| atlas-operator               | atlas-operator | Database schema migration operator |
-| altinity-clickhouse-operator | kube-system    | ClickHouse database operator       |
-| cloudnative-pg               | cnpg-system    | PostgreSQL operator for Kubernetes |
+| Tool                         | Namespace                  | Description                        |
+|------------------------------|----------------------------|------------------------------------|
+| atlas-operator               | atlas-operator             | Database schema migration operator |
+| altinity-clickhouse-operator | kube-system                | ClickHouse database operator       |
+| clickhouse-operator          | clickhouse-operator-system | ClickHouse database operator       |
+| cloudnative-pg               | cnpg-system                | PostgreSQL operator for Kubernetes |
 
 ### Delivery
 
@@ -128,12 +131,16 @@ This catalog contains **kubernetes addons** organized by category, all deployabl
 
 ### Machine Learning
 
-| Tool     | Namespace       | Description                             |
-|----------|-----------------|-----------------------------------------|
-| kgateway | kgateway-system | Kubernetes API gateway for ML workloads |
-| langfuse | langfuse        | LLM engineering platform                |
-| litellm  | litellm         | Unified API for 100+ LLMs               |
-| ollama   | ollama          | Run large language models locally       |
+| Tool             | Namespace        | Description                             |
+|------------------|------------------|-----------------------------------------|
+| kgateway         | kgateway-system  | Kubernetes API gateway for ML workloads |
+| kuberay          | kuberay          | Kubernetes operator for Ray             |
+| vllm             | vllm             | High-performance LLM serving platform   |
+| llm-d            | llm-d            | LLM deployment and management platform  |
+| langfuse         | langfuse         | LLM engineering platform                |
+| litellm          | litellm          | Unified API for 100+ LLMs               |
+| litellm-operator | litellm-operator | Kubernetes operator for LiteLLM         |
+| ollama           | ollama           | Run large language models locally       |
 
 ### Messaging
 

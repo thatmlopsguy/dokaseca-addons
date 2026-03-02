@@ -1,13 +1,16 @@
 {
     "cSpell.words": [
+        "altinity",
         "capi",
         "cloudnative",
+        "cnpg",
         "dagster",
         "dapr",
         "envoyproxy",
         "kiali",
         "komoplane",
         "kuberay",
+        "kured",
         "metallb",
         "openobserve",
         "opensearch",

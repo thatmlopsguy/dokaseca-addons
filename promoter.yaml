@@ -142,6 +142,13 @@ dependencies:
     source:
       file: argocd/appsets/oss/databases/addons-clickhouse-operator-appset.yaml
     repository:
+      type: oci
+      url: oci://ghcr.io/clickhouse/clickhouse-operator-helm
+
+  - name: altinity-clickhouse-operator
+    source:
+      file: argocd/appsets/oss/databases/addons-altinity-clickhouse-operator-appset.yaml
+    repository:
       type: rss
       url: https://artifacthub.io/api/v1/packages/helm/altinity-clickhouse-operator/altinity-clickhouse-operator/feed/rss
 

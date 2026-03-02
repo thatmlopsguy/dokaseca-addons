@@ -2,7 +2,7 @@
 apiVersion: argoproj.io/v1alpha1
 kind: ApplicationSet
 metadata:
-  name: addons-clickhouse-operator
+  name: addons-altinity-clickhouse-operator
   namespace: argocd
 spec:
   syncPolicy:
@@ -13,13 +13,13 @@ spec:
         generators:
           - clusters:
               values:
-                addonChart: clickhouse-operator-helm
-                addonChartVersion: 0.0.2
-                addonChartRepository: ghcr.io/clickhouse
-                addonChartNamespace: clickhouse-operator-system
+                addonChart: altinity-clickhouse-operator
+                addonChartVersion: 0.24.5
+                addonChartRepository: https://docs.altinity.com/clickhouse-operator
+                addonChartNamespace: kube-system
               selector:
                 matchExpressions:
-                  - key: enable_clickhouse_operator
+                  - key: enable_altinity_clickhouse_operator
                     operator: In
                     values: ['true']
           - clusters:
@@ -27,13 +27,13 @@ spec:
                 matchLabels:
                   environment: dev
               values:
-                addonChartVersion: 0.0.2 # promote this
+                addonChartVersion: 0.26.0 # promote this
           - clusters:
               selector:
                 matchLabels:
                   environment: prod
               values:
-                addonChartVersion: 0.0.2
+                addonChartVersion: 0.24.5
   template:
     metadata:
       name: addon-{{name}}-{{values.addonChart}}
