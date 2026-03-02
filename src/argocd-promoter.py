@@ -168,6 +168,53 @@ def _get_oci_token(registry: str, repository: str) -> str | None:
         return None
 
 
+def fetch_github_versions(github_url: str) -> list[str]:
+    """
+    Fetch available versions from GitHub releases using the Atom feed.
+
+    Supports URLs in the format:
+    - https://github.com/{owner}/{repo}/releases
+    - https://github.com/{owner}/{repo}
+
+    Returns a list of version strings (without 'v' prefix for consistency).
+    """
+    try:
+        # Extract owner and repo from URL
+        match = re.match(r"https://github\.com/([^/]+)/([^/]+)", github_url)
+        if not match:
+            console.print(f"[yellow]Warning: Invalid GitHub URL format: {github_url}[/yellow]")
+            return []
+
+        owner = match.group(1)
+        repo = match.group(2)
+
+        # Fetch releases from GitHub Atom feed
+        atom_url = f"https://github.com/{owner}/{repo}/releases.atom"
+        response = requests.get(atom_url, timeout=10)
+        response.raise_for_status()
+
+        # Parse Atom feed
+        root = ET.fromstring(response.content)
+
+        # Atom namespace
+        ns = {"atom": "http://www.w3.org/2005/Atom"}
+
+        versions = []
+        for entry in root.findall("atom:entry", ns):
+            title = entry.find("atom:title", ns)
+            if title is not None and title.text:
+                tag_name = title.text.strip()
+                # Match semantic versions with optional 'v' prefix
+                if re.match(r"^v?\d+\.\d+\.\d+$", tag_name):
+                    # Strip 'v' prefix for consistent version comparison
+                    versions.append(tag_name.lstrip("v"))
+
+        return versions
+    except Exception as e:
+        console.print(f"[yellow]Warning: Could not fetch GitHub releases: {e}[/yellow]")
+        return []
+
+
 def find_promoter_lines(file_path: Path) -> list[tuple[int, str, str]]:
     """
     Find lines in YAML file marked with '# promote this'.
@@ -286,6 +333,8 @@ def check(
             available_versions = fetch_rss_versions(repo_url)
         elif repo_type == "oci" and repo_url:
             available_versions = fetch_oci_versions(repo_url)
+        elif repo_type == "github" and repo_url:
+            available_versions = fetch_github_versions(repo_url)
 
         latest_version = get_latest_version(available_versions)
 
@@ -469,6 +518,8 @@ def update(
             available_versions = fetch_rss_versions(repo_url)
         elif repo_type == "oci" and repo_url:
             available_versions = fetch_oci_versions(repo_url)
+        elif repo_type == "github" and repo_url:
+            available_versions = fetch_github_versions(repo_url)
 
         latest_version = get_latest_version(available_versions)
 
@@ -558,21 +609,18 @@ def update(
 
 @app.command()
 def validate(
-    config_file: Path | None = None,
+    config_file: Path = typer.Option(  # noqa: B008
+        "promoter.yaml",
+        "--config",
+        "-c",
+        help="Path to the promoter configuration file",
+    ),
 ):
     """
     Validate the promoter configuration file.
 
     Checks that the configuration file is valid and all referenced files exist.
     """
-    if config_file is None:
-        config_file = typer.Option(
-            "promoter.yaml",
-            "--config",
-            "-c",
-            help="Path to the promoter configuration file",
-        )
-
     if not config_file.exists():
         console.print(f"[red]Error: Config file not found: {config_file}[/red]")
         raise typer.Exit(1)
@@ -633,6 +681,12 @@ def validate(
                 console.print("  [green]✓ OCI registry configured[/green]")
             else:
                 console.print("  [red]✗ OCI registry URL missing[/red]")
+                errors += 1
+        elif repo_type == "github":
+            if repo_info.get("url"):
+                console.print("  [green]✓ GitHub releases configured[/green]")
+            else:
+                console.print("  [red]✗ GitHub releases URL missing[/red]")
                 errors += 1
 
         console.print()

@@ -218,12 +218,12 @@ dependencies:
       type: oci
       url: oci://ghcr.io/akuity/kargo-charts/kargo
 
-  # - name: gitops-promoter
-  #   source:
-  #     file: argocd/appsets/oss/gitops/addons-gitops-promoter-appset.yaml
-  #   repository:
-  #     type: oci
-  #     url:
+  - name: gitops-promoter
+    source:
+      file: argocd/appsets/oss/gitops/addons-gitops-promoter-appset.yaml
+    repository:
+      type: github
+      url: https://github.com/argoproj-labs/gitops-promoter
 
   # Machine Learning
   - name: ollama
