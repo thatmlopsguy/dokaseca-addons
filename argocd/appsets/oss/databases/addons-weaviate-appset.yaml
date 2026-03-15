@@ -27,7 +27,7 @@ spec:
                 matchLabels:
                   environment: dev
               values:
-                addonChartVersion: 17.7.0 # promote this
+                addonChartVersion: 17.7.1 # promote this
           - clusters:
               selector:
                 matchLabels:
