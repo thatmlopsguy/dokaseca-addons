@@ -28,7 +28,7 @@ spec:
               values:
                 addonKustomize: gitops-promoter
                 addonKustomizeNamespace: promoter-system
-                addonKustomizeVersion: 0.22.7 # promote this
+                addonKustomizeVersion: 0.24.0 # promote this
           - clusters:
               selector:
                 matchLabels:
