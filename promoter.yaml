@@ -545,6 +545,13 @@ dependencies:
       type: rss
       url: https://artifacthub.io/api/v1/packages/helm/cert-manager/cert-manager/feed/rss
 
+  - name: trust-manager
+    source:
+      file: argocd/appsets/oss/security/addons-trust-manager-appset.yaml
+    repository:
+      type: rss
+      url: https://artifacthub.io/api/v1/packages/helm/cert-manager/trust-manager/feed/rss
+
   - name: external-secrets
     source:
       file: argocd/appsets/oss/security/addons-external-secrets-appset.yaml

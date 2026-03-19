@@ -212,6 +212,7 @@ This catalog contains **kubernetes addons** organized by category, all deployabl
 | tetragon         | kube-system      | eBPF-based security observability      |
 | tracee           | tracee-system    | Linux runtime security and forensics   |
 | trivy-operator   | trivy-system     | Kubernetes security scanning           |
+| trust-manager    | trust-manager    | Manage TLS trust bundles in Kubernetes |
 
 ### Storage
 
