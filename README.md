@@ -63,28 +63,29 @@ This catalog contains **kubernetes addons** organized by category, all deployabl
 
 ### Cluster Management
 
-| Tool                       | Namespace                | Description                                    |
-|----------------------------|--------------------------|------------------------------------------------|
-| cluster-api-operator       | capi-operator-system     | Kubernetes Cluster API Operator               |
-| vcluster                   | vcluster                 | Virtual Kubernetes clusters                   |
+| Tool                 | Namespace            | Description                     |
+|----------------------|----------------------|---------------------------------|
+| cluster-api-operator | capi-operator-system | Kubernetes Cluster API Operator |
+| vcluster             | vcluster             | Virtual Kubernetes clusters     |
 
 ### Compliance
 
-| Tool                       | Namespace        | Description                                    |
-|----------------------------|------------------|------------------------------------------------|
-| connaisseur                | connaisseur      | Admission controller for container validation |
-| kyverno                    | kyverno          | Kubernetes native policy management           |
-| kyverno-policies           | kyverno          | Policy collection for Kyverno                 |
-| policy-reporter            | policy-reporter  | Policy violation dashboard                     |
-| polaris                    | polaris          | Kubernetes configuration validation            |
+| Tool              | Namespace       | Description                                   |
+|-------------------|-----------------|-----------------------------------------------|
+| connaisseur       | connaisseur     | Admission controller for container validation |
+| kyverno           | kyverno         | Kubernetes native policy management           |
+| kyverno-policies  | kyverno         | Policy collection for Kyverno                 |
+| policy-reporter   | policy-reporter | Policy violation dashboard                    |
+| polaris           | polaris         | Kubernetes configuration validation           |
+| policy-controller | cosign-system   | Kubernetes admission controller for Sigstore  |
 
 ### Cost Management
 
-| Tool                       | Namespace        | Description                                    |
-|----------------------------|------------------|------------------------------------------------|
-| kepler                     | kepler           | Kubernetes power consumption monitoring       |
-| kube-green                 | kube-green       | Kubernetes resource scheduler for cost saving |
-| opencost                   | opencost         | Real-time cost monitoring for Kubernetes      |
+| Tool       | Namespace  | Description                                   |
+|------------|------------|-----------------------------------------------|
+| kepler     | kepler     | Kubernetes power consumption monitoring       |
+| kube-green | kube-green | Kubernetes resource scheduler for cost saving |
+| opencost   | opencost   | Real-time cost monitoring for Kubernetes      |
 
 ### Dashboard
 

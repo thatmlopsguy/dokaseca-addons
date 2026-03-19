@@ -1,0 +1,131 @@
+cosign:
+  # add the values in base64 encoded
+  cosignPub: ""
+  webhookName: "policy.sigstore.dev"
+  webhookTimeoutSeconds: {}
+    # mutating: 10
+    # validating: 10
+
+installCRDs: true
+
+imagePullSecrets: []
+
+loglevel: info
+
+webhook:
+  customLabels: {}
+  configData: {}
+  replicaCount: 1
+  name: webhook
+  image:
+    repository: ghcr.io/sigstore/policy-controller/policy-controller
+    # crane digest ghcr.io/sigstore/policy-controller/policy-controller:v0.13.1
+    version: sha256:0bcd60beb93f4427c29cf3a669743caf58490e98ded4380c33c09f092734a6ab
+    pullPolicy: IfNotPresent
+  env: {}
+  envFrom: {}
+    # configmaps:
+    #   - mycm1
+    #   - mycm2
+    # secrets:
+    #   - mys1
+    #   - mys2
+  extraArgs: {}
+  resources:
+    limits:
+      cpu: 200m
+      memory: 512Mi
+    requests:
+      cpu: 100m
+      memory: 128Mi
+  securityContext:
+    enabled: false
+    runAsUser: 65532
+  failurePolicy: Fail
+  podAnnotations: {}
+  podSecurityContext:
+    enabled: true
+    allowPrivilegeEscalation: false
+    readOnlyRootFilesystem: true
+    runAsUser: 1000
+    capabilities:
+      drop:
+        - ALL
+  # The default affinity config is to spread the webhook across nodes.
+  # See charts/policy-controller/templates/webhook/deployment_webhook.yaml#L39 for more info.
+  affinity: {}
+  podDisruptionBudget:
+    enabled: true
+    minAvailable: 1
+    # maxUnavailable: 3
+  serviceAccount:
+    annotations: {}
+    create: true
+    name: ""
+  service:
+    annotations: {}
+    type: ClusterIP
+    port: 443
+    # For nodeport, specify the following:
+    #   type: NodePort
+    #   nodePort: <port-number>
+  volumeMounts: []
+  volumes: []
+  namespaceSelector:
+    matchExpressions:
+      - key: policy.sigstore.dev/include
+        operator: In
+        values: ["true"]
+  registryCaBundle: {}
+  webhookNames:
+    defaulting: "defaulting.clusterimagepolicy.sigstore.dev"
+    validating: "validating.clusterimagepolicy.sigstore.dev"
+  webhookTimeoutSeconds: {}
+    # defaulting: 10
+    # validating: 10
+  priorityClass: ""
+  automountServiceAccountToken: true
+
+leasescleanup:
+  priorityClass: ""
+  image:
+    repository: cgr.dev/chainguard/kubectl
+    version: latest-dev
+    pullPolicy: IfNotPresent
+  resources:
+    limits:
+      cpu: ""
+      memory: ""
+    requests:
+      cpu: ""
+      memory: ""
+  podSecurityContext:
+    enabled: false
+    # allowPrivilegeEscalation: false
+    # readOnlyRootFilesystem: true
+    # runAsUser: 1000
+    # capabilities:
+    #   drop:
+    #     - ALL
+  automountServiceAccountToken: true
+
+## common node selector for all the pods
+commonNodeSelector: {}
+#  key1: value1
+#  key2: value2
+
+## common tolerations for all the pods
+commonTolerations: []
+# - key: "key"
+#   operator: "Equal"
+#   value: "value"
+#   effect: "NoSchedule"
+
+## This will set some annotations in config maps and secrets. Use case: Disable versioning to deploy helm chart using spinnaker
+commonAnnotations: {}
+#  strategy.spinnaker.io/versioned: "false"
+#  key2: value2
+
+## serviceMonitor makes policy controller metrics discoverable to prometheus
+serviceMonitor:
+  enabled: false

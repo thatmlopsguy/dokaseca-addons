@@ -65,6 +65,13 @@ dependencies:
       type: rss
       url: https://artifacthub.io/api/v1/packages/helm/connaisseur/connaisseur/feed/rss
 
+  - name: policy-controller
+    source:
+      file: argocd/appsets/oss/compliance/addons-policy-controller-appset.yaml
+    repository:
+      type: rss
+      url: https://artifacthub.io/api/v1/packages/helm/sigstore/policy-controller/feed/rss
+
   # Cost Management
   - name: opencost
     source:
