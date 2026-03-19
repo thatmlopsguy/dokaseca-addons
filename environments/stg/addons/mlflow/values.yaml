@@ -367,7 +367,7 @@ ldapAuth:
   uri: ""
   # -- TLS verification mode. Options: required, optional, none
   tlsVerification: required
-  # -- LDAP Loopup Bind. e.g.: "uid=%s,ou=people,dc=mlflow,dc=test"
+  # -- LDAP Lookup Bind. e.g.: "uid=%s,ou=people,dc=mlflow,dc=test"
   lookupBind: ""
   # -- LDAP group attribute.
   groupAttribute: "dn"
