@@ -15,6 +15,7 @@
         "kured",
         "metallb",
         "ollama",
+        "opencost",
         "openobserve",
         "opensearch",
         "perses",

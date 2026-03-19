@@ -2,7 +2,7 @@
 apiVersion: argoproj.io/v1alpha1
 kind: ApplicationSet
 metadata:
-  name: addons-kubernetes-dashboard
+  name: addons-mlflow
   namespace: argocd
 spec:
   syncPolicy:
@@ -13,13 +13,13 @@ spec:
         generators:
           - clusters:
               values:
-                addonChart: kubernetes-dashboard
-                addonChartVersion: 7.12.0
-                addonChartRepository: https://kubernetes.github.io/dashboard
-                addonChartNamespace: kubernetes-dashboard
+                addonChart: mlflow
+                addonChartVersion: 1.8.1
+                addonChartRepository: https://community-charts.github.io/helm-charts
+                addonChartNamespace: mlflow
               selector:
                 matchExpressions:
-                  - key: enable_kubernetes_dashboard
+                  - key: enable_mlflow
                     operator: In
                     values: ['true']
           - clusters:
@@ -27,13 +27,13 @@ spec:
                 matchLabels:
                   environment: dev
               values:
-                addonChartVersion: 7.14.0 # promote this
+                addonChartVersion: 1.8.1 # promote this
           - clusters:
               selector:
                 matchLabels:
                   environment: prod
               values:
-                addonChartVersion: 7.12.0
+                addonChartVersion: 1.8.1
   template:
     metadata:
       name: addon-{{name}}-{{values.addonChart}}

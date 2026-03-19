@@ -88,13 +88,12 @@ This catalog contains **kubernetes addons** organized by category, all deployabl
 
 ### Dashboard
 
-| Tool                       | Namespace                | Description                                    |
-|----------------------------|--------------------------|------------------------------------------------|
-| dapr-dashboard             | dapr-system              | Dashboard for Dapr applications               |
-| headlamp                   | kube-system              | Easy-to-use Kubernetes web UI                 |
-| helm-dashboard             | kube-system              | Web dashboard for Helm                        |
-| komoplane                  | komoplane                | Kubernetes resource browser                   |
-| kubernetes-dashboard       | kubernetes-dashboard     | General-purpose web UI for Kubernetes         |
+| Tool                 | Namespace            | Description                           |
+|----------------------|----------------------|---------------------------------------|
+| dapr-dashboard       | dapr-system          | Dashboard for Dapr applications       |
+| headlamp             | kube-system          | Easy-to-use Kubernetes web UI         |
+| helm-dashboard       | kube-system          | Web dashboard for Helm                |
+| komoplane            | komoplane            | Kubernetes resource browser           |
 
 ### Databases
 
@@ -123,24 +122,25 @@ This catalog contains **kubernetes addons** organized by category, all deployabl
 
 ### GitOps
 
-| Tool                       | Namespace        | Description                                    |
-|----------------------------|------------------|------------------------------------------------|
-| argocd-image-updater       | argocd           | Automatic container image update for ArgoCD   |
-| gitops-promoter            | promoter-system  | Facilitates environment promotion via GitOps  |
-| kargo                      | kargo            | GitOps continuous promotion                    |
+| Tool                 | Namespace       | Description                                  |
+|----------------------|-----------------|----------------------------------------------|
+| argocd-image-updater | argocd          | Automatic container image update for ArgoCD  |
+| gitops-promoter      | promoter-system | Facilitates environment promotion via GitOps |
+| kargo                | kargo           | GitOps continuous promotion                  |
 
 ### Machine Learning
 
-| Tool             | Namespace        | Description                             |
-|------------------|------------------|-----------------------------------------|
-| kgateway         | kgateway-system  | Kubernetes API gateway for ML workloads |
-| kuberay          | kuberay          | Kubernetes operator for Ray             |
-| vllm             | vllm             | High-performance LLM serving platform   |
-| llm-d            | llm-d            | LLM deployment and management platform  |
-| langfuse         | langfuse         | LLM engineering platform                |
-| litellm          | litellm          | Unified API for 100+ LLMs               |
-| litellm-operator | litellm-operator | Kubernetes operator for LiteLLM         |
-| ollama           | ollama           | Run large language models locally       |
+| Tool             | Namespace        | Description                                             |
+|------------------|------------------|---------------------------------------------------------|
+| kgateway         | kgateway-system  | Kubernetes API gateway for ML workloads                 |
+| kuberay          | kuberay          | Kubernetes operator for Ray                             |
+| vllm             | vllm             | High-performance LLM serving platform                   |
+| llm-d            | llm-d            | LLM deployment and management platform                  |
+| langfuse         | langfuse         | LLM engineering platform                                |
+| litellm          | litellm          | Unified API for 100+ LLMs                               |
+| litellm-operator | litellm-operator | Kubernetes operator for LiteLLM                         |
+| ollama           | ollama           | Run large language models locally                       |
+| mlflow           | mlflow           | Open source platform for the machine learning lifecycle |
 
 ### Messaging
 
@@ -199,7 +199,7 @@ This catalog contains **kubernetes addons** organized by category, all deployabl
 
 | Tool                       | Namespace        | Description                                    |
 |----------------------------|------------------|------------------------------------------------|
-| backstage                  | backstage        | Open platform for building developer portals  |
+| backstage                  | backstage        | Open platform for building developer portals   |
 
 ### Security
 
@@ -237,10 +237,10 @@ This catalog contains **kubernetes addons** organized by category, all deployabl
 
 ### Other
 
-| Tool                       | Namespace                        | Description                                    |
-|----------------------------|----------------------------------|------------------------------------------------|
-| keda                       | keda                             | Kubernetes event-driven autoscaling           |
-| open-feature-operator      | open-feature-operator-system     | Feature flag management for Kubernetes        |
+| Tool                  | Namespace                    | Description                            |
+|-----------------------|------------------------------|----------------------------------------|
+| keda                  | keda                         | Kubernetes event-driven autoscaling    |
+| open-feature-operator | open-feature-operator-system | Feature flag management for Kubernetes |
 
 ### Workflows
 

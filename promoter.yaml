@@ -88,13 +88,6 @@ dependencies:
       url: https://artifacthub.io/api/v1/packages/helm/kube-green-official/kube-green/feed/rss
 
   # Dashboards
-  - name: kubernetes-dashboard
-    source:
-      file: argocd/appsets/oss/dashboard/addons-kubernetes-dashboard-appset.yaml
-    repository:
-      type: rss
-      url: https://artifacthub.io/api/v1/packages/helm/k8s-dashboard/kubernetes-dashboard/feed/rss
-
   - name: headlamp
     source:
       file: argocd/appsets/oss/dashboard/addons-headlamp-appset.yaml
@@ -267,6 +260,13 @@ dependencies:
     repository:
       type: rss
       url: https://artifacthub.io/api/v1/packages/helm/vllm-production-stack/vllm-stack/feed/rss
+
+  - name: mlflow
+    source:
+      file: argocd/appsets/oss/machine-learning/addons-mlflow-appset.yaml
+    repository:
+      type: rss
+      url: https://artifacthub.io/api/v1/packages/helm/community-charts/mlflow/feed/rss
 
   # Messaging
   - name: nats
