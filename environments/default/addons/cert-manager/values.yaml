@@ -13,3 +13,24 @@ crds:
   # WARNING: when the CRDs are removed, all cert-manager custom resources
   # (Certificates, Issuers, ...) will be removed too by the garbage collector.
   keep: true
+
+# +docs:section=Controller
+
+# The number of replicas of the cert-manager controller to run.
+#
+# The default is 1, but in production set this to 2 or 3 to provide high
+# availability.
+#
+# If `replicas > 1`, consider setting `podDisruptionBudget.enabled=true`.
+#
+# Note that cert-manager uses leader election to ensure that there can
+# only be a single instance active at a time.
+replicaCount: 1
+
+# +docs:section=Gateway API
+# This section contains configuration options for cert-manager's support for
+# the Gateway API.
+# For more information on cert-manager's support for the Gateway API, see
+# https://cert-manager.io/docs/usage/gateway-api/.
+config:
+  enableGatewayAPI: true
