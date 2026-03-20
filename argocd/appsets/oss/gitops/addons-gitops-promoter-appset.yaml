@@ -13,9 +13,10 @@ spec:
         generators:
           - clusters:
               values:
-                addonKustomize: gitops-promoter
-                addonKustomizeNamespace: promoter-system
-                addonKustomizeVersion: 0.22.7
+                addonChart: gitops-promoter
+                addonChartVersion: 0.4.2
+                addonChartRepository: https://argoproj-labs.github.io/gitops-promoter-helm
+                addonChartNamespace: promoter-system
               selector:
                 matchExpressions:
                   - key: enable_gitops_promoter
@@ -26,28 +27,34 @@ spec:
                 matchLabels:
                   environment: dev
               values:
-                addonKustomize: gitops-promoter
-                addonKustomizeNamespace: promoter-system
-                addonKustomizeVersion: 0.24.0 # promote this
+                addonChartVersion: 0.4.2 # promote this
           - clusters:
               selector:
                 matchLabels:
                   environment: prod
               values:
-                addonKustomize: gitops-promoter
-                addonKustomizeNamespace: promoter-system
-                addonKustomizeVersion: 0.22.7
+                addonChartVersion: 0.4.2
   template:
     metadata:
-      name: addon-{{name}}-{{values.addonKustomize}}
+      name: addon-{{name}}-{{values.addonChart}}
     spec:
       project: addons
-      source:
-          repoURL: '{{metadata.annotations.addons_repo_url}}'
-          path: 'kustomize/{{values.addonKustomize}}/v{{values.addonKustomizeVersion}}'
+      sources:
+        - repoURL: '{{metadata.annotations.addons_repo_url}}'
           targetRevision: '{{metadata.annotations.addons_repo_revision}}'
+          ref: values
+        - chart: '{{values.addonChart}}'
+          repoURL: '{{values.addonChartRepository}}'
+          targetRevision: '{{values.addonChartVersion}}'
+          helm:
+            releaseName: '{{values.addonChart}}'
+            ignoreMissingValueFiles: true
+            valueFiles:
+              - $values/environments/default/addons/{{values.addonChart}}/values.yaml
+              - $values/environments/{{metadata.labels.environment}}/addons/{{values.addonChart}}/values.yaml
+              - $values/clusters/{{name}}/addons/{{values.addonChart}}/values.yaml
       destination:
-        namespace: '{{values.addonKustomizeNamespace}}'
+        namespace: '{{values.addonChartNamespace}}'
         name: '{{name}}'
       syncPolicy:
         automated: {}

@@ -222,8 +222,8 @@ dependencies:
     source:
       file: argocd/appsets/oss/gitops/addons-gitops-promoter-appset.yaml
     repository:
-      type: github
-      url: https://github.com/argoproj-labs/gitops-promoter
+      type: rss
+      url: https://artifacthub.io/api/v1/packages/helm/gitops-promoter/gitops-promoter/feed/rss
 
   # Machine Learning
   - name: ollama
