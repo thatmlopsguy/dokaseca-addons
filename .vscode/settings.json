@@ -4,6 +4,7 @@
         "capi",
         "cloudnative",
         "cnpg",
+        "crds",
         "dagster",
         "dapr",
         "devlake",
@@ -12,6 +13,7 @@
         "kiali",
         "komoplane",
         "kuberay",
+        "kueue",
         "kured",
         "metallb",
         "ollama",
@@ -21,8 +23,11 @@
         "perses",
         "pyroscope",
         "rollouts",
+        "slurm",
         "traefik",
+        "trino",
         "vllm",
+        "yunikorn",
         "zipkin"
     ],
     "files.exclude": {

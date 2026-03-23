@@ -54,6 +54,15 @@ The Catalog is a library of curated Helm charts to create Kubernetes resources v
 
 This catalog contains **kubernetes addons** organized by category, all deployable via ArgoCD ApplicationSets.
 
+### Analytics
+
+| Tool     | Namespace    | Description                                 |
+|----------|--------------|---------------------------------------------|
+| flink    | flink-system | Stream processing framework                 |
+| trino    | trino        | Distributed SQL query engine                |
+| superset | superset     | Data exploration and visualization platform |
+
+
 ### Chaos Engineering
 
 | Tool       | Namespace  | Description                             |
@@ -79,6 +88,14 @@ This catalog contains **kubernetes addons** organized by category, all deployabl
 | polaris           | polaris         | Kubernetes configuration validation           |
 | policy-controller | cosign-system   | Kubernetes admission controller for Sigstore  |
 
+### Compute
+
+| Tool           | Namespace | Description                          |
+|----------------|-----------|--------------------------------------|
+| spark-operator | spark     | Kubernetes operator for Apache Spark |
+| kuberay        | kuberay   | Kubernetes operator for Ray          |
+| slurm-operator | slinky    | Kubernetes operator for Slurm        |
+
 ### Cost Management
 
 | Tool       | Namespace  | Description                                   |
@@ -95,6 +112,13 @@ This catalog contains **kubernetes addons** organized by category, all deployabl
 | headlamp             | kube-system          | Easy-to-use Kubernetes web UI         |
 | helm-dashboard       | kube-system          | Web dashboard for Helm                |
 | komoplane            | komoplane            | Kubernetes resource browser           |
+
+### Data Management
+
+| Tool    | Namespace | Description                          |
+|---------|-----------|--------------------------------------|
+| datahub | datahub   | Metadata platform for data discovery |
+| feast   | feast     | Feature store for machine learning   |
 
 ### Databases
 
@@ -149,7 +173,7 @@ This catalog contains **kubernetes addons** organized by category, all deployabl
 |---------------------------|-----------------|-----------------------------------|
 | nats                      | nats            | High-performance messaging system |
 | rabbitmq-cluster-operator | rabbitmq-system | RabbitMQ cluster operator         |
-| strimzi-kafka-operator    | kafka           | Apache Kafka on Kubernetes        |
+| strimzi-kafka-operator    | strimzi-system  | Apache Kafka on Kubernetes        |
 
 ### Networking
 
@@ -201,6 +225,14 @@ This catalog contains **kubernetes addons** organized by category, all deployabl
 | Tool                       | Namespace        | Description                                    |
 |----------------------------|------------------|------------------------------------------------|
 | backstage                  | backstage        | Open platform for building developer portals   |
+
+### Scheduling
+
+| Tool     | Namespace       | Description                                 |
+|----------|-----------------|---------------------------------------------|
+| volcano  | volcano-system  | High-performance batch scheduling system    |
+| yunikorn | yunikorn-system | Kubernetes scheduler for big data workloads |
+| kueue    | kueue-system    | Kubernetes-native job scheduling system     |
 
 ### Security
 

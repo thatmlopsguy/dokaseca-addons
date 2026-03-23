@@ -2,7 +2,7 @@
 apiVersion: argoproj.io/v1alpha1
 kind: ApplicationSet
 metadata:
-  name: addons-strimzi
+  name: addons-superset
   namespace: argocd
 spec:
   syncPolicy:
@@ -13,13 +13,12 @@ spec:
         generators:
           - clusters:
               values:
-                addonChart: strimzi-kafka-operator
-                addonChartVersion: 0.51.0
-                addonChartRepository: quay.io/strimzi-helm
-                addonChartNamespace: strimzi-system
+                addonChart: superset
+                addonChartVersion: 0.15.2
+                addonChartRepository: http://apache.github.io/superset/
               selector:
                 matchExpressions:
-                  - key: enable_strimzi
+                  - key: enable_superset
                     operator: In
                     values: ['true']
           - clusters:
@@ -27,13 +26,13 @@ spec:
                 matchLabels:
                   environment: dev
               values:
-                addonChartVersion: 0.51.0 # promote this
+                addonChartVersion: 0.15.2 # promote this
           - clusters:
               selector:
                 matchLabels:
                   environment: prod
               values:
-                addonChartVersion: 0.45.0
+                addonChartVersion: 0.15.2
   template:
     metadata:
       name: addon-{{name}}-{{values.addonChart}}
@@ -54,7 +53,7 @@ spec:
               - $values/environments/{{metadata.labels.environment}}/addons/{{values.addonChart}}/values.yaml
               - $values/clusters/{{name}}/addons/{{values.addonChart}}/values.yaml
       destination:
-        namespace: '{{values.addonChartNamespace}}'
+        namespace: '{{values.addonChart}}'
         name: '{{name}}'
       syncPolicy:
         automated: {}

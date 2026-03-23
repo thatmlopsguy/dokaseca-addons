@@ -2,7 +2,7 @@
 apiVersion: argoproj.io/v1alpha1
 kind: ApplicationSet
 metadata:
-  name: addons-strimzi
+  name: addons-kueue
   namespace: argocd
 spec:
   syncPolicy:
@@ -13,13 +13,13 @@ spec:
         generators:
           - clusters:
               values:
-                addonChart: strimzi-kafka-operator
-                addonChartVersion: 0.51.0
-                addonChartRepository: quay.io/strimzi-helm
-                addonChartNamespace: strimzi-system
+                addonChart: kueue
+                addonChartVersion: 0.16.4
+                addonChartRepository: oci://registry.k8s.io/kueue/charts
+                addonChartNamespace: kueue-system
               selector:
                 matchExpressions:
-                  - key: enable_strimzi
+                  - key: enable_kueue
                     operator: In
                     values: ['true']
           - clusters:
@@ -27,13 +27,13 @@ spec:
                 matchLabels:
                   environment: dev
               values:
-                addonChartVersion: 0.51.0 # promote this
+                addonChartVersion: 0.16.4 # promote this
           - clusters:
               selector:
                 matchLabels:
                   environment: prod
               values:
-                addonChartVersion: 0.45.0
+                addonChartVersion: 0.16.4
   template:
     metadata:
       name: addon-{{name}}-{{values.addonChart}}

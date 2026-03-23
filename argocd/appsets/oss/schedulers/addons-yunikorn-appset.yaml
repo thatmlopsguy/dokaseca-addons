@@ -2,7 +2,7 @@
 apiVersion: argoproj.io/v1alpha1
 kind: ApplicationSet
 metadata:
-  name: addons-strimzi
+  name: addons-yunikorn
   namespace: argocd
 spec:
   syncPolicy:
@@ -13,13 +13,13 @@ spec:
         generators:
           - clusters:
               values:
-                addonChart: strimzi-kafka-operator
-                addonChartVersion: 0.51.0
-                addonChartRepository: quay.io/strimzi-helm
-                addonChartNamespace: strimzi-system
+                addonChart: yunikorn
+                addonChartVersion: 1.8.0
+                addonChartRepository: https://apache.github.io/yunikorn-release
+                addonChartNamespace: yunikorn-system
               selector:
                 matchExpressions:
-                  - key: enable_strimzi
+                  - key: enable_yunikorn
                     operator: In
                     values: ['true']
           - clusters:
@@ -27,13 +27,13 @@ spec:
                 matchLabels:
                   environment: dev
               values:
-                addonChartVersion: 0.51.0 # promote this
+                addonChartVersion: 1.8.0 # promote this
           - clusters:
               selector:
                 matchLabels:
                   environment: prod
               values:
-                addonChartVersion: 0.45.0
+                addonChartVersion: 1.8.0
   template:
     metadata:
       name: addon-{{name}}-{{values.addonChart}}
