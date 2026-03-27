@@ -19,4 +19,4 @@ spec:
     - group: '*'
       kind: '*'
   sourceRepos:
-    - '*'
+    - 'https://github.com/thatmlopsguy/dokaseca-addons.git'

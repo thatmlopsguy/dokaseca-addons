@@ -62,7 +62,6 @@ This catalog contains **kubernetes addons** organized by category, all deployabl
 | trino    | trino        | Distributed SQL query engine                |
 | superset | superset     | Data exploration and visualization platform |
 
-
 ### Chaos Engineering
 
 | Tool       | Namespace  | Description                             |
@@ -137,7 +136,6 @@ This catalog contains **kubernetes addons** organized by category, all deployabl
 | argo-rollouts | argo-rollouts | Progressive delivery tool                        |
 | argo-events   | argo-events   | Event-driven automation for Kubernetes           |
 | devlake       | devlake       | DevOps metrics and analytics                     |
-| keptn         | keptn-system  | Cloud-native application lifecycle orchestration |
 
 ### Disaster Recovery
 

@@ -1,4 +1,19 @@
 dependencies:
+  # Analytics
+  - name: superset
+    source:
+      file: argocd/appsets/oss/analytics/addons-superset-appset.yaml
+    repository:
+      type: rss
+      url: https://artifacthub.io/api/v1/packages/helm/superset/superset/feed/rss
+
+  - name: trino
+    source:
+      file: argocd/appsets/oss/analytics/addons-trino-appset.yaml
+    repository:
+      type: rss
+      url: https://artifacthub.io/api/v1/packages/helm/trino/trino/feed/rss
+
   # Chaos Engineering
   - name: chaos-mesh
     source:
@@ -187,13 +202,6 @@ dependencies:
     repository:
       type: rss
       url: https://artifacthub.io/api/v1/packages/helm/apache-incubator-devlake-helm-chart/devlake/feed/rss
-
-  - name: keptn
-    source:
-      file: argocd/appsets/oss/delivery/addons-keptn-appset.yaml
-    repository:
-      type: rss
-      url: https://artifacthub.io/api/v1/packages/helm/lifecycle-toolkit/keptn/feed/rss
 
   # Disaster Recovery
   - name: velero
@@ -634,7 +642,7 @@ dependencies:
 
   - name: goldilocks
     source:
-      file: argocd/appsets/oss/utilities/addons-goldilocks-appset.yaml
+      file: argocd/appsets/oss/cost/addons-goldilocks-appset.yaml
     repository:
       type: rss
       url: https://artifacthub.io/api/v1/packages/helm/fairwinds-stable/goldilocks/feed/rss
