@@ -552,6 +552,14 @@ dependencies:
       type: oci
       url: oci://registry.k8s.io/kro/charts/kro
 
+  # rbac
+  - name: rbac-manager
+    source:
+      file: argocd/appsets/oss/rbac/addons-rbac-manager-appset.yaml
+    repository:
+      type: rss
+      url: https://artifacthub.io/api/v1/packages/helm/fairwinds-stable/rbac-manager/feed/rss
+
   # Security
   - name: cert-manager
     source:
