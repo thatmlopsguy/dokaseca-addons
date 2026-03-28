@@ -1,4 +1,5 @@
 ingress:
+  ingressClassName: nginx
   enabled: true
   hosts:
     - host: headlamp.dokaseca.local
