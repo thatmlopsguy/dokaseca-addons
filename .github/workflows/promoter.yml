@@ -1,9 +1,9 @@
 name: ArgoCD Promoter
 
 on:
-  # every week on Sunday at midnight
+  # every month on the 1st at midnight
   schedule:
-    - cron: "0 0 * * 0"
+    - cron: "0 0 1 * *"
   workflow_dispatch: # Allow manual triggers
 
 jobs:
