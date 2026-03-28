@@ -224,6 +224,14 @@ This catalog contains **kubernetes addons** organized by category, all deployabl
 |----------------------------|------------------|------------------------------------------------|
 | backstage                  | backstage        | Open platform for building developer portals   |
 
+### RBAC
+
+| Tool                 | Namespace                   | Description                                  |
+|----------------------|-----------------------------|----------------------------------------------|
+| rbac-manager         | rbac-manager                | Kubernetes RBAC management                   |
+| argocd-rbac-operator | argocd-rbac-operator-system | Kubernetes RBAC management for ArgoCD        |
+| paralus              | paralus                     | Kubernetes RBAC management and visualization |
+
 ### Scheduling
 
 | Tool     | Namespace       | Description                                 |

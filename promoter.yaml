@@ -560,6 +560,13 @@ dependencies:
       type: rss
       url: https://artifacthub.io/api/v1/packages/helm/fairwinds-stable/rbac-manager/feed/rss
 
+  - name: argocd-rbac-operator
+    source:
+      file: argocd/appsets/oss/rbac/addons-argocd-rbac-operator-appset.yaml
+    repository:
+      type: rss
+      url: https://artifacthub.io/api/v1/packages/helm/argocd-rbac-operator/argocd-rbac-operator/feed/rss
+
   # Security
   - name: cert-manager
     source:
