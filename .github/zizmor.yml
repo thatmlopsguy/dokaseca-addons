@@ -1,4 +1,4 @@
 rules:
   artipacked:
     ignore:
-      - promoter.yml:19:9
+      - promoter.yml:20:9

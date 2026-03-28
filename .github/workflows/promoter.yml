@@ -2,6 +2,7 @@ name: ArgoCD Promoter
 
 on:
   # every month on the 1st at midnight
+  # https://crontab.guru/#0_0_1_*_*
   schedule:
     - cron: "0 0 1 * *"
   workflow_dispatch: # Allow manual triggers
