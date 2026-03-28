@@ -4,3 +4,4 @@ ingress:
     - host: headlamp.dokaseca.local
       paths:
         - path: /
+          pathType: Prefix
