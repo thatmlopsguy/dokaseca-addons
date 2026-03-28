@@ -20,3 +20,4 @@ spec:
       kind: '*'
   sourceRepos:
     - 'https://github.com/thatmlopsguy/dokaseca-addons.git'
+    - 'https://charts.jetstack.io'
