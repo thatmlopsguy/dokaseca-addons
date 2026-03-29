@@ -1092,19 +1092,39 @@ defaultDatasources:
           implementation: prometheus
   # -- Configure additional grafana datasources (passed through tpl).
   # Check [here](http://docs.grafana.org/administration/provisioning/#datasources) for details
-  extra: []
-    # - name: prometheus-sample
-    #   access: proxy
-    #   basicAuth: true
-    #   basicAuthPassword: pass
-    #   basicAuthUser: daco
-    #   editable: false
-    #   jsonData:
-    #     tlsSkipVerify: true
-    #   orgId: 1
-    #   type: prometheus
-    #   url: https://{{ printf "%s-prometheus.svc" .Release.Name }}:9090
-    #   version: 1
+  extra:
+    - name: Loki
+      type: loki
+      access: proxy
+      url: http://loki-gateway.monitoring.svc.cluster.local/
+      isDefault: false
+    - name: Tempo
+      type: tempo
+      access: proxy
+      url: http://tempo.monitoring.svc.cluster.local:3100
+      isDefault: false
+    - name: Zipkin
+      type: zipkin
+      access: proxy
+      url: http://zipkin.zipkin.svc.cluster.local:9411
+      isDefault: false
+    - name: Pyroscope
+      type: grafana-pyroscope-datasource
+      access: proxy
+      url: http://pyroscope.monitoring.svc.cluster.local:4040
+      isDefault: false
+  # - name: prometheus-sample
+  #   access: proxy
+  #   basicAuth: true
+  #   basicAuthPassword: pass
+  #   basicAuthUser: daco
+  #   editable: false
+  #   jsonData:
+  #     tlsSkipVerify: true
+  #   orgId: 1
+  #   type: prometheus
+  #   url: https://{{ printf "%s-prometheus.svc" .Release.Name }}:9090
+  #   version: 1
 
 # -- Grafana dependency chart configuration. For possible values refer [here](https://github.com/grafana/helm-charts/tree/main/charts/grafana#configuration)
 grafana:
