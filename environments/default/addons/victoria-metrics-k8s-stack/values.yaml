@@ -1093,40 +1093,43 @@ defaultDatasources:
   # -- Configure additional grafana datasources (passed through tpl).
   # Check [here](http://docs.grafana.org/administration/provisioning/#datasources) for details
   extra:
+    # logs
     - name: Loki
       type: loki
       access: proxy
       url: http://loki-gateway.monitoring.svc.cluster.local/
-      isDefault: false
-    - name: Tempo
-      type: tempo
-      access: proxy
-      url: http://tempo.monitoring.svc.cluster.local:3100
-      isDefault: false
-    - name: Zipkin
-      type: zipkin
-      access: proxy
-      url: http://zipkin.zipkin.svc.cluster.local:9411
-      isDefault: false
-    - name: Pyroscope
-      type: grafana-pyroscope-datasource
-      access: proxy
-      url: http://pyroscope.monitoring.svc.cluster.local:4040
-      isDefault: false
-    - name: Jaeger
-      type: jaeger
-      access: proxy
-      url: http://jaeger-query.monitoring.svc.cluster.local:16686
       isDefault: false
     - name: Victoria Logs
       type: victoriametrics-logs-datasource
       access: proxy
       url: http://victoria-logs-single-server.monitoring.svc.cluster.local:9428
       isDefault: false
+    # traces
+    - name: Tempo
+      type: tempo
+      access: proxy
+      url: http://tempo.monitoring.svc.cluster.local:3100
+      isDefault: false
     - name: Victoria Traces
       type: jaeger
       access: proxy
       url: http://victoria-traces-single-server.monitoring.svc.cluster.local:10428
+      isDefault: false
+    - name: Zipkin
+      type: zipkin
+      access: proxy
+      url: http://zipkin.zipkin.svc.cluster.local:9411
+      isDefault: false
+    - name: Jaeger
+      type: jaeger
+      access: proxy
+      url: http://jaeger-query.monitoring.svc.cluster.local:16686
+      isDefault: false
+    # profiling
+    - name: Pyroscope
+      type: grafana-pyroscope-datasource
+      access: proxy
+      url: http://pyroscope.monitoring.svc.cluster.local:4040
       isDefault: false
   # - name: prometheus-sample
   #   access: proxy
