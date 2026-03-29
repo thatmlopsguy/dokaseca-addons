@@ -2,7 +2,7 @@
 apiVersion: argoproj.io/v1alpha1
 kind: ApplicationSet
 metadata:
-  name: addons-oneuptime
+  name: addons-oneuptime-agent
   namespace: argocd
 spec:
   syncPolicy:
@@ -13,7 +13,7 @@ spec:
         generators:
           - clusters:
               values:
-                addonChart: oneuptime
+                addonChart: kubernetes-agent
                 addonChartVersion: 10.0.39
                 addonChartRepository: https://helm-chart.oneuptime.com
                 addonChartNamespace: oneuptime-system
