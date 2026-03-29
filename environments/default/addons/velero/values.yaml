@@ -392,7 +392,7 @@ configuration:
     # prefix is the directory under which all Velero data should be stored within the bucket. Optional.
     prefix:
     # default indicates this location is the default backup storage location. Optional.
-    default: false
+    default: true
     # validationFrequency defines how frequently Velero should validate the object storage. Optional.
     validationFrequency:
     # accessMode determines if velero can write to this backup storage location. Optional.
@@ -400,29 +400,18 @@ configuration:
     accessMode: ReadWrite
     credential:
       # name of the secret used by this backupStorageLocation.
-      name:
+      name: velero-s3-credentials
       # name of key that contains the secret data to be used.
-      key:
+      key: cloud
     # Additional provider-specific configuration. See link above
     # for details of required/optional fields for your provider.
-    config: {}
-    #  region:
-    #  s3ForcePathStyle:
-    #  s3Url:
-    #  kmsKeyId:
-    #  resourceGroup:
-    #  The ID of the subscription containing the storage account, if different from the cluster’s subscription. (Azure only)
-    #  subscriptionId:
-    #  storageAccount:
-    #  publicUrl:
-    #  Name of the GCP service account to use for this backup storage location. Specify the
-    #  service account here if you want to use workload identity instead of providing the key file.(GCP only)
-    #  serviceAccount:
-    #  Option to skip certificate validation or not if insecureSkipTLSVerify is set to be true, the client side should set the
-    #  flag. For Velero client Command like velero backup describe, velero backup logs needs to add the flag --insecure-skip-tls-verify
-    #  insecureSkipTLSVerify:
+    config:
+      region: minio
+      s3ForcePathStyle: "true"
+      s3Url: http://minio:9000
 
     # annotations allows adding arbitrary annotations to this BackupStorageLocation resource. Optional.
+
     annotations: {}
 
   # Parameters for the VolumeSnapshotLocation(s). Configure multiple by adding other element(s) to the volumeSnapshotLocation slice.
@@ -430,17 +419,18 @@ configuration:
   volumeSnapshotLocation:
     # name is the name of the volume snapshot location where snapshots are being taken. If a name is not provided,
     # a volume snapshot location will be created with the name "default". Optional.
-  - name:
+  - name: default
     # provider is the name for the volume snapshot provider.
-    provider: ""
+    provider: "aws"
     credential:
       # name of the secret used by this volumeSnapshotLocation.
-      name:
+      name: velero-s3-credentials
       # name of key that contains the secret data to be used.
-      key:
+      key: cloud
     # Additional provider-specific configuration. See link above
     # for details of required/optional fields for your provider.
-    config: {}
+    config:
+      region: minio
   #    region:
   #    apiTimeout:
   #    resourceGroup:
@@ -621,7 +611,7 @@ credentials:
   name:
   # Name of a pre-existing secret (if any) in the Velero namespace
   # that should be used to get IAM account credentials. Optional.
-  existingSecret:
+  existingSecret: velero-s3-credentials
   # Data to be stored in the Velero secret, if `useSecret` is true and `existingSecret` is empty.
   # As of the current Velero release, Velero only uses one secret key/value at a time.
   # The key must be named `cloud`, and the value corresponds to the entire content of your IAM credentials file.
@@ -631,10 +621,6 @@ credentials:
   # [GCP] https://github.com/vmware-tanzu/velero-plugin-for-gcp/blob/main/README.md
   # [Azure] https://github.com/vmware-tanzu/velero-plugin-for-microsoft-azure/blob/main/README.md
   secretContents: {}
-  #  cloud: |
-  #    [default]
-  #    aws_access_key_id=<REDACTED>
-  #    aws_secret_access_key=<REDACTED>
   # additional key/value pairs to be used as environment variables such as "DIGITALOCEAN_TOKEN: <your-key>". Values will be stored in the secret.
   extraEnvVars: {}
   # Name of a pre-existing secret (if any) in the Velero namespace
