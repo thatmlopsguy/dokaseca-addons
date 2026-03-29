@@ -1113,6 +1113,21 @@ defaultDatasources:
       access: proxy
       url: http://pyroscope.monitoring.svc.cluster.local:4040
       isDefault: false
+    - name: Jaeger
+      type: jaeger
+      access: proxy
+      url: http://jaeger-query.monitoring.svc.cluster.local:16686
+      isDefault: false
+    - name: Victoria Logs
+      type: victoriametrics-logs-datasource
+      access: proxy
+      url: http://victoria-logs-single-server.monitoring.svc.cluster.local:9428
+      isDefault: false
+    - name: Victoria Traces
+      type: jaeger
+      access: proxy
+      url: http://victoria-traces-single-server.monitoring.svc.cluster.local:10428
+      isDefault: false
   # - name: prometheus-sample
   #   access: proxy
   #   basicAuth: true
