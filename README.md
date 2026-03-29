@@ -206,7 +206,7 @@ This catalog contains **kubernetes addons** organized by category, all deployabl
 | vector                     | monitoring                    | High-performance observability data pipeline |
 | victoria-logs-single       | monitoring                    | Fast and cost-effective log database         |
 | victoria-metrics-k8s-stack | monitoring                    | Monitoring solution and time series database |
-| zipkin                     | zipkin                        | Distributed tracing system                   |
+| ~~zipkin~~                 | ~~zipki~~                     | ~~Distributed tracing system~~               |
 
 ### Platform Engineering
 

@@ -458,12 +458,12 @@ dependencies:
       type: rss
       url: https://artifacthub.io/api/v1/packages/helm/jaegertracing/jaeger/feed/rss
 
-  - name: zipkin
-    source:
-      file: argocd/appsets/oss/observability/tracing/addons-zipkin-appset.yaml
-    repository:
-      type: rss
-      url: https://artifacthub.io/api/v1/packages/helm/zipkin/zipkin/feed/rss
+  # - name: zipkin
+  #   source:
+  #     file: argocd/appsets/oss/observability/tracing/addons-zipkin-appset.yaml
+  #   repository:
+  #     type: rss
+  #     url: https://artifacthub.io/api/v1/packages/helm/zipkin/zipkin/feed/rss
 
   - name: victoria-traces-single
     source:
