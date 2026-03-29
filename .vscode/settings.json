@@ -9,6 +9,7 @@
         "dapr",
         "devlake",
         "envoyproxy",
+        "inspektor",
         "kgateway",
         "kiali",
         "komoplane",
