@@ -5,7 +5,7 @@ metadata:
     argocd-autopilot.argoproj-labs.io/default-dest-server: https://kubernetes.default.svc
     argocd.argoproj.io/sync-options: PruneLast=true
     argocd.argoproj.io/sync-wave: '-20'
-  name: addons-project
+  name: addons
   namespace: argocd
 spec:
   clusterResourceWhitelist:
