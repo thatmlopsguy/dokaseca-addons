@@ -1,0 +1,730 @@
+## Important: For developers and agents
+## If you change the structure of this, please also update the values.schema.json file accordingly for better validation and autocompletion in IDEs.
+
+global:
+  storageClass:
+  clusterDomain: &global-cluster-domain dokaseca.local
+
+# Please change this to the domain name / IP where OneUptime server is hosted on.
+host: localhost
+httpProtocol: http
+ssl:
+  # Automatically provision a Let's Encrypt certificate for the primary host when set to true.
+  # If you enable this, please make sure that the host is publicly accessible via port 80 and 443.
+  provision: false
+
+image:
+  registry: docker.io
+  repository: oneuptime
+  pullPolicy: Always
+  tag: release
+
+  ## Type of OneUptime image to use.
+  ## Possible values: community-edition, enterprise-edition
+  ## Enterprise edition images are hardened for more security and compliance, but you need a valid license to use them.
+  ## Please contact sales@oneuptime.com for more information.
+  type: community-edition
+
+  restartPolicy: Always
+# imagePullSecrets:
+#   - name: MyCustomSecretNameWithDockerCredentials
+
+# Important: You do need to set this to a long random values if you're using OneUptime in production.
+# Please set this to string.
+oneuptimeSecret:
+registerProbeKey:
+encryptionSecret:
+
+# Comma-separated list of egress IP addresses that probes use for monitoring checks.
+# Customers can use this to whitelist probe traffic in their firewalls.
+# This is returned as a JSON array via the /ip-whitelist API endpoint.
+# Example: "203.0.113.1,203.0.113.2,198.51.100.10"
+ipWhitelist:
+
+# External Secrets
+# You need to leave blank oneuptimeSecret and encryptionSecret to use this section
+externalSecrets:
+  oneuptimeSecret:
+    existingSecret:
+      name:
+      passwordKey:
+  encryptionSecret:
+    existingSecret:
+      name:
+      passwordKey:
+
+deployment:
+  # When set to true, no OneUptime deployments are provisioned. Only databases (Redis, ClickHouse, Postgres) will be running.
+  disableDeployments: false
+  # Default replica count for all deployments
+  replicaCount: 1
+  # Update strategy type for all deployments
+  updateStrategy:
+    type: RollingUpdate
+  # Dynamic timestamp label to force updates
+  includeTimestampLabel: true
+
+metalLb:
+  enabled: false
+  ipAdddressPool:
+    enabled: false
+    addresses:
+      # - 51.158.55.153/32 # List of IP addresses of all the servers in the cluster.
+
+nginx:
+  # OneUptime ships with its own ingress gateway container, so Kubernetes Ingress resources are not required.
+  enabled: true
+  replicaCount: 1
+  disableTelemetryCollection: false
+  disableAutoscaler: false
+  listenAddress: ""
+  listenOptions: ""
+  serverNamesHash:
+    bucketSize: ""
+    maxSize: ""
+  ports:
+    http: 80
+    https: 443
+  service:
+    loadBalancerIP:
+    loadBalancerClass:
+    annotations:
+    type: LoadBalancer
+    externalIPs:
+      # - 51.158.55.153 # Please make sure this is the same as the one in metalLb.ipAdddressPool.addresses
+  resources: {}
+  nodeSelector: {}
+  podSecurityContext: {}
+  containerSecurityContext: {}
+
+postgresql:
+  enabled: false # Set this to false if you're using an external postgresql database.
+  image:
+    repository: postgres
+    tag: latest
+    pullPolicy: IfNotPresent
+  auth:
+    database: oneuptimedb
+    # Username is fixed to "postgres"
+    # Will be auto-generated if not provided
+    postgresPassword:
+  primary:
+    service:
+      type: ClusterIP
+      ports:
+        postgresql: "5432"
+    terminationGracePeriodSeconds: 0 # We do this because we do not want to wait for the pod to terminate in case of node failure. https://medium.com/tailwinds-navigator/kubernetes-tip-how-statefulsets-behave-differently-than-deployments-when-node-fails-d29e36bca7d5
+    persistence:
+      enabled: true
+      size: 25Gi
+      storageClass: ""
+    nodeSelector: {}
+    tolerations: []
+    affinity: {}
+    podSecurityContext: {}
+    containerSecurityContext: {}
+    resources: {}
+    configuration: |-
+      # Network and connection settings
+      listen_addresses = '*'
+      port = 5432
+      # Core tuning (adjust as needed)
+      max_connections = 100
+      shared_buffers = 128MB
+    # pg_hba.conf rules. These enable password auth (md5) from any host/IP.
+    # Tighten these for production to your pod/service/network CIDRs.
+    hbaConfiguration: |-
+      # Local connections (needed for initdb/entrypoint to create databases)
+      local   all             all                                     trust
+      # Allow all IPv4 and IPv6 clients with md5 password auth
+      host    all             all             0.0.0.0/0               md5
+      host    all             all             ::/0                    md5
+
+clickhouse:
+  # Set this to false if you're using an external clickhouse database
+  enabled: false #
+  auth:
+    username: oneuptime
+    # Will be auto-generated if not provided
+    password:
+    # Use an existing secret for the ClickHouse password
+    existingSecret:
+      name:
+      passwordKey:
+  image:
+    repository: clickhouse/clickhouse-server
+    tag: latest
+    pullPolicy: IfNotPresent
+  service:
+    type: ClusterIP
+    ports:
+      http: "8123"
+      tcp: "9000"
+      mysql: "9004"
+      postgresql: "9005"
+      interserver: "9009"
+  persistence:
+    enabled: true
+    size: 25Gi
+    storageClass: ""
+  nodeSelector: {}
+  tolerations: []
+  affinity: {}
+  podSecurityContext: {}
+  containerSecurityContext: {}
+  resources: {}
+  # Custom ClickHouse configuration
+  configuration: |-
+    <clickhouse>
+        <merge_tree>
+            <max_suspicious_broken_parts>1000</max_suspicious_broken_parts>
+        </merge_tree>
+        <logger>
+            <level>warning</level>
+            <console>true</console>
+        </logger>
+        <http_port>8123</http_port>
+        <tcp_port>9000</tcp_port>
+        <mysql_port>9004</mysql_port>
+        <postgresql_port>9005</postgresql_port>
+        <interserver_http_port>9009</interserver_http_port>
+        <listen_host>::</listen_host>
+        <users>
+            <${CLICKHOUSE_USER}>
+                <password>${CLICKHOUSE_PASSWORD}</password>
+                <networks>
+                    <ip>::/0</ip>
+                </networks>
+                <profile>default</profile>
+                <quota>default</quota>
+                <access_management>1</access_management>
+            </${CLICKHOUSE_USER}>
+        </users>
+        <quotas>
+            <default>
+                <interval>
+                    <duration>3600</duration>
+                    <queries>0</queries>
+                    <errors>0</errors>
+                    <result_rows>0</result_rows>
+                    <read_rows>0</read_rows>
+                    <execution_time>0</execution_time>
+                </interval>
+            </default>
+        </quotas>
+    </clickhouse>
+
+redis:
+  # Set this to false if you're using an external redis database
+  enabled: false
+  auth:
+    # Will be auto-generated if not provided
+    password:
+    # Use an existing secret for the Redis password
+    existingSecret:
+      name:
+      passwordKey:
+  image:
+    repository: redis
+    tag: latest
+    pullPolicy: IfNotPresent
+  master:
+    service:
+      type: ClusterIP
+      ports:
+        redis: "6379"
+    persistence:
+      enabled: false
+      size: 8Gi
+      storageClass: ""
+    nodeSelector: {}
+    tolerations: []
+    affinity: {}
+    # Optional: override global security contexts just for the Redis pod/container
+    podSecurityContext: {}
+    containerSecurityContext: {}
+    resources: {}
+  commonConfiguration: |-
+    appendonly no
+    save ""
+    maxmemory-policy noeviction
+
+
+autoscaling:
+  enabled: false
+  minReplicas: 1
+  maxReplicas: 100
+  targetCPUUtilizationPercentage: 80
+  targetMemoryUtilizationPercentage: 80
+
+nodeEnvironment: production
+
+billing:
+  enabled: false
+  publicKey:
+  privateKey:
+  # Stripe webhook secret for automatic invoice emails (get from Stripe Dashboard > Developers > Webhooks)
+  webhookSecret:
+  smsDefaultValueInCents:
+  whatsAppTextDefaultValueInCents:
+  callDefaultValueInCentsPerMinute:
+  smsHighRiskValueInCents:
+  callHighRiskValueInCentsPerMinute:
+  allowedActiveMonitorCountInFreePlan: 10
+  telemetry:
+    averageSpanRowSizeInBytes: 1024
+    averageLogRowSizeInBytes: 1024
+    averageMetricRowSizeInBytes: 1024
+    averageExceptionRowSizeInBytes: 1024
+
+subscriptionPlan:
+  basic:
+  growth:
+  scale:
+  enterprise:
+
+analytics:
+  host:
+  key:
+
+
+# CAPTCHA Configuration
+# We support hCaptcha. You can get site key and secret key from https://hcaptcha.com/
+captcha:
+  enabled: false
+  siteKey:
+  secretKey:
+
+# VAPID Configuration for Web Push Notifications
+# Generate VAPID keys using: npx web-push generate-vapid-keys
+vapid:
+  publicKey:
+  privateKey:
+  subject: mailto:support@oneuptime.com
+
+# Expo access token for sending mobile push notifications directly via Expo SDK.
+# If not set, notifications are relayed through the push notification relay URL.
+expo:
+  accessToken:
+
+# Push notification relay URL for self-hosted instances without Expo credentials
+pushNotification:
+  relayUrl: https://oneuptime.com/api/notification/push-relay/send
+
+incidents:
+  disableAutomaticCreation: false
+
+alerts:
+  disableAutomaticCreation: false
+
+# If you would like to attach status page to custom domains use this setting.
+# For example, lets say you would like the status page to be hosted on status.yourcompany.com, then
+# 1. Create a A record in your DNS provider with the name "oneuptime.yourcompany.com" and value to Public IP of the server oneuptime is deployed on.
+# 2. Set the statusPage.cnameRecord to "oneuptime.yourcompany.com"
+# 3. Create CNAME record in your DNS provider with the name "status.yourcompany.com" and value "oneuptime.yourcompany.com"
+statusPage:
+  cnameRecord:
+
+probes:
+  one:
+    name: "Probe"
+    description: "Probe"
+    enabled: true
+    monitoringWorkers: 3
+    monitorFetchLimit: 10
+    monitorRetryLimit: 3
+    key:
+    replicaCount: 1
+    syntheticMonitorScriptTimeoutInMs: 60000
+    customCodeMonitorScriptTimeoutInMs: 60000
+    disableTelemetryCollection: false
+    disableAutoscaler: false
+    ports:
+      http: 3874
+    # Proxy configuration for probe connections
+    proxy:
+      # HTTP proxy URL for HTTP requests (optional)
+      # Format: http://[username:password@]proxy.server.com:port
+      # Example: http://proxy.example.com:8080
+      # Example with auth: http://username:password@proxy.example.com:8080
+      httpProxyUrl:
+      # HTTPS proxy URL for HTTPS requests (optional)
+      # Format: http://[username:password@]proxy.server.com:port
+      # Example: http://proxy.example.com:8080
+      # Example with auth: http://username:password@proxy.example.com:8080
+      httpsProxyUrl:
+      # Comma-separated list of hosts that should bypass the proxy (optional)
+      # Example: localhost,.internal.example.com,10.0.0.0/8
+      noProxy:
+    # KEDA autoscaling configuration based on monitor queue metrics
+    keda:
+      enabled: false
+      minReplicas: 1
+      maxReplicas: 100
+      # Scale up when queue size exceeds this threshold per probe
+      queueSizeThreshold: 10
+      # Polling interval for metrics (in seconds)
+      pollingInterval: 30
+      # Cooldown period after scaling (in seconds)
+      cooldownPeriod: 300
+    resources: {}
+    nodeSelector: {}
+    podSecurityContext: {}
+    containerSecurityContext: {}
+#   additionalContainers:
+# two:
+#   name: "Probe 2"
+#   description: "Probe 2"
+#   monitoringWorkers: 3
+#   monitorFetchLimit: 10
+#   key:
+#   replicaCount: 1
+#   ports:
+#     http: 3874
+#   syntheticMonitorScriptTimeoutInMs: 60000
+#   customCodeMonitorScriptTimeoutInMs: 60000
+#   disableTelemetryCollection: false
+#   disableAutoscaler: false
+#   # Proxy configuration for probe connections
+#   proxy:
+#     # HTTP proxy URL for HTTP requests (optional)
+#     httpProxyUrl:
+#     # HTTPS proxy URL for HTTPS requests (optional)
+#     httpsProxyUrl:
+#     # Hosts that should bypass the proxy (optional)
+#     noProxy:
+#   resources:
+#   additionalContainers:
+  # KEDA autoscaling configuration based on monitor queue metrics
+  # keda:
+  #   enabled: false
+  #   minReplicas: 1
+  #   maxReplicas: 100
+  #   # Scale up when queue size exceeds this threshold per probe
+  #   queueSizeThreshold: 10
+  #   # Polling interval for metrics (in seconds)
+  #   pollingInterval: 30
+  #   # Cooldown period after scaling (in seconds)
+  #   cooldownPeriod: 300
+
+testServer:
+  replicaCount: 1
+  enabled: false
+  disableTelemetryCollection: false
+  disableAutoscaler: false
+  ports:
+    http: 3800
+  resources: {}
+  nodeSelector: {}
+  podSecurityContext: {}
+  containerSecurityContext: {}
+
+openTelemetryExporter:
+  endpoint:
+  # This can be for example: x-oneuptime-token=<YOUR_ONEUPTIME_TELEMETRY_INGEST_TOKEN>
+  headers:
+
+containerSecurityContext:
+podSecurityContext:
+affinity:
+tolerations:
+nodeSelector:
+
+# This can be one of the following: DEBUG, INFO, WARN, ERROR, OFF
+# Please do not set this to DEBUG in production. This is only for development / debugging purposes.
+logLevel: INFO
+
+# Enable cleanup cron jobs
+# Please do not enable this in production. This is only for development purposes.
+cronJobs:
+  cleanup:
+    enabled: false
+  e2e:
+    # Please do not enable this in production. This is only for development purposes.
+    enabled: false
+    isUserRegistered: false
+    registeredUserEmail:
+    registeredUserPassword:
+    # This is the URL of the status page you want to test. This is used to check if the status page is up and running.
+    statusPageUrl:
+    failedWebhookUrl:
+
+# Please add this information if you want to generate SSL certificates for your status page custom domains.
+# This is only required if you're using custom domains for status pages.
+letsEncrypt:
+  # Generate a random private key via openssl, encode it to base64
+  # Example: "LS0tLS....1cbg=="
+  accountKey:
+  # Email address to register with letsencrypt for notifications
+  # Example: "hello@yourcompany.com"
+  email:
+
+script:
+  workflowScriptTimeoutInMs: 5000
+
+# extraTemplates -- Array of extra objects to deploy with the release. Strings
+# are evaluated as a template and can use template expansions and functions. All
+# other objects are used as yaml.
+extraTemplates:
+  #- |
+  #    apiVersion: v1
+  #    kind: ConfigMap
+  #    metadata:
+  #      name: my-configmap
+  #    data:
+  #      key: {{ .Values.myCustomValue | quote }}
+
+# External Postgres Configuration
+# You need to set postgresql.enabled to false if you're using an external postgres database.
+externalPostgres:
+  host:
+  port:
+  username:
+  password:
+  # If you're using an existing secret for the password, please use this instead of password.
+  existingSecret:
+    name:
+    # This is the key in the secret where the password is stored.
+    passwordKey:
+  database:
+  ssl:
+    enabled: false
+    # If this is enabled, please set either "ca"
+    ca:
+    # (optional)
+    cert:
+    key:
+
+## External Redis Configuration
+# You need to set redis.enabled to false if you're using an external redis database.
+
+externalRedis:
+  host:
+  port:
+  username:
+  password:
+  ipFamily:
+  # If you're using an existing secret for the password, please use this instead of password.
+  existingSecret:
+    name:
+    # This is the key in the secret where the password is stored.
+    passwordKey:
+  database:
+  tls:
+    enabled: false
+    # If this is enabled, please set "ca" certificate.
+    ca:
+    # (optional)
+    cert:
+    key:
+
+## External Clickhouse Configuration
+# You need to set clickhouse.enabled to false if you're using an external clickhouse database.
+externalClickhouse:
+  host:
+  ## If the host is https, set this to true. Otherwise, set it to false.
+  isHostHttps: false
+  port:
+  username:
+  password:
+  # If you're using an existing secret for the password, please use this instead of password.
+  existingSecret:
+    name:
+    # This is the key in the secret where the password is stored.
+    passwordKey:
+  database:
+  tls:
+    enabled: false
+    # If this is enabled, please set either "ca"
+    ca:
+    # (optional)
+    cert:
+    key:
+
+openSourceDeployment:
+  # This webhook is called when a new self-hosted open source deployment registers.
+  webhookUrl:
+
+# Notification webhooks when certain events happen in the system. (usually they are slack webhooks)
+notifications:
+  webhooks:
+    slack:
+      # This is the webhook that will be called when a user is created or signs up.
+      onCreateUser:
+      onDeleteProject:
+      onCreateProject:
+      onSubscriptionUpdate:
+
+startupProbe: # Startup probe configuration
+  enabled: true
+  periodSeconds: 60
+  failureThreshold: 18
+
+livenessProbe: # Liveness probe configuration
+  enabled: true
+  periodSeconds: 60
+  timeoutSeconds: 120
+  initialDelaySeconds: 10
+
+readinessProbe: # Readiness probe configuration
+  enabled: true
+  periodSeconds: 60
+  initialDelaySeconds: 10
+  timeoutSeconds: 120
+
+home:
+  enabled: false
+  replicaCount: 1
+  disableTelemetryCollection: false
+  disableAutoscaler: false
+  ports:
+    http: 1444
+  resources:
+  nodeSelector: {}
+  podSecurityContext: {}
+  containerSecurityContext: {}
+
+
+worker:
+  enabled: true
+  replicaCount: 1
+  disableTelemetryCollection: false
+  disableAutoscaler: false
+  concurrency: 100
+  workflowTimeoutInMs: 5000
+  ports:
+    http: 1445
+  resources:
+  nodeSelector: {}
+  podSecurityContext: {}
+  containerSecurityContext: {}
+  # KEDA autoscaling configuration based on queue metrics
+  keda:
+    enabled: false
+    minReplicas: 1
+    maxReplicas: 100
+    # Scale up when queue size exceeds this threshold
+    queueSizeThreshold: 100
+    # Polling interval for metrics (in seconds)
+    pollingInterval: 30
+    # Cooldown period after scaling (in seconds)
+    cooldownPeriod: 300
+
+app:
+  enabled: true
+  replicaCount: 1
+  disableTelemetryCollection: false
+  disableAutoscaler: false
+  ports:
+    http: 3002
+  resources:
+  nodeSelector: {}
+  podSecurityContext: {}
+  containerSecurityContext: {}
+
+telemetry:
+  enabled: true
+  replicaCount: 1
+  disableTelemetryCollection: false
+  disableAutoscaler: false
+  # Max concurrent telemetry jobs processed by each pod
+  concurrency: 100
+  ports:
+    http: 3403
+    grpc: 4317
+  resources:
+  nodeSelector: {}
+  podSecurityContext: {}
+  containerSecurityContext: {}
+  # KEDA autoscaling configuration based on queue metrics
+  keda:
+    enabled: false
+    minReplicas: 1
+    maxReplicas: 100
+    # Scale up when queue size exceeds this threshold
+    queueSizeThreshold: 100
+    # Polling interval for metrics (in seconds)
+    pollingInterval: 30
+    # Cooldown period after scaling (in seconds)
+    cooldownPeriod: 300
+
+# AI Agent Configuration
+# Deploy this to run an AI Agent within your Kubernetes cluster
+# Note: This is disabled by default. To enable, set enabled to true and provide the AI Agent credentials
+aiAgent:
+  enabled: false
+  replicaCount: 1
+  disableTelemetryCollection: false
+  disableAutoscaler: false
+  # AI Agent ID from OneUptime dashboard (required when enabled)
+  id:
+  # AI Agent Key from OneUptime dashboard (will be stored in secrets if not provided)
+  key:
+  ports:
+    http: 3875
+  resources:
+  nodeSelector: {}
+  podSecurityContext: {}
+  containerSecurityContext: {}
+  # KEDA autoscaling configuration based on queue metrics
+  keda:
+    enabled: false
+    minReplicas: 1
+    maxReplicas: 100
+    # Scale up when queue size exceeds this threshold
+    queueSizeThreshold: 5
+    # Polling interval for metrics (in seconds)
+    pollingInterval: 30
+    # Cooldown period after scaling (in seconds)
+    cooldownPeriod: 300
+
+slackApp:
+  clientId:
+  clientSecret:
+  signingSecret:
+  # If you're using an existing secret for the configuration, please use this and update accordingly instead of the parameters above.
+  # existingSecret:
+  #   name: "app-secret"
+  #   clientIdKey: clientId
+  #   clientSecretKey: clientSecret
+  #   signingSecretKey: signingSecret
+
+microsoftTeamsApp:
+  clientId:
+  clientSecret:
+  tenantId:
+
+# GitHub Example Configuration
+# gitHubApp:
+#   id: "123456"
+#   name: "my-github-app"
+#   clientId: "Iv1.abc123"
+#   clientSecret: "your-client-secret"
+#   privateKey: |
+#     -----BEGIN RSA PRIVATE KEY-----
+#     ...
+#     -----END RSA PRIVATE KEY-----
+#   webhookSecret: "your-webhook-secret"
+
+gitHubApp:
+  id:
+  name:
+  clientId:
+  clientSecret:
+  privateKey:
+  webhookSecret:
+
+# Inbound Email Configuration
+# Required for Incoming Email Monitor feature
+# See documentation: https://oneuptime.com/docs/self-hosted/sendgrid-inbound-email
+inboundEmail:
+  # Email provider type (currently only SendGrid is supported)
+  provider: SendGrid
+  # The domain configured for inbound email (e.g., inbound.yourdomain.com)
+  # Required for the Incoming Email Monitor feature to work
+  domain:
+  # Optional webhook secret for validating incoming webhooks from the email provider
+  webhookSecret:
+
+keda:
+  enabled: false
