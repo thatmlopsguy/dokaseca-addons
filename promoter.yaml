@@ -1,4 +1,19 @@
 dependencies:
+  # Artifact Repositories
+  - name: harbor
+    source:
+      file: argocd/appsets/oss/artifacts/addons-harbor-appset.yaml
+    repository:
+      type: rss
+      url: https://artifacthub.io/api/v1/packages/helm/harbor/harbor/feed/rss
+
+  - name: chartmuseum
+    source:
+      file: argocd/appsets/oss/artifacts/addons-chartmuseum-appset.yaml
+    repository:
+      type: rss
+      url: https://artifacthub.io/api/v1/packages/helm/chartmuseum/chartmuseum/feed/rss
+
   # Analytics
   - name: superset
     source:

@@ -54,6 +54,13 @@ The Catalog is a library of curated Helm charts to create Kubernetes resources v
 
 This catalog contains **kubernetes addons** organized by category, all deployable via ArgoCD ApplicationSets.
 
+### Artifact Repositories
+
+| Tool        | Namespace   | Description                         |
+|-------------|-------------|-------------------------------------|
+| harbor      | harbor      | Cloud-native registry for artifacts |
+| chartmuseum | chartmuseum | Helm chart repository server        |
+
 ### Analytics
 
 | Tool     | Namespace    | Description                                 |
