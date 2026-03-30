@@ -5,6 +5,67 @@ All notable changes to this project will be documented in this file.
 The format is based on [Keep a Changelog](https://keepachangelog.com/en/1.0.0/),
 and this project adheres to [Semantic Versioning](https://semver.org/spec/v2.0.0.html).
 
+## [0.3.0] - 2026-03-30
+
+### Added
+
+- Add new application sets for analytics, compute, and data management tools; update strimzi version and add slurm operator values
+- Add addons-paralus ApplicationSet for ArgoCD with environment-specific configurations
+- Add addons-rbac-manager
+- Add Jetstack chart repository to sourceRepos in project.yaml
+- Add Kubernetes documentation repository to sourceRepos in project.yaml
+- Add ingress configuration for headlamp in values.yaml
+- Add missing ingressClassName for headlamp in values.yaml
+- Add argocd-rbac-operator ApplicationSet and update promoter.yaml
+- Add comment link for cron schedule in ArgoCD promoter workflow
+- Add pyroscope values.yaml
+- Add grafana appset
+- Add missing chart reference in addons-grafana appset
+- Add additional Grafana datasources for Loki, Tempo, Zipkin, and Pyroscope
+- Add additional Grafana datasources for Jaeger and VictoriaMetrics logs and traces
+- Add OneUptime ApplicationSet
+- Add OneUptime Kubernetes Agent ApplicationSet and configuration
+- Add Inspektor Gadget ApplicationSet
+- Add multiple ApplicationSets for various utilities
+- Add KEDA and KEDA add-ons HTTP ApplicationSets
+- Add KEDA Kaito scaler ApplicationSet and related configurations
+
+### Changed
+
+- Update changelog
+- Bump ruff from 0.15.5 to 0.15.6
+- Merge pull request #53 from thatmlopsguy/dependabot/uv/ruff-0.15.6
+- Update ArgoCD addon versions
+- Merge pull request #52 from thatmlopsguy/promoter-23394325939
+- Bump astral-sh/setup-uv from 7.3.1 to 7.6.0
+- Merge pull request #54 from thatmlopsguy/dependabot/github_actions/astral-sh/setup-uv-7.6.0
+- Update sourceRepos in project.yaml to include external-secrets chart repository
+- Update sourceRepos in project.yaml to use wildcard and comment out specific repositories
+- Update addonChartVersion for dev environment in addons-headlamp-appset.yaml
+- Update ingress pathType to type in values.yaml and add new kustomization.yaml for headlamp
+- Update DevLake, Velero, and Zipkin configurations
+- Refactor code structure for improved readability and maintainability
+- Update Grafana datasources for improved logging and tracing support
+- Update version to 0.3.0 in pyproject.toml
+
+### Fixed
+
+- Ensure pathType is correctly set for headlamp ingress configuration in values.yaml
+- Update ArgoCD promoter schedule to run monthly on the 1st
+- Enable postgres backend storage and configure connection details in values.yaml
+- Enable postgres backend storage and configure connection details in values.yaml
+- Enable AWS S3 Mlflow Artifact Root and update configuration details in values.yaml
+- Update S3 endpoint URL in extra environment variables for mlflow configuration
+- Update Velero configuration for S3 backup storage and credentials
+- Update project name to addons-project in ArgoCD appset
+- Update project name to addons in ArgoCD appset
+- Deprecate Zipkin ApplicationSet and update promoter to exclude Zipkin
+
+### Removed
+
+- Remove ApplicationSets for Keptn; update dependencies in promoter.yaml
+- Remove mlflow values.yaml configuration file
+
 ## [0.1.1] - 2026-03-20
 
 ### Changed
@@ -237,6 +298,7 @@ and this project adheres to [Semantic Versioning](https://semver.org/spec/v2.0.0
 - Remove outdated update summary file and add to .gitignore
 - Remove unused variable 'field_name' in update function
 
+[0.3.0]: https://github.com/thatmlopsguy/dokaseca-addons/compare/v0.1.1..v0.3.0
 [0.1.1]: https://github.com/thatmlopsguy/dokaseca-addons/compare/v0.1.0..v0.1.1
 [0.1.0]: https://github.com/thatmlopsguy/dokaseca-addons/tree/v0.1.0
 
