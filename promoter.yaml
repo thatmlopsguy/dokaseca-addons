@@ -524,6 +524,14 @@ dependencies:
       type: rss
       url: https://artifacthub.io/api/v1/packages/helm/kedacore/keda/feed/rss
 
+  - name: keda-kaito-scaler
+    source:
+      file: argocd/appsets/oss/scaling/addons-keda-kaito-scaler-appset.yaml
+    repository:
+      type: helm
+      url: https://kaito-project.github.io/keda-kaito-scaler/charts/kaito-project
+      chart: keda-kaito-scaler
+
   - name: keda-add-ons-http
     source:
       file: argocd/appsets/oss/scaling/addons-keda-add-ons-http-appset.yaml

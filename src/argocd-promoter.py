@@ -56,6 +56,50 @@ def fetch_rss_versions(rss_url: str) -> list[str]:
         return []
 
 
+def fetch_helm_repo_versions(repo_url: str, chart_name: str | None = None) -> list[str]:
+    """
+    Fetch available chart versions from a Helm chart repository (index.yaml).
+
+    `repo_url` may point to the chart repo base (e.g. https://example.github.io/charts)
+    or directly to an index.yaml. If `chart_name` is provided, only versions for
+    that chart are returned.
+    """
+    try:
+        if not repo_url:
+            console.print("[yellow]Warning: Helm repository URL is empty[/yellow]")
+            return []
+
+        # Normalize to index.yaml
+        index_url = repo_url if repo_url.endswith("index.yaml") else repo_url.rstrip("/") + "/index.yaml"
+
+        resp = requests.get(index_url, timeout=10)
+        resp.raise_for_status()
+
+        data = yaml.safe_load(resp.text)
+        entries = data.get("entries", {}) if isinstance(data, dict) else {}
+
+        versions = []
+        if chart_name:
+            chart_entries = entries.get(chart_name, [])
+            for e in chart_entries:
+                v = e.get("version")
+                if v:
+                    versions.append(str(v))
+        else:
+            # If no chart_name provided, collect versions from all charts
+            for chart_entries in entries.values():
+                for e in chart_entries:
+                    v = e.get("version")
+                    if v:
+                        versions.append(str(v))
+
+        # Deduplicate and return
+        return sorted(set(versions), key=lambda s: version.parse(s))
+    except Exception as e:
+        console.print(f"[yellow]Warning: Could not fetch Helm index: {e}[/yellow]")
+        return []
+
+
 def fetch_oci_versions(oci_url: str) -> list[str]:
     """
     Fetch available versions from an OCI registry.
@@ -335,6 +379,9 @@ def check(
             available_versions = fetch_oci_versions(repo_url)
         elif repo_type == "github" and repo_url:
             available_versions = fetch_github_versions(repo_url)
+        elif repo_type == "helm":
+            chart_name = repo_info.get("chart")
+            available_versions = fetch_helm_repo_versions(repo_url, chart_name=chart_name)
 
         latest_version = get_latest_version(available_versions)
 
@@ -520,6 +567,9 @@ def update(
             available_versions = fetch_oci_versions(repo_url)
         elif repo_type == "github" and repo_url:
             available_versions = fetch_github_versions(repo_url)
+        elif repo_type == "helm":
+            chart_name = repo_info.get("chart")
+            available_versions = fetch_helm_repo_versions(repo_url, chart_name=chart_name)
 
         latest_version = get_latest_version(available_versions)
 
@@ -688,6 +738,17 @@ def validate(
             else:
                 console.print("  [red]✗ GitHub releases URL missing[/red]")
                 errors += 1
+        elif repo_type == "helm":
+            # url is preferred, but chart can be specified instead if the source file
+            # contains the repo/chart definitions templated elsewhere.
+            if repo_info.get("url"):
+                console.print("  [green]✓ Helm repository configured[/green]")
+                if not repo_info.get("chart"):
+                    console.print("  [yellow]⚠ Helm chart name not specified (will attempt to discover)")
+            else:
+                console.print(
+                    "  [yellow]⚠ Helm repository URL missing; promoter will attempt discovery in source file[/yellow]"
+                )
 
         console.print()
 

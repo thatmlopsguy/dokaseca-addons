@@ -7,7 +7,6 @@ repos:
         args: ["--maxkb=2000"]
     -   id: trailing-whitespace
         args: ["--markdown-linebreak-ext=md"]
-    -   id: detect-private-key
 -   repo: https://github.com/astral-sh/ruff-pre-commit
     rev: v0.15.4
     hooks:
@@ -34,10 +33,11 @@ repos:
     hooks:
     -   id: codespell
         args: ["--ignore-words", ".codespell-ignore"]
--   repo: https://github.com/gitleaks/gitleaks
-    rev: v8.30.0
+-   repo: https://github.com/betterleaks/betterleaks
+    rev: v1.1.1
     hooks:
-    -   id: gitleaks
+    -   id: betterleaks
+        args: ["--config=.betterleaks.toml"]
 -   repo: https://github.com/abravalheri/validate-pyproject
     rev: v0.25
     hooks:

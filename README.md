@@ -287,6 +287,7 @@ This catalog contains **kubernetes addons** organized by category, all deployabl
 |-------------------|-----------|-------------------------------------------|
 | keda              | keda      | Kubernetes-based Event Driven Autoscaling |
 | keda-add-ons-http | keda      | keda add-on for HTTP-based scaling        |
+| keda-kaito-scaler | keda      | keda add-on for LLM inference scaling     |
 
 ### Workflows
 
