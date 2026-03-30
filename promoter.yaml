@@ -516,12 +516,20 @@ dependencies:
       type: rss
       url: https://artifacthub.io/api/v1/packages/helm/open-feature-operator/open-feature-operator/feed/rss
 
+  # Scaling
   - name: keda
     source:
-      file: argocd/appsets/oss/other/addons-keda-appset.yaml
+      file: argocd/appsets/oss/scaling/addons-keda-appset.yaml
     repository:
       type: rss
       url: https://artifacthub.io/api/v1/packages/helm/kedacore/keda/feed/rss
+
+  - name: keda-add-ons-http
+    source:
+      file: argocd/appsets/oss/scaling/addons-keda-add-ons-http-appset.yaml
+    repository:
+      type: rss
+      url: https://artifacthub.io/api/v1/packages/helm/kedacore/keda-add-ons-http/feed/rss
 
   # Platform Engineering
   - name: crossplane

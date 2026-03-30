@@ -279,8 +279,14 @@ This catalog contains **kubernetes addons** organized by category, all deployabl
 
 | Tool                  | Namespace                    | Description                            |
 |-----------------------|------------------------------|----------------------------------------|
-| keda                  | keda                         | Kubernetes event-driven autoscaling    |
 | open-feature-operator | open-feature-operator-system | Feature flag management for Kubernetes |
+
+## Scaling
+
+| Tool              | Namespace | Description                               |
+|-------------------|-----------|-------------------------------------------|
+| keda              | keda      | Kubernetes-based Event Driven Autoscaling |
+| keda-add-ons-http | keda      | keda add-on for HTTP-based scaling        |
 
 ### Workflows
 
