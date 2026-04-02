@@ -201,6 +201,9 @@ This catalog contains **kubernetes addons** organized by category, all deployabl
 |----------------------------|-------------------------------|----------------------------------------------|
 | signoz                     | platform                      | Open source APM and observability platform   |
 | uptrace                    | monitoring                    | Distributed tracing and error monitoring     |
+| alertmanager               | monitoring                    | Prometheus Alertmanager                      |
+| node-exporter              | monitoring                    | Prometheus Node Exporter                     |
+| kube-state-metrics         | monitoring                    | Kubernetes cluster state metrics exporter    |
 | alloy                      | monitoring                    | OpenTelemetry collector distribution         |
 | fluent-bit                 | monitoring                    | Lightweight log processor and forwarder      |
 | grafana-operator           | monitoring                    | Kubernetes operator for Grafana              |
