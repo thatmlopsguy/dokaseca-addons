@@ -450,17 +450,40 @@ dependencies:
       type: rss
       url: https://artifacthub.io/api/v1/packages/helm/victoriametrics/victoria-logs-single/feed/rss
 
+  # Observability - Alerting
+  - name: alertmanager
+    source:
+      file: argocd/appsets/oss/observability/alerting/addons-alertmanager-appset.yaml
+    repository:
+      type: rss
+      url: https://artifacthub.io/api/v1/packages/helm/prometheus-community/alertmanager/feed/rss
+
   # Observability - Metrics
+  - name: prometheus-node-exporter
+    source:
+      file: argocd/appsets/oss/observability/metrics/addons-prometheus-node-exporter-appset.yaml
+    repository:
+      type: rss
+      url: https://artifacthub.io/api/v1/packages/helm/prometheus-community/prometheus-node-exporter/feed/rss
+
+  - name: kube-state-metrics
+    source:
+      file: argocd/appsets/oss/observability/metrics/addons-kube-state-metrics-appset.yaml
+    repository:
+      type: rss
+      url: https://artifacthub.io/api/v1/packages/helm/prometheus-community/kube-state-metrics/feed/rss
+
+  # Observability - Stacks
   - name: kube-prometheus-stack
     source:
-      file: argocd/appsets/oss/observability/metrics/addons-kube-prometheus-stack-appset.yaml
+      file: argocd/appsets/oss/observability/stacks/addons-kube-prometheus-stack-appset.yaml
     repository:
       type: rss
       url: https://artifacthub.io/api/v1/packages/helm/prometheus-community/kube-prometheus-stack/feed/rss
 
   - name: victoria-metrics-k8s-stack
     source:
-      file: argocd/appsets/oss/observability/metrics/addons-victoria-metrics-k8s-stack-appset.yaml
+      file: argocd/appsets/oss/observability/stacks/addons-victoria-metrics-k8s-stack-appset.yaml
     repository:
       type: rss
       url: https://artifacthub.io/api/v1/packages/helm/victoriametrics/victoria-metrics-k8s-stack/feed/rss
