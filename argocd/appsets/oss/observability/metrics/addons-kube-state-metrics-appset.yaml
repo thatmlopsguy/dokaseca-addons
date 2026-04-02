@@ -2,7 +2,7 @@
 apiVersion: argoproj.io/v1alpha1
 kind: ApplicationSet
 metadata:
-  name: addons-kube-prometheus-stack
+  name: addons-kube-state-metrics
   namespace: argocd
 spec:
   syncPolicy:
@@ -13,13 +13,13 @@ spec:
         generators:
           - clusters:
               values:
-                addonChart: kube-prometheus-stack
-                addonChartVersion: 69.4.1
+                addonChart: kube-state-metrics
+                addonChartVersion: 7.2.2
                 addonChartRepository: https://prometheus-community.github.io/helm-charts
                 addonChartNamespace: monitoring
               selector:
                 matchExpressions:
-                  - key: enable_kube_prometheus_stack
+                  - key: enable_kube_state_metrics
                     operator: In
                     values: ['true']
           - clusters:
@@ -27,13 +27,13 @@ spec:
                 matchLabels:
                   environment: dev
               values:
-                addonChartVersion: 82.16.0 # promote this
+                addonChartVersion: 7.2.2 # promote this
           - clusters:
               selector:
                 matchLabels:
                   environment: prod
               values:
-                addonChartVersion: 69.4.1
+                addonChartVersion: 7.2.2
   template:
     metadata:
       name: addon-{{name}}-{{values.addonChart}}
@@ -57,10 +57,7 @@ spec:
         namespace: '{{values.addonChartNamespace}}'
         name: '{{name}}'
       syncPolicy:
-        automated:
-          prune: true
-          allowEmpty: true
+        automated: {}
         syncOptions:
           - CreateNamespace=true
           - ServerSideApply=true # Big CRDs.
-          - ApplyOutOfSyncOnly=true
