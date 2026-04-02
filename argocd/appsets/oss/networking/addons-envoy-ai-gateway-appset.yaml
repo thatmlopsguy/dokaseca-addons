@@ -16,7 +16,7 @@ spec:
                 addonChart: envoy
                 addonChartCRD: ai-gateway-crd-helm
                 addonChartName: ai-gateway-helm
-                addonChartVersion: v0.0.0-latest
+                addonChartVersion: v0.5.0
                 addonChartRepository: docker.io/envoyproxy
                 addonChartNamespace: envoy-ai-gateway-system
               selector:
@@ -29,13 +29,13 @@ spec:
                 matchLabels:
                   environment: dev
               values:
-                addonChartVersion: v0.0.0-latest # promote this
+                addonChartVersion: v0.5.0 # promote this
           - clusters:
               selector:
                 matchLabels:
                   environment: prod
               values:
-                addonChartVersion: v0.0.0-latest
+                addonChartVersion: v0.5.0
   template:
     metadata:
       name: addon-{{name}}-{{values.addonChart}}
