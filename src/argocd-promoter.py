@@ -46,9 +46,13 @@ def fetch_rss_versions(rss_url: str) -> list[str]:
             title = item.find("title")
             if title is not None and title.text:
                 # Extract version from title (assuming format like "chaos-mesh 2.7.0")
-                match = re.search(r"(\d+\.\d+\.\d+)", title.text)
+                # Capture optional pre-release suffix to filter out non-stable versions
+                match = re.search(r"(\d+\.\d+\.\d+(?:-[a-zA-Z0-9.]+)?)", title.text)
                 if match:
-                    versions.append(match.group(1))
+                    full_ver = match.group(1)
+                    # Only include stable versions (exclude pre-release like -alpha, -beta, -rc)
+                    if re.match(r"^\d+\.\d+\.\d+$", full_ver):
+                        versions.append(full_ver)
 
         return versions
     except Exception as e:

@@ -199,6 +199,8 @@ This catalog contains **kubernetes addons** organized by category, all deployabl
 
 | Tool                       | Namespace                     | Description                                  |
 |----------------------------|-------------------------------|----------------------------------------------|
+| signoz                     | platform                      | Open source APM and observability platform   |
+| uptrace                    | monitoring                    | Distributed tracing and error monitoring     |
 | alloy                      | monitoring                    | OpenTelemetry collector distribution         |
 | fluent-bit                 | monitoring                    | Lightweight log processor and forwarder      |
 | grafana-operator           | monitoring                    | Kubernetes operator for Grafana              |

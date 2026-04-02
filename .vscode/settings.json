@@ -26,9 +26,11 @@
         "perses",
         "pyroscope",
         "rollouts",
+        "signoz",
         "slurm",
         "traefik",
         "trino",
+        "uptrace",
         "vllm",
         "yunikorn",
         "zipkin"

@@ -384,6 +384,21 @@ dependencies:
       type: oci
       url: oci://docker.io/envoyproxy/gateway-helm
 
+  # Observability - APM
+  - name: signoz
+    source:
+      file: argocd/appsets/oss/observability/apm/addons-signoz-appset.yaml
+    repository:
+      type: rss
+      url: https://artifacthub.io/api/v1/packages/helm/signoz/signoz/feed/rss
+
+  - name: uptrace
+    source:
+      file: argocd/appsets/oss/observability/apm/addons-uptrace-appset.yaml
+    repository:
+      type: rss
+      url: https://artifacthub.io/api/v1/packages/helm/uptrace/uptrace/feed/rss
+
   # Observability - Agents
   - name: alloy
     source:
