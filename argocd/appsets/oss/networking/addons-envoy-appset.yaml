@@ -56,6 +56,10 @@ spec:
               - $values/clusters/{{name}}/addons/{{values.addonChart}}/values.yaml
             values: |
               kubernetesClusterDomain: '{{metadata.labels.domain}}'
+              deployment:
+                envoyGateway:
+                  image:
+                    tag: 'v{{values.addonChartVersion}}'
       destination:
         namespace: '{{values.addonChartNamespace}}'
         name: '{{name}}'
