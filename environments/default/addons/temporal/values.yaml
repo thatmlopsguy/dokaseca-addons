@@ -222,10 +222,16 @@ server:
           #   tx_isolation: 'READ-COMMITTED'
     namespaces:
       # Enable this to create namespaces
-      create: false
+      create: true
       namespace:
         - name: default
           retention: 3d
+        - name: dev
+          retention: 3d
+        - name: staging
+          retention: 5d
+        - name: prod
+          retention: 7d
   frontend:
     service:
       # Evaluated as template
