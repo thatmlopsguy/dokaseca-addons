@@ -109,6 +109,7 @@ This catalog contains **kubernetes addons** organized by category, all deployabl
 | kepler     | kepler     | Kubernetes power consumption monitoring       |
 | kube-green | kube-green | Kubernetes resource scheduler for cost saving |
 | opencost   | opencost   | Real-time cost monitoring for Kubernetes      |
+| goldilocks | goldilocks | Kubernetes resource recommendation            |
 
 ### Dashboard
 
@@ -280,12 +281,17 @@ This catalog contains **kubernetes addons** organized by category, all deployabl
 
 ### Utilities
 
-| Tool       | Namespace   | Description                                        |
-|------------|-------------|----------------------------------------------------|
-| goldilocks | goldilocks  | Kubernetes resource recommendation                 |
-| kured      | kured       | Kubernetes reboot daemon                           |
-| reflector  | kube-system | Secret and ConfigMap reflection across namespaces  |
-| reloader   | reloader    | Automatic restart of deployments on config changes |
+| Tool                  | Namespace        | Description                                                                     |
+|-----------------------|------------------|---------------------------------------------------------------------------------|
+| kured                 | kured            | Kubernetes reboot daemon                                                        |
+| reflector             | kube-system      | Secret and ConfigMap reflection across namespaces                               |
+| reloader              | reloader         | Automatic restart of deployments on config changes                              |
+| inspektor-gadget      | inspektor-gadget | Kubernetes runtime security and observability                                   |
+| eraser                | eraser           | Kubernetes resource cleanup utility                                             |
+| fake-gpu-operator     | gpu-operator     | Simulate GPU resources in Kubernetes                                            |
+| spegel                | spegel           | Stateless cluster local OCI registry mirror                                     |
+| kube-image-keeper     | kuik-system      | Container image caching system for Kubernetes                                   |
+| kubernetes-replicator | kube-system      | Kubernetes controller for synchronizing secrets & config maps across namespaces |
 
 ### Other
 

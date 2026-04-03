@@ -16,6 +16,7 @@ spec:
                 addonChart: kubernetes-replicator
                 addonChartVersion: 2.12.3
                 addonChartRepository: https://helm.mittwald.de
+                addonChartNamespace: kube-system
               selector:
                 matchExpressions:
                   - key: enable_kubernetes_replicator
@@ -53,7 +54,7 @@ spec:
               - $values/environments/{{metadata.labels.environment}}/addons/{{values.addonChart}}/values.yaml
               - $values/clusters/{{name}}/addons/{{values.addonChart}}/values.yaml
       destination:
-        namespace: '{{values.addonChart}}'
+        namespace: '{{values.addonChartNamespace}}'
         name: '{{name}}'
       syncPolicy:
         automated: {}
