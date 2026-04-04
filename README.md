@@ -163,7 +163,6 @@ This catalog contains **kubernetes addons** organized by category, all deployabl
 
 | Tool             | Namespace        | Description                                             |
 |------------------|------------------|---------------------------------------------------------|
-| kgateway         | kgateway-system  | Kubernetes API gateway for ML workloads                 |
 | kuberay          | kuberay          | Kubernetes operator for Ray                             |
 | vllm             | vllm             | High-performance LLM serving platform                   |
 | llm-d            | llm-d            | LLM deployment and management platform                  |
@@ -183,18 +182,19 @@ This catalog contains **kubernetes addons** organized by category, all deployabl
 
 ### Networking
 
-| Tool           | Namespace      | Description                                 |
-|----------------|----------------|---------------------------------------------|
-| cilium         | kube-system    | eBPF-based networking and security          |
-| ingress-nginx  | ingress-nginx  | NGINX Ingress Controller                    |
-| istio-base     | istio-system   | Istio service mesh base components          |
-| istio-gateway  | istio-ingress  | Istio gateway for traffic management        |
-| istiod         | istio-system   | Istio service mesh control plane            |
-| kube-vip       | kube-system    | Virtual IP and load balancer for Kubernetes |
-| metallb        | metallb-system | Load balancer implementation for bare metal |
-| ngrok-operator | ngrok          | Secure tunnels to localhost                 |
-| skupper        | skupper        | Multi-cloud communication for Kubernetes    |
-| traefik        | traefik        | Modern HTTP reverse proxy and load balancer |
+| Tool           | Namespace       | Description                                 |
+|----------------|-----------------|---------------------------------------------|
+| cilium         | kube-system     | eBPF-based networking and security          |
+| ingress-nginx  | ingress-nginx   | NGINX Ingress Controller                    |
+| istio-base     | istio-system    | Istio service mesh base components          |
+| istio-gateway  | istio-ingress   | Istio gateway for traffic management        |
+| istiod         | istio-system    | Istio service mesh control plane            |
+| kube-vip       | kube-system     | Virtual IP and load balancer for Kubernetes |
+| metallb        | metallb-system  | Load balancer implementation for bare metal |
+| ngrok-operator | ngrok           | Secure tunnels to localhost                 |
+| skupper        | skupper         | Multi-cloud communication for Kubernetes    |
+| traefik        | traefik         | Modern HTTP reverse proxy and load balancer |
+| kgateway       | kgateway-system | Kubernetes API gateway                      |
 
 ### Observability
 

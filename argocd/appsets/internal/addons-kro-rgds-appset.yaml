@@ -2,7 +2,7 @@
 apiVersion: argoproj.io/v1alpha1
 kind: ApplicationSet
 metadata:
-  name: addons-velero-ui
+  name: addons-kro-rgds
   namespace: argocd
 spec:
   syncPolicy:
@@ -13,15 +13,15 @@ spec:
         generators:
           - clusters:
               values:
-                addonChart: velero-ui
-                addonChartVersion: 0.14.0
-                addonChartRepository: https://helm.otwld.com/
+                addonChart: kro-rgds
+                addonChartVersion: 0.1.0
+                addonChartRepository: https://thatmlopsguy.github.io/helm-charts
               selector:
                 matchExpressions:
-                  - key: addon_velero
+                  - key: enable_kro
                     operator: In
                     values: ['true']
-                  - key: enable_velero_ui
+                  - key: enable_kro_rgds
                     operator: In
                     values: ['true']
           - clusters:
@@ -29,13 +29,13 @@ spec:
                 matchLabels:
                   environment: dev
               values:
-                addonChartVersion: 0.14.0 # promote this
+                addonChartVersion: 0.1.0 # promote this
           - clusters:
               selector:
                 matchLabels:
                   environment: prod
               values:
-                addonChartVersion: 0.14.0
+                addonChartVersion: 0.1.0
   template:
     metadata:
       name: addon-{{name}}-{{values.addonChart}}
@@ -62,4 +62,3 @@ spec:
         automated: {}
         syncOptions:
           - CreateNamespace=true
-          - ServerSideApply=true # Big CRDs.

@@ -277,13 +277,6 @@ dependencies:
       type: rss
       url: https://artifacthub.io/api/v1/packages/helm/litellm-operator/litellm-operator/feed/rss
 
-  - name: kgateway
-    source:
-      file: argocd/appsets/oss/machine-learning/addons-kgateway-appset.yaml
-    repository:
-      type: oci
-      url: oci://ghcr.io/kgateway-dev/charts/kgateway
-
   - name: vllm-stack
     source:
       file: argocd/appsets/oss/machine-learning/addons-vllm-stack-appset.yaml
@@ -383,6 +376,13 @@ dependencies:
     repository:
       type: oci
       url: oci://docker.io/envoyproxy/gateway-helm
+
+  - name: kgateway
+    source:
+      file: argocd/appsets/oss/networking/addons-kgateway-appset.yaml
+    repository:
+      type: oci
+      url: oci://ghcr.io/kgateway-dev/charts/kgateway
 
   # Observability - APM
   - name: signoz
