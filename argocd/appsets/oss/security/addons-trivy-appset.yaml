@@ -19,7 +19,7 @@ spec:
                 addonChartNamespace: trivy-system
               selector:
                 matchExpressions:
-                  - key: enable_trivy
+                  - key: enable_trivy_operator
                     operator: In
                     values: ['true']
           - clusters:
