@@ -633,24 +633,24 @@ s3:
   # Event Upload Configuration
   eventUpload:
     # -- S3 bucket to use for event uploads.
-    bucket: ""
+    bucket: "langfuse"
     # -- Prefix to use for event uploads within the bucket.
-    prefix: ""
+    prefix: "events/"
     # -- S3 region to use for event uploads.
     region: ""
     # -- S3 endpoint to use for event uploads.
-    endpoint: ""
+    endpoint: "http://minio:9000"
     # -- Whether to force path style on requests. Required for MinIO.
-    forcePathStyle: Null
+    forcePathStyle: true
     # -- S3 accessKeyId to use for event uploads.
     accessKeyId:
-      value: ""
+      value: "langfuse"
       secretKeyRef:
         name: ""
         key: ""
     # -- S3 secretAccessKey to use for event uploads.
     secretAccessKey:
-      value: ""
+      value: "8u0Dmz3UipOOPnZCLqHIqL5n"
       secretKeyRef:
         name: ""
         key: ""
@@ -660,24 +660,24 @@ s3:
     # -- Enable batch export.
     enabled: true
     # -- S3 bucket to use for batch exports.
-    bucket: ""
+    bucket: "langfuse"
     # -- Prefix to use for batch exports within the bucket.
-    prefix: ""
+    prefix: "exports/"
     # -- S3 region to use for batch exports.
     region: ""
     # -- S3 endpoint to use for batch exports.
-    endpoint: ""
+    endpoint: "http://minio:9000"
     # -- Whether to force path style on requests. Required for MinIO.
-    forcePathStyle: Null
+    forcePathStyle: true
     # -- S3 accessKeyId to use for batch exports.
     accessKeyId:
-      value: ""
+      value: "langfuse"
       secretKeyRef:
         name: ""
         key: ""
     # -- S3 secretAccessKey to use for batch exports.
     secretAccessKey:
-      value: ""
+      value: "8u0Dmz3UipOOPnZCLqHIqL5n"
       secretKeyRef:
         name: ""
         key: ""
@@ -687,24 +687,24 @@ s3:
     # -- Enable media uploads.
     enabled: true
     # -- S3 bucket to use for media uploads.
-    bucket: ""
+    bucket: "langfuse"
     # -- Prefix to use for media uploads within the bucket.
-    prefix: ""
+    prefix: "media/"
     # -- S3 region to use for media uploads.
     region: ""
     # -- S3 endpoint to use for media uploads.
-    endpoint: ""
+    endpoint: "http://minio:9000"
     # -- Whether to force path style on requests. Required for MinIO.
-    forcePathStyle: Null
+    forcePathStyle: true
     # -- S3 accessKeyId to use for media uploads.
     accessKeyId:
-      value: ""
+      value: "langfuse"
       secretKeyRef:
         name: ""
         key: ""
     # -- S3 secretAccessKey to use for media uploads.
     secretAccessKey:
-      value: ""
+      value: "8u0Dmz3UipOOPnZCLqHIqL5n"
       secretKeyRef:
         name: ""
         key: ""
