@@ -15,7 +15,8 @@ spec:
               values:
                 addonChart: kro
                 addonChartVersion: 0.2.1
-                addonChartRepository: ghcr.io/kro-run/kro
+                addonChartRepository: registry.k8s.io/kro/charts
+                addonChartNamespace: kro-system
               selector:
                 matchExpressions:
                   - key: enable_kro
@@ -53,7 +54,7 @@ spec:
               - $values/environments/{{metadata.labels.environment}}/addons/{{values.addonChart}}/values.yaml
               - $values/clusters/{{name}}/addons/{{values.addonChart}}/values.yaml
       destination:
-        namespace: '{{values.addonChart}}'
+        namespace: '{{values.addonChartNamespace}}'
         name: '{{name}}'
       syncPolicy:
         automated: {}
