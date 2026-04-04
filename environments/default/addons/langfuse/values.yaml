@@ -477,10 +477,10 @@ redis:
   auth:
     # -- Username for Redis authentication. Set to null to omit username from connection string entirely.
     # In case `redis.deploy` is set to `true`, the user will be created automatically.
-    username: "default"
+    username: "langfuse_user"
     # -- Password for Redis authentication. Set to null to disable authentication (for passwordless Redis like AWS ElastiCache without auth).
     # Use URL-encoded passwords or avoid special characters in the password.
-    password: ""
+    password: "langfuse_password"
     # -- If you want to use an existing secret for the redis password, set the name of the secret here. (`redis.auth.password` will be ignored and picked up from this secret).
     existingSecret: ""
     # -- The key in the existing secret that contains the password.
@@ -600,13 +600,13 @@ s3:
   forcePathStyle: true
   # -- S3 accessKeyId to use for all uploads. Can be overridden per upload type.
   accessKeyId:
-    value: ""
+    value: "langfuse"
     secretKeyRef:
       name: ""
       key: ""
   # -- S3 secretAccessKey to use for all uploads. Can be overridden per upload type.
   secretAccessKey:
-    value: ""
+    value: "8u0Dmz3UipOOPnZCLqHIqL5n"
     secretKeyRef:
       name: ""
       key: ""
