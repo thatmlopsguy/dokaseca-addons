@@ -564,13 +564,13 @@ clickhouse:
     # -- Whether to run automatic ClickHouse migrations on startup
     autoMigrate: true
 
-  # -- Whether to run ClickHouse commands ON CLUSTER. Controls CLICKHOUSE_CLUSTER_ENABLED setting.
-  clusterEnabled: true
+  # -- Whether to run ClickHouse commands ON CLUSTER. Keep this disabled for single-node or non-replicated external ClickHouse deployments.
+  clusterEnabled: false
 
   # -- Subchart specific settings
   shards: 1 # Fixed - Langfuse does not support sharding
-  # -- Number of replicas to use for the ClickHouse cluster. 1 corresponds to a single, non-HA deployment.
-  replicaCount: 3
+  # -- Number of replicas to use for the ClickHouse cluster. Set to 1 unless the external ClickHouse deployment is configured with ZooKeeper/Keeper-backed replication.
+  replicaCount: 1
   # -- The resources preset to use for the ClickHouse cluster.
   resourcesPreset: 2xlarge
 
