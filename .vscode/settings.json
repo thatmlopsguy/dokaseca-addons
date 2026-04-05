@@ -13,6 +13,7 @@
         "dapr",
         "devlake",
         "envoyproxy",
+        "falco",
         "flink",
         "healthz",
         "inspektor",
