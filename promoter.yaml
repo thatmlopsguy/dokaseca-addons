@@ -102,6 +102,15 @@ dependencies:
       type: rss
       url: https://artifacthub.io/api/v1/packages/helm/sigstore/policy-controller/feed/rss
 
+  # Compute
+  - name: kuberay
+    source:
+       file: argocd/appsets/oss/compute/addons-kuberay-appset.yaml
+    repository:
+       type: helm
+       url: https://ray-project.github.io/kuberay-helm
+       chart: kuberay-operator
+
   # Cost Management
   - name: opencost
     source:
