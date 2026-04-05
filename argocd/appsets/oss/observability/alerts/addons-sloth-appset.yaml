@@ -21,7 +21,7 @@ spec:
                 matchExpressions:
                   - key: enable_sloth
                     operator: In
-                    values: ['true']
+                    values: ['true'] # requires https://raw.githubusercontent.com/prometheus-operator/kube-prometheus/refs/heads/main/manifests/setup/0podmonitorCustomResourceDefinition.yaml
           - clusters:
               selector:
                 matchLabels:

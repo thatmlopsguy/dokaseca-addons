@@ -15,7 +15,7 @@ spec:
               values:
                 addonChart: kueue
                 addonChartVersion: 0.16.4
-                addonChartRepository: oci://registry.k8s.io/kueue/charts
+                addonChartRepository: registry.k8s.io/kueue/charts
                 addonChartNamespace: kueue-system
               selector:
                 matchExpressions:
@@ -27,7 +27,7 @@ spec:
                 matchLabels:
                   environment: dev
               values:
-                addonChartVersion: 0.16.4 # promote this
+                addonChartVersion: 0.17.0 # promote this
           - clusters:
               selector:
                 matchLabels:
@@ -53,6 +53,8 @@ spec:
               - $values/environments/default/addons/{{values.addonChart}}/values.yaml
               - $values/environments/{{metadata.labels.environment}}/addons/{{values.addonChart}}/values.yaml
               - $values/clusters/{{name}}/addons/{{values.addonChart}}/values.yaml
+            values: |
+              kubernetesClusterDomain: {{ .metadata.labels.domain }}
       destination:
         namespace: '{{values.addonChartNamespace}}'
         name: '{{name}}'

@@ -13,7 +13,7 @@ spec:
         generators:
           - clusters:
               values:
-                addonChart: /volcano
+                addonChart: volcano
                 addonChartVersion: 1.14.1
                 addonChartRepository: https://volcano-sh.github.io/helm-charts
                 addonChartNamespace: volcano-system
