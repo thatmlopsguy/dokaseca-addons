@@ -14,7 +14,7 @@ spec:
           - clusters:
               values:
                 addonChart: vllm-stack
-                addonChartVersion: 1.19.0
+                addonChartVersion: 0.1.10
                 addonChartRepository: https://vllm-project.github.io/production-stack
                 addonChartNamespace: vllm
               selector:
@@ -27,13 +27,13 @@ spec:
                 matchLabels:
                   environment: dev
               values:
-                addonChartVersion: 1.35.0 # promote this
+                addonChartVersion: 0.1.10 # promote this
           - clusters:
               selector:
                 matchLabels:
                   environment: prod
               values:
-                addonChartVersion: 1.19.0
+                addonChartVersion: 0.1.10
   template:
     metadata:
       name: addon-{{name}}-{{values.addonChart}}
@@ -53,6 +53,9 @@ spec:
               - $values/environments/default/addons/{{values.addonChart}}/values.yaml
               - $values/environments/{{metadata.labels.environment}}/addons/{{values.addonChart}}/values.yaml
               - $values/clusters/{{name}}/addons/{{values.addonChart}}/values.yaml
+            values: |
+              loraController:
+                kubernetesClusterDomain: '{{metadata.labels.domain}}'
       destination:
         namespace: '{{values.addonChartNamespace}}'
         name: '{{name}}'

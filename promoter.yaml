@@ -249,12 +249,12 @@ dependencies:
       url: https://artifacthub.io/api/v1/packages/helm/gitops-promoter/gitops-promoter/feed/rss
 
   # Machine Learning
-  - name: ollama
-    source:
-      file: argocd/appsets/oss/machine-learning/addons-ollama-appset.yaml
-    repository:
-      type: rss
-      url: https://artifacthub.io/api/v1/packages/helm/ollama-helm/ollama/feed/rss
+  # - name: ollama
+  #   source:
+  #     file: argocd/appsets/oss/machine-learning/addons-ollama-appset.yaml
+  #   repository:
+  #     type: rss
+  #     url: https://artifacthub.io/api/v1/packages/helm/ollama-helm/ollama/feed/rss
 
   - name: langfuse
     source:
@@ -453,7 +453,7 @@ dependencies:
   # Observability - Alerting
   - name: alertmanager
     source:
-      file: argocd/appsets/oss/observability/alerting/addons-alertmanager-appset.yaml
+      file: argocd/appsets/oss/observability/alerts/addons-alertmanager-appset.yaml
     repository:
       type: rss
       url: https://artifacthub.io/api/v1/packages/helm/prometheus-community/alertmanager/feed/rss
