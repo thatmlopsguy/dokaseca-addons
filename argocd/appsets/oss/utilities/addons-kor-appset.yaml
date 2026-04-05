@@ -2,7 +2,7 @@
 apiVersion: argoproj.io/v1alpha1
 kind: ApplicationSet
 metadata:
-  name: addons-spegel
+  name: addons-kor
   namespace: argocd
 spec:
   syncPolicy:
@@ -13,12 +13,12 @@ spec:
         generators:
           - clusters:
               values:
-                addonChart: spegel
-                addonChartVersion: 0.6.0 # oras repo tags ghcr.io/spegel-org/helm-charts/spegel
-                addonChartRepository: ghcr.io/spegel-org/helm-charts
+                addonChart: kor
+                addonChartVersion: 0.2.14
+                addonChartRepository: https://github.com/yonahd/kor/charts
               selector:
                 matchExpressions:
-                  - key: enable_spegel
+                  - key: enable_kor
                     operator: In
                     values: ['true']
           - clusters:
@@ -26,13 +26,13 @@ spec:
                 matchLabels:
                   environment: dev
               values:
-                addonChartVersion: 0.6.0 # promote this
+                addonChartVersion: 0.2.14 # promote this
           - clusters:
               selector:
                 matchLabels:
                   environment: prod
               values:
-                addonChartVersion: 0.6.0
+                addonChartVersion: 0.2.14
   template:
     metadata:
       name: addon-{{name}}-{{values.addonChart}}
