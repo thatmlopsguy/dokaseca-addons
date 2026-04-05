@@ -361,6 +361,7 @@ servingEngineSpec:
 
 routerSpec:
   # -- The docker image of the router. The following values are defaults:
+  # big image, consider hosting in a local registry for faster pull speed and reliability
   repository: "lmcache/lmstack-router"
   tag: "latest"
   imagePullPolicy: "Always"
