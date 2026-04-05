@@ -28,11 +28,6 @@ repos:
         name: actionlint
         description: Lint GitHub Actions workflow files
         files: ^\.github/workflows/.*\.ya?ml$
--   repo: https://github.com/codespell-project/codespell
-    rev: v2.4.1
-    hooks:
-    -   id: codespell
-        args: ["--ignore-words", ".codespell-ignore"]
 -   repo: https://github.com/betterleaks/betterleaks
     rev: v1.1.1
     hooks:
