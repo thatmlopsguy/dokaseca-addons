@@ -702,6 +702,13 @@ dependencies:
       type: rss
       url: https://artifacthub.io/api/v1/packages/helm/falcosecurity/falco/feed/rss
 
+  - name: falcosidekick
+    source:
+      file: argocd/appsets/oss/security/addons-falcosidekick-appset.yaml
+    repository:
+      type: rss
+      url: https://artifacthub.io/api/v1/packages/helm/falcosecurity/falcosidekick/feed/rss
+
   # Storage
   - name: openebs
     source:
