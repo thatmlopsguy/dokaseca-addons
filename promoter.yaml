@@ -646,6 +646,13 @@ dependencies:
       url: https://artifacthub.io/api/v1/packages/helm/argocd-rbac-operator/argocd-rbac-operator/feed/rss
 
   # Security
+  - name: dependency-track
+    source:
+      file: argocd/appsets/oss/security/addons-dependency-track-appset.yaml
+    repository:
+      type: rss
+      url: https://artifacthub.io/api/v1/packages/helm/dependencytrack/dependency-track/feed/rss
+
   - name: cert-manager
     source:
       file: argocd/appsets/oss/security/addons-cert-manager-appset.yaml
