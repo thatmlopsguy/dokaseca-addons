@@ -724,6 +724,13 @@ dependencies:
       type: rss
       url: https://artifacthub.io/api/v1/packages/helm/openebs/openebs/feed/rss
 
+  - name: rook-ceph
+    source:
+      file: argocd/appsets/oss/storage/addons-rook-ceph-appset.yaml
+    repository:
+      type: rss
+      url: https://artifacthub.io/api/v1/packages/helm/rook/rook-ceph/feed/rss
+
   # Testing
   - name: report-portal
     source:
