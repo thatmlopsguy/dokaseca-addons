@@ -22,15 +22,18 @@ spec:
                   - key: enable_longhorn
                     operator: In
                     values: ['true']
+                  - key: distro
+                    operator: In
+                    values: ['k3s']
           - clusters:
               selector:
-                matchLabels:
+                matchExpressions:
                   environment: dev
               values:
                 addonChartVersion: 1.11.1 # promote this
           - clusters:
               selector:
-                matchLabels:
+                matchExpressions:
                   environment: prod
               values:
                 addonChartVersion: 1.11.1
