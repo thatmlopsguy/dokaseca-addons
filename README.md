@@ -158,6 +158,8 @@ This catalog contains **kubernetes addons** organized by category, all deployabl
 | Security              | dependency-track             | dependency-track              | Software supply chain security                                                  |
 | Storage               | minio-operator               | minio-operator                | High performance object storage                                                 |
 | Storage               | openebs                      | openebs                       | Kubernetes native storage                                                       |
+| Storage               | longhorn                     | longhorn-system               | Cloud-native distributed block storage for Kubernetes                           |
+| Storage               | rook-ceph                    | rook-ceph                     | Cloud-native distributed storage orchestrator for Kubernetes                    |
 | Testing               | report-portal                | report-portal                 | Test report aggregation and visualization                                       |
 | Utilities             | kured                        | kured                         | Kubernetes reboot daemon                                                        |
 | Utilities             | reflector                    | kube-system                   | Secret and ConfigMap reflection across namespaces                               |

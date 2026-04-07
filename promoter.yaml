@@ -731,6 +731,13 @@ dependencies:
       type: rss
       url: https://artifacthub.io/api/v1/packages/helm/rook/rook-ceph/feed/rss
 
+  - name: longhorn
+    source:
+      file: argocd/appsets/oss/storage/addons-longhorn-appset.yaml
+    repository:
+      type: rss
+      url: https://artifacthub.io/api/v1/packages/helm/longhorn/longhorn/feed/rss
+
   # Testing
   - name: report-portal
     source:
