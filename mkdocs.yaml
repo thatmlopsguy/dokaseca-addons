@@ -11,6 +11,8 @@ repo_name: dokaseca-addons
 # Navigation
 nav:
   - Overview: index.md
+  - Catalog: catalog.md
+  - Contributing: contributing.md
 
 # Configuration
 theme:
