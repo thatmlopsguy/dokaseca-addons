@@ -49,9 +49,11 @@ spec:
             releaseName: '{{values.addonChart}}'
             ignoreMissingValueFiles: true
             valueFiles:
-              - $values/environments/default/addons/{{values.addonChart}}/values.yaml
-              - $values/environments/{{metadata.labels.environment}}/addons/{{values.addonChart}}/values.yaml
-              - $values/clusters/{{name}}/addons/{{values.addonChart}}/values.yaml
+              - $values/configs/addons/environments/default/{{values.addonChart}}/values.yaml
+              - $values/configs/addons/environments/{{metadata.labels.environment}}/{{values.addonChart}}/values.yaml
+              - $values/configs/addons/regions/{{metadata.labels.region}}/{{values.addonChart}}/values.yaml
+              - $values/configs/addons/cluster_type//{{metadata.labels.cluster_type}}/{{values.addonChart}}/values.yaml
+              - $values/configs/addons/cluster_name/{{name}}/{{values.addonChart}}/values.yaml
       destination:
         namespace: '{{values.addonChart}}'
         name: '{{name}}'
