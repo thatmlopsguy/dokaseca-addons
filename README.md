@@ -28,7 +28,7 @@
 >
 > DoKa Seca is still in relatively early development. At this time, **do not use** Doka Seca for critical production systems.
 
-## 👋 Introduction
+## Introduction
 
 Welcome to **DoKa Seca** - Distributed Orchestration Kubernetes Automation with Scalable Edge Computing Applications - a comprehensive framework for bootstrapping cloud-native platforms using Kubernetes in Docker (Kind)!
 

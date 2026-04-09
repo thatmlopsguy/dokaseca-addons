@@ -4,7 +4,7 @@ metadata:
   annotations:
     argocd-autopilot.argoproj-labs.io/default-dest-server: https://kubernetes.default.svc
     argocd.argoproj.io/sync-options: PruneLast=true
-    argocd.argoproj.io/sync-wave: '-20'
+    argocd.argoproj.io/sync-wave: '-1000' # ensures this project is created before any applications
   name: addons
   namespace: argocd
 spec:

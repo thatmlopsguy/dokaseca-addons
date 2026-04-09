@@ -1,0 +1,85 @@
+# Site configuration
+site_url: https://thatmlopsguy.github.io/dokaseca-addons
+site_author: That MLOps Guy
+site_name: Doka Seca Addons
+site_description: A collection of Kubernetes addons to support the Doka Seca platform
+
+# Repository
+repo_url: https://github.com/thatmlopsguy/dokaseca-addons
+repo_name: dokaseca-addons
+
+# Navigation
+nav:
+  - Overview: index.md
+
+# Configuration
+theme:
+  name: "material"
+  locale: en
+  font: false
+  palette:
+    - media: "(prefers-color-scheme: light)"
+      scheme: default
+      primary: black
+      accent: amber
+      toggle:
+        icon: material/toggle-switch
+        name: Switch to light mode
+    - media: "(prefers-color-scheme: dark)"
+      scheme: slate
+      primary: black
+      accent: amber
+      toggle:
+        icon: material/toggle-switch-off-outline
+        name: Switch to dark mode
+  features:
+    - navigation.footer
+
+# Plugins
+plugins:
+  - search
+  - git-revision-date-localized:
+      type: timeago
+      fallback_to_build_date: true
+  - git-authors
+  # TODO: Enable these plugins when ready
+  # This plugin is used to generate the ADR index page
+  # mkdocs-material-adr/adr
+  # mkdocs-asciinema-player
+
+# Markdown Extensions
+markdown_extensions:
+  - pymdownx.details
+  - pymdownx.superfences:
+      custom_fences:
+        - name: mermaid
+          class: mermaid
+          format: !!python/name:pymdownx.superfences.fence_code_format
+  - pymdownx.tabbed:
+      alternate_style: true
+  - pymdownx.snippets:
+      check_paths: true
+  - admonition
+  - attr_list
+  - md_in_html
+  - pymdownx.tasklist:
+      custom_checkbox: true
+  - pymdownx.emoji
+  - pymdownx.highlight
+  - toc:
+      permalink: true
+
+# Copyright
+copyright: Copyright &copy; 2025-2026 That MLOps Guy
+
+# Extra configuration
+extra:
+  social:
+    - icon: fontawesome/brands/github
+      link: https://github.com/thatmlopsguy/dokaseca-control-plane
+    - icon: fontawesome/solid/globe
+      link: https://thatmlopsguy.github.io/
+
+# Custom JS
+extra_javascript:
+  - https://unpkg.com/mermaid@10.6.1/dist/mermaid.min.js
