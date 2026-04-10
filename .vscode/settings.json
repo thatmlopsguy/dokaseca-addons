@@ -44,6 +44,7 @@
         "pyroscope",
         "readyz",
         "rollouts",
+        "rustfs",
         "signoz",
         "skupper",
         "slurm",

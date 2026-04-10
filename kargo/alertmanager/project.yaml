@@ -1,6 +1,0 @@
-apiVersion: kargo.akuity.io/v1alpha1
-kind: Project
-metadata:
-  name: alertmanager-addon
-  annotations:
-    kargo.akuity.io/description: "Alertmanager addon chart version promotion project"

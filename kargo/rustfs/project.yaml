@@ -1,0 +1,6 @@
+apiVersion: kargo.akuity.io/v1alpha1
+kind: Project
+metadata:
+  name: rustfs-addon
+  annotations:
+    kargo.akuity.io/description: "RustFS addon chart version promotion project"

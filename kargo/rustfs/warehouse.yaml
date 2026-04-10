@@ -1,0 +1,12 @@
+apiVersion: kargo.akuity.io/v1alpha1
+kind: Warehouse
+metadata:
+  name: rustfs-charts
+  namespace: rustfs-addon
+spec:
+  subscriptions:
+    # Watch the RustFS Helm chart for new versions
+    - chart:
+        repoURL: https://charts.rustfs.com
+        name: rustfs
+
