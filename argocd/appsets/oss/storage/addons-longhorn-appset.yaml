@@ -27,13 +27,13 @@ spec:
                     values: ['k3s']
           - clusters:
               selector:
-                matchExpressions:
+                matchLabels:
                   environment: dev
               values:
                 addonChartVersion: 1.11.1 # promote this
           - clusters:
               selector:
-                matchExpressions:
+                matchLabels:
                   environment: prod
               values:
                 addonChartVersion: 1.11.1
