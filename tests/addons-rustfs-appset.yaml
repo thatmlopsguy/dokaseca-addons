@@ -24,7 +24,7 @@ spec:
                   - key: enable_rustfs
                     operator: In
                     values: ['true']
-          # Priority 2: per-environment overrides from config files
+          # Priority 2 (medium): per-environment overrides from config files
           - matrix:
               generators:
                 - git:
@@ -38,7 +38,7 @@ spec:
                         env: '{{ .environment }}'
                     values:
                       addonChartVersion: '{{ .addonChartVersion }}'
-          # Priority 3 (highest): per-region overrides — allows individual region promotion in prod without affecting other regions
+          # Priority 3 (high): per-region overrides — allows individual region promotion in prod without affecting other regions
           - matrix:
               generators:
                 - git:
@@ -53,7 +53,7 @@ spec:
                         env: 'prod'
                     values:
                       addonChartVersion: '{{ .addonChartVersion }}'
-          # Priority 4 (final, highest): per-cluster overrides — allow single-cluster canaries
+          # Priority 4 (highest): per-cluster overrides — allow single-cluster canaries
           - matrix:
               generators:
                 - git:
