@@ -1,3 +1,5 @@
 {
+    "environment": "prod",
+    "env": "prod",
     "addonChartVersion": "0.0.90"
 }

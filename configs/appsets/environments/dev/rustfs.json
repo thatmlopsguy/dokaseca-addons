@@ -1,3 +1,5 @@
 {
-    "addonChartVersion": "0.0.92"
+    "environment": "dev",
+    "env": "dev",
+    "addonChartVersion": "0.0.90"
 }
