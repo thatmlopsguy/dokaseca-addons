@@ -17,6 +17,7 @@ spec:
               values:
                 addonChart: rustfs
                 addonChartVersion: 0.0.84
+                addonChartVersionResolved: 0.0.84
                 addonChartRepository: https://charts.rustfs.com
                 addonChartNamespace: rustfs-system
               selector:
@@ -37,7 +38,8 @@ spec:
                       matchLabels:
                         env: '{{ .environment }}'
                     values:
-                      addonChartVersion: '{{ .addonChartVersion }}'
+                      addonChartVersion: '{{ if and .addonChartVersion (ne .addonChartVersion "<no value>") }}{{ .addonChartVersion }}{{ end }}'
+                      addonChartVersionResolved: '{{ if and .addonChartVersion (ne .addonChartVersion "<no value>") }}{{ .addonChartVersion }}{{ end }}'
           # Priority 3 (highest): per-region overrides — allows individual region promotion in prod without affecting other regions
           - matrix:
               generators:
@@ -52,7 +54,26 @@ spec:
                         region: '{{ .cluster_region }}'
                         env: 'prod'
                     values:
-                      addonChartVersion: '{{ .addonChartVersion }}'
+                      addonChartVersion: '{{ if and .addonChartVersion (ne .addonChartVersion "<no value>") }}{{ .addonChartVersion }}{{ end }}'
+                      addonChartVersionResolved: '{{ if and .addonChartVersion (ne .addonChartVersion "<no value>") }}{{ .addonChartVersion }}{{ end }}'
+          # Priority 4 (final, highest): per-cluster overrides — allow single-cluster canaries
+          - matrix:
+              generators:
+                - git:
+                    repoURL: https://github.com/thatmlopsguy/dokaseca-addons
+                    revision: main
+                    files:
+                      - path: configs/appsets/clusters/*/addons.json
+                - clusters:
+                    selector:
+                      matchExpressions:
+                        - key: cluster_name
+                          operator: In
+                          values:
+                            - '{{ .cluster_name }}'
+                    values:
+                      addonChartVersion: '{{ if and .addonRustFSChartVersion (ne .addonRustFSChartVersion "<no value>") }}{{ .addonRustFSChartVersion }}{{ else if and .addonChartVersion (ne .addonChartVersion "<no value>") }}{{ .addonChartVersion }}{{ end }}'
+                      addonChartVersionResolved: '{{ if and .addonRustFSChartVersion (ne .addonRustFSChartVersion "<no value>") }}{{ .addonRustFSChartVersion }}{{ else if and .addonChartVersion (ne .addonChartVersion "<no value>") }}{{ .addonChartVersion }}{{ else }}{{ .addonChartVersionResolved }}{{ end }}'
   template:
     metadata:
       name: "{{ .name }}-{{ .metadata.labels.env }}-{{ .metadata.labels.region }}-addon-{{ .values.addonChart }}"
@@ -69,7 +90,7 @@ spec:
           ref: values
         - chart: '{{ .values.addonChart }}'
           repoURL: '{{ .values.addonChartRepository }}'
-          targetRevision: '{{ .values.addonChartVersion }}'
+          targetRevision: '{{ if .addonChartVersion }}{{ .addonChartVersion }}{{ else if .values.addonChartVersionResolved }}{{ .values.addonChartVersionResolved }}{{ else if .values.addonChartVersion }}{{ .values.addonChartVersion }}{{ else }}0.0.84{{ end }}'
           helm:
             releaseName: '{{ .values.addonChart }}'
             ignoreMissingValueFiles: true
