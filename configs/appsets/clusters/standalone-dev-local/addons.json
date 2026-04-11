@@ -1,4 +1,4 @@
 {
   "cluster_name": "standalone-dev-local",
-  "addonRustFSChartVersion": "0.0.100"
+  "addonRustFSChartVersion": "0.0.88"
 }
