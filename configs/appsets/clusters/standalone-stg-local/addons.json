@@ -1,0 +1,4 @@
+{
+  "cluster_name": "standalone-stg-local",
+  "addonRustFSChartVersion": "0.0.87"
+}
