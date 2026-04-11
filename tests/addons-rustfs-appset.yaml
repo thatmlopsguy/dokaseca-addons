@@ -16,7 +16,7 @@ spec:
           - clusters:
               values:
                 addonChart: rustfs
-                addonChartVersion: 0.0.93
+                addonChartVersion: 0.0.84
                 addonChartRepository: https://charts.rustfs.com
                 addonChartNamespace: rustfs-system
               selector:
@@ -40,7 +40,7 @@ spec:
                       addonChartVersion: '{{ .addonChartVersion }}'
   template:
     metadata:
-      name: addon-{{ .name }}-{{ .values.addonChart }}
+      name: addon-{{ .name }}-{{ .values.addonChart }}-{{ .metadata.labels.env }}
     spec:
       project: default
       sources:
