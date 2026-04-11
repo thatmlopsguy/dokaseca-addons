@@ -1,5 +1,14 @@
 [
-    {"environment": "dev", "addonChartVersion": "0.0.92"},
-    {"environment": "stg", "addonChartVersion": "0.0.91"},
-    {"environment": "prod", "addonChartVersion": "0.0.90"}
+    {
+        "environment": "dev",
+        "addonChartVersion": "0.0.92"
+    },
+    {
+        "environment": "stg",
+        "addonChartVersion": "0.0.91"
+    },
+    {
+        "environment": "prod",
+        "addonChartVersion": "0.0.90"
+    }
 ]
