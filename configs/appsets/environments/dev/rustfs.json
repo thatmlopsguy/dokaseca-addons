@@ -1,4 +1,4 @@
 {
-    "environment": "dev",
+    "environment": "test",
     "addonChartVersion": "0.0.91"
 }
