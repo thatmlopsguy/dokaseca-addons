@@ -1,0 +1,72 @@
+apiVersion: kargo.akuity.io/v1alpha1
+kind: PromotionTask
+metadata:
+  name: addon-version-promote
+  namespace: rustfs-addon
+spec:
+  vars:
+    - name: gitRepoURL
+      value: https://github.com/thatmlopsguy/dokaseca-addons.git
+    - name: openPR
+      value: "true"
+  steps:
+    # Clone the gitops-addons repo
+    - uses: git-clone
+      as: clone-repo
+      config:
+        repoURL: ${{ vars.gitRepoURL }}
+        checkout:
+          - branch: main
+            path: ./out
+
+    # Current addon chart version in the target's JSON config file
+    - uses: json-parse
+      as: current-version
+      config:
+        path: ./out/configs/appsets/environments/${{ ctx.stage }}/rustfs.json
+        outputs:
+          - name: addonChartVersion
+            fromExpression: addonChartVersion
+
+    # Update the chart version in the target's JSON config file
+    - uses: json-update
+      as: update-settings
+      config:
+        path: ./out/configs/appsets/environments/${{ ctx.stage }}/rustfs.json
+        updates:
+        - key: addonChartVersion
+          value: ${{ chartFrom('https://charts.rustfs.com', 'rustfs', warehouse('rustfs-charts')).Version }}
+
+    # Commit changes
+    - uses: git-commit
+      as: commit
+      config:
+        path: ./out
+        message: "kargo: promote RustFS addon to ${{ chartFrom('https://charts.rustfs.com', 'rustfs', warehouse('rustfs-charts')).Version }} (${{ ctx.stage }})"
+
+    # Push to feature branch and open PR
+    - uses: git-push
+      as: push
+      if: ${{ vars.openPR == 'true' }}
+      config:
+        path: ./out
+        generateTargetBranch: true
+
+    - uses: git-open-pr
+      as: open-pr
+      if: ${{ vars.openPR == 'true' }}
+      config:
+        repoURL: ${{ vars.gitRepoURL }}
+        provider: github
+        sourceBranch: ${{ task.outputs['push'].branch }}
+        targetBranch: main
+        title: "kargo: promote RustFS addon to ${{ chartFrom('https://charts.rustfs.com', 'rustfs', warehouse('rustfs-charts')).Version }} (${{ ctx.stage }})"
+        labels: ["kargo", "addon-promotion", "rustfs", "${{ ctx.stage }}"]
+
+    - uses: git-wait-for-pr
+      as: wait-for-pr
+      if: ${{ vars.openPR == 'true' }}
+      config:
+        repoURL: ${{ vars.gitRepoURL }}
+        prNumber: ${{ task.outputs['open-pr'].pr.id }}
+

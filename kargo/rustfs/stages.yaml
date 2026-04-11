@@ -1,0 +1,81 @@
+# Pipeline: dev → stg → prod
+---
+# Stage 1: dev
+apiVersion: kargo.akuity.io/v1alpha1
+kind: Stage
+metadata:
+  name: dev
+  namespace: rustfs-addon
+  annotations:
+    kargo.akuity.io/color: green
+spec:
+  requestedFreight:
+    - origin:
+        kind: Warehouse
+        name: rustfs-charts
+      sources:
+        direct: true
+  promotionTemplate:
+    spec:
+      vars:
+        - name: openPR
+          value: "true"
+        - name: environment
+          value: dev
+      steps:
+        - task:
+            name: addon-version-promote
+---
+# Stage 2: stg
+apiVersion: kargo.akuity.io/v1alpha1
+kind: Stage
+metadata:
+  name: stg
+  namespace: rustfs-addon
+  annotations:
+    kargo.akuity.io/color: yellow
+spec:
+  requestedFreight:
+    - origin:
+        kind: Warehouse
+        name: rustfs-charts
+      sources:
+        stages:
+          - dev
+  promotionTemplate:
+    spec:
+      vars:
+        - name: openPR
+          value: "true"
+        - name: environment
+          value: stg
+      steps:
+        - task:
+            name: addon-version-promote
+---
+# Stage 3: prod
+apiVersion: kargo.akuity.io/v1alpha1
+kind: Stage
+metadata:
+  name: prod
+  namespace: rustfs-addon
+  annotations:
+    kargo.akuity.io/color: red
+spec:
+  requestedFreight:
+    - origin:
+        kind: Warehouse
+        name: rustfs-charts
+      sources:
+        stages:
+          - stg
+  promotionTemplate:
+    spec:
+      vars:
+        - name: openPR
+          value: "true"
+        - name: environment
+          value: prod
+      steps:
+        - task:
+            name: addon-version-promote
