@@ -45,7 +45,7 @@ spec:
                     repoURL: https://github.com/thatmlopsguy/dokaseca-addons
                     revision: main
                     files:
-                      - path: configs/appsets/regions/rustfs/*.json
+                      - path: configs/appsets/regions/*/rustfs.json
                 - clusters:
                     selector:
                       matchLabels:
