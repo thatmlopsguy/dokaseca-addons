@@ -79,3 +79,111 @@ spec:
       steps:
         - task:
             name: addon-version-promote
+---
+# Stage: prod-apac (sources from prod, promotes region override independently)
+apiVersion: kargo.akuity.io/v1alpha1
+kind: Stage
+metadata:
+  name: prod-apac
+  namespace: rustfs-addon
+  annotations:
+    kargo.akuity.io/color: red
+spec:
+  requestedFreight:
+    - origin:
+        kind: Warehouse
+        name: rustfs-charts
+      sources:
+        stages:
+          - prod
+  promotionTemplate:
+    spec:
+      vars:
+        - name: openPR
+          value: "true"
+        - name: region
+          value: apac
+      steps:
+        - task:
+            name: addon-version-promote-region
+---
+# Stage: prod-eu
+apiVersion: kargo.akuity.io/v1alpha1
+kind: Stage
+metadata:
+  name: prod-eu
+  namespace: rustfs-addon
+  annotations:
+    kargo.akuity.io/color: red
+spec:
+  requestedFreight:
+    - origin:
+        kind: Warehouse
+        name: rustfs-charts
+      sources:
+        stages:
+          - prod
+  promotionTemplate:
+    spec:
+      vars:
+        - name: openPR
+          value: "true"
+        - name: region
+          value: eu
+      steps:
+        - task:
+            name: addon-version-promote-region
+---
+# Stage: prod-us
+apiVersion: kargo.akuity.io/v1alpha1
+kind: Stage
+metadata:
+  name: prod-us
+  namespace: rustfs-addon
+  annotations:
+    kargo.akuity.io/color: red
+spec:
+  requestedFreight:
+    - origin:
+        kind: Warehouse
+        name: rustfs-charts
+      sources:
+        stages:
+          - prod
+  promotionTemplate:
+    spec:
+      vars:
+        - name: openPR
+          value: "true"
+        - name: region
+          value: us
+      steps:
+        - task:
+            name: addon-version-promote-region
+---
+# Stage: prod-local
+apiVersion: kargo.akuity.io/v1alpha1
+kind: Stage
+metadata:
+  name: prod-local
+  namespace: rustfs-addon
+  annotations:
+    kargo.akuity.io/color: red
+spec:
+  requestedFreight:
+    - origin:
+        kind: Warehouse
+        name: rustfs-charts
+      sources:
+        stages:
+          - prod
+  promotionTemplate:
+    spec:
+      vars:
+        - name: openPR
+          value: "true"
+        - name: region
+          value: local
+      steps:
+        - task:
+            name: addon-version-promote-region
