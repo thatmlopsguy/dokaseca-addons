@@ -17,7 +17,6 @@ spec:
               values:
                 addonChart: rustfs
                 addonChartVersion: 0.0.84
-                addonChartVersionResolved: 0.0.84
                 addonChartRepository: https://charts.rustfs.com
                 addonChartNamespace: rustfs-system
               selector:
@@ -38,8 +37,7 @@ spec:
                       matchLabels:
                         env: '{{ .environment }}'
                     values:
-                      addonChartVersion: '{{ if and .addonChartVersion (ne .addonChartVersion "<no value>") }}{{ .addonChartVersion }}{{ end }}'
-                      addonChartVersionResolved: '{{ if and .addonChartVersion (ne .addonChartVersion "<no value>") }}{{ .addonChartVersion }}{{ end }}'
+                      addonChartVersion: '{{ .addonChartVersion }}'
           # Priority 3 (highest): per-region overrides — allows individual region promotion in prod without affecting other regions
           - matrix:
               generators:
@@ -54,8 +52,7 @@ spec:
                         region: '{{ .cluster_region }}'
                         env: 'prod'
                     values:
-                      addonChartVersion: '{{ if and .addonChartVersion (ne .addonChartVersion "<no value>") }}{{ .addonChartVersion }}{{ end }}'
-                      addonChartVersionResolved: '{{ if and .addonChartVersion (ne .addonChartVersion "<no value>") }}{{ .addonChartVersion }}{{ end }}'
+                      addonChartVersion: '{{ .addonChartVersion }}'
           # Priority 4 (final, highest): per-cluster overrides — allow single-cluster canaries
           - matrix:
               generators:
@@ -72,8 +69,7 @@ spec:
                           values:
                             - '{{ .cluster_name }}'
                     values:
-                      addonChartVersion: '{{ if and .addonRustFSChartVersion (ne .addonRustFSChartVersion "<no value>") }}{{ .addonRustFSChartVersion }}{{ else if and .addonChartVersion (ne .addonChartVersion "<no value>") }}{{ .addonChartVersion }}{{ end }}'
-                      addonChartVersionResolved: '{{ if and .addonRustFSChartVersion (ne .addonRustFSChartVersion "<no value>") }}{{ .addonRustFSChartVersion }}{{ else if and .addonChartVersion (ne .addonChartVersion "<no value>") }}{{ .addonChartVersion }}{{ else }}{{ .addonChartVersionResolved }}{{ end }}'
+                      addonRustFSChartVersion: '{{ .addonRustFSChartVersion }}'
   template:
     metadata:
       name: "{{ .name }}-{{ .metadata.labels.env }}-{{ .metadata.labels.region }}-addon-{{ .values.addonChart }}"
@@ -90,7 +86,7 @@ spec:
           ref: values
         - chart: '{{ .values.addonChart }}'
           repoURL: '{{ .values.addonChartRepository }}'
-          targetRevision: '{{ if .addonChartVersion }}{{ .addonChartVersion }}{{ else if .values.addonChartVersionResolved }}{{ .values.addonChartVersionResolved }}{{ else if .values.addonChartVersion }}{{ .values.addonChartVersion }}{{ else }}0.0.84{{ end }}'
+          targetRevision: '{{ default .addonChartVersion .addonRustFSChartVersion }}'
           helm:
             releaseName: '{{ .values.addonChart }}'
             ignoreMissingValueFiles: true
@@ -98,7 +94,6 @@ spec:
               - $values/configs/addons/environments/default/{{ .values.addonChart }}/values.yaml
               - $values/configs/addons/environments/{{ .metadata.labels.environment }}/{{ .values.addonChart }}/values.yaml
               - $values/configs/addons/regions/{{ .metadata.labels.region }}/{{ .values.addonChart }}/values.yaml
-              - $values/configs/addons/cluster_type/{{ .metadata.labels.cluster_type }}/{{ .values.addonChart }}/values.yaml
               - $values/configs/addons/cluster_name/{{ .name }}/{{ .values.addonChart }}/values.yaml
       destination:
         namespace: '{{ .values.addonChartNamespace }}'
