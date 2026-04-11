@@ -38,9 +38,29 @@ spec:
                         env: '{{ .environment }}'
                     values:
                       addonChartVersion: '{{ .addonChartVersion }}'
+          # Priority 3 (highest): per-region overrides — allows individual region promotion in prod without affecting other regions
+          - matrix:
+              generators:
+                - git:
+                    repoURL: https://github.com/thatmlopsguy/dokaseca-addons
+                    revision: main
+                    files:
+                      - path: configs/appsets/regions/rustfs/*.json
+                - clusters:
+                    selector:
+                      matchLabels:
+                        region: '{{ .cluster_region }}'
+                        env: 'prod'
+                    values:
+                      addonChartVersion: '{{ .addonChartVersion }}'
   template:
     metadata:
-      name: addon-{{ .name }}-{{ .values.addonChart }}-{{ .metadata.labels.env }}
+      name: "{{ .name }}-{{ .metadata.labels.env }}-{{ .metadata.labels.region }}-addon-{{ .values.addonChart }}"
+      labels:
+        app.kubernetes.io/part-of: addons
+        app.kubernetes.io/component: '{{ .values.addonChart }}'
+        environment: '{{ .metadata.labels.env }}'
+        region: '{{ .metadata.labels.region }}'
     spec:
       project: default
       sources:
