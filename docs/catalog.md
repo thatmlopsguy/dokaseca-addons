@@ -42,7 +42,8 @@ This catalog contains **kubernetes addons** organized by category, all deployabl
 | Delivery              | argo-cd                      | argocd                        | GitOps continuous delivery                                                      |
 | Delivery              | argo-rollouts                | argo-rollouts                 | Progressive delivery tool                                                       |
 | Delivery              | argo-events                  | argo-events                   | Event-driven automation for Kubernetes                                          |
-| Delivery              | devlake                      | devlake                       | DevOps metrics and analytics                                                    |
+| DORA                  | devlake                      | devlake                       | DevOps metrics and analytics                                                    |
+| DORA                  | open-dora                    | open-dora                     | DevOps Research and Assessment (DORA) metrics collection and visualization      |
 | Disaster Recovery     | velero                       | velero                        | Kubernetes backup and disaster recovery                                         |
 | GitOps                | argocd-image-updater         | argocd                        | Automatic container image update for ArgoCD                                     |
 | GitOps                | gitops-promoter              | promoter-system               | Facilitates environment promotion via GitOps                                    |

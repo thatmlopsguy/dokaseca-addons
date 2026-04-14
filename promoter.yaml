@@ -227,9 +227,10 @@ dependencies:
       type: rss
       url: https://artifacthub.io/api/v1/packages/helm/argo/argo-events/feed/rss
 
+  # DORA
   - name: devlake
     source:
-      file: argocd/appsets/oss/delivery/addons-devlake-appset.yaml
+      file: argocd/appsets/oss/dora/addons-devlake-appset.yaml
     repository:
       type: rss
       url: https://artifacthub.io/api/v1/packages/helm/apache-incubator-devlake-helm-chart/devlake/feed/rss
