@@ -18,7 +18,6 @@ This catalog contains **kubernetes addons** organized by category, all deployabl
 | Compliance            | connaisseur                  | connaisseur                   | Admission controller for container validation                                   |
 | Compliance            | kyverno                      | kyverno                       | Kubernetes native policy management                                             |
 | Compliance            | kyverno-policies             | kyverno                       | Policy collection for Kyverno                                                   |
-| Compliance            | policy-reporter              | policy-reporter               | Policy violation dashboard                                                      |
 | Compliance            | polaris                      | polaris                       | Kubernetes configuration validation                                             |
 | Compliance            | policy-controller            | cosign-system                 | Kubernetes admission controller for Sigstore                                    |
 | Compute               | spark-operator               | spark                         | Kubernetes operator for Apache Spark                                            |
@@ -32,6 +31,8 @@ This catalog contains **kubernetes addons** organized by category, all deployabl
 | Dashboard             | headlamp                     | kube-system                   | Easy-to-use Kubernetes web UI                                                   |
 | Dashboard             | helm-dashboard               | kube-system                   | Web dashboard for Helm                                                          |
 | Dashboard             | komoplane                    | komoplane                     | Kubernetes resource browser                                                     |
+| Dashboard             | policy-reporter              | policy-reporter               | Policy violation dashboard                                                      |
+| Dashboard             | kiali-operator               | kiali-operator                | Service mesh observability                                                      |
 | Data Management       | datahub                      | datahub                       | Metadata platform for data discovery                                            |
 | Data Management       | feast                        | feast                         | Feature store for machine learning                                              |
 | Databases             | atlas-operator               | atlas-operator                | Database schema migration operator                                              |
@@ -75,7 +76,6 @@ This catalog contains **kubernetes addons** organized by category, all deployabl
 | Observability         | fluent-bit                   | monitoring                    | Lightweight log processor and forwarder                                         |
 | Observability         | grafana-operator             | monitoring                    | Kubernetes operator for Grafana                                                 |
 | Observability         | jaeger                       | monitoring                    | Distributed tracing system                                                      |
-| Observability         | kiali-operator               | kiali-operator                | Service mesh observability                                                      |
 | Observability         | kube-prometheus-stack        | monitoring                    | Complete monitoring stack with Prometheus                                       |
 | Observability         | logging-operator             | logging                       | Log management operator                                                         |
 | Observability         | loki                         | monitoring                    | Log aggregation system                                                          |
@@ -120,7 +120,6 @@ This catalog contains **kubernetes addons** organized by category, all deployabl
 | Utilities             | spegel                       | spegel                        | Stateless cluster local OCI registry mirror                                     |
 | Utilities             | kube-image-keeper            | kuik-system                   | Container image caching system for Kubernetes                                   |
 | Utilities             | kubernetes-replicator        | kube-system                   | Kubernetes controller for synchronizing secrets & config maps across namespaces |
-| Other                 | open-feature-operator        | open-feature-operator-system  | Feature flag management for Kubernetes                                          |
 | Scaling               | keda                         | keda                          | Kubernetes-based Event Driven Autoscaling                                       |
 | Scaling               | keda-add-ons-http            | keda                          | keda add-on for HTTP-based scaling                                              |
 | Scaling               | keda-kaito-scaler            | keda                          | keda add-on for LLM inference scaling                                           |
@@ -128,3 +127,4 @@ This catalog contains **kubernetes addons** organized by category, all deployabl
 | Workflows             | argo-workflows               | argo                          | Kubernetes-native workflow engine                                               |
 | Workflows             | temporal                     | temporal                      | Durable execution for microservices                                             |
 | Workflows             | dagster                      | dagster                       | Data orchestrator for machine learning, analytics, and ETL                      |
+| Other                 | open-feature-operator        | open-feature-operator-system  | Feature flag management for Kubernetes                                          |
