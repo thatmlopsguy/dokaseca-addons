@@ -74,13 +74,6 @@ dependencies:
       type: rss
       url: https://artifacthub.io/api/v1/packages/helm/kyverno/kyverno-policies/feed/rss
 
-  - name: kyverno-policy-reporter
-    source:
-      file: argocd/appsets/oss/compliance/addons-kyverno-policy-reporter-appset.yaml
-    repository:
-      type: rss
-      url: https://artifacthub.io/api/v1/packages/helm/policy-reporter/policy-reporter/feed/rss
-
   - name: polaris
     source:
       file: argocd/appsets/oss/compliance/addons-polaris-appset.yaml
@@ -161,6 +154,20 @@ dependencies:
     repository:
       type: rss
       url: https://artifacthub.io/api/v1/packages/helm/dapr/dapr-dashboard/feed/rss
+
+  - name: kiali-operator
+    source:
+      file: argocd/appsets/oss/dashboard/addons-kiali-appset.yaml
+    repository:
+      type: rss
+      url: https://artifacthub.io/api/v1/packages/helm/kiali/kiali-operator/feed/rss
+
+  - name: policy-reporter
+    source:
+      file: argocd/appsets/oss/dashboard/addons-policy-reporter-appset.yaml
+    repository:
+      type: rss
+      url: https://artifacthub.io/api/v1/packages/helm/policy-reporter/policy-reporter/feed/rss
 
   # Databases
   - name: cloudnative-pg
@@ -556,13 +563,6 @@ dependencies:
       type: rss
       url: https://artifacthub.io/api/v1/packages/helm/opensearch-project-helm-charts/opensearch-dashboards/feed/rss
 
-  - name: kiali-operator
-    source:
-      file: argocd/appsets/oss/observability/addons-kiali-appset.yaml
-    repository:
-      type: rss
-      url: https://artifacthub.io/api/v1/packages/helm/kiali/kiali-operator/feed/rss
-
   - name: opensearch
     source:
       file: argocd/appsets/oss/observability/addons-opensearch-appset.yaml
@@ -726,7 +726,7 @@ dependencies:
 
   - name: rook-ceph
     source:
-      file: argocd/appsets/oss/storage/addons-rook-ceph-appset.yaml
+      file: argocd/appsets/oss/storage/addons-rook-ceph-operator-appset.yaml
     repository:
       type: rss
       url: https://artifacthub.io/api/v1/packages/helm/rook/rook-ceph/feed/rss

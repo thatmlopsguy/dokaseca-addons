@@ -21,7 +21,7 @@ spec:
                   - key: enable_kyverno
                     operator: In
                     values: ['true']
-                  - key: enable_kyverno_policy_reporter
+                  - key: enable_policy_reporter
                     operator: In
                     values: ['true']
           - clusters:

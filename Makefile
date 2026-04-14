@@ -41,6 +41,10 @@ pre-commit-update: ## Update pre-commit git-hooks
 argocd-promoter-update: ## Update ArgoCD ApplicationSet definitions from promoter.yaml
 	@uv run src/argocd-promoter.py update --dry-run
 
+##@ ArgoCD
+argocd-restart: ## Restart ArgoCD ApplicationSet controller to apply changes
+	@kubectl -n argocd rollout restart deployment argo-cd-argocd-applicationset-controller
+
 ##@ Documentation
 .PHONY: docs-serve docs-build adr-list
 docs-serve: ## Start a local web server for serving documentation
