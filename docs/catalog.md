@@ -33,6 +33,8 @@ This catalog contains **kubernetes addons** organized by category, all deployabl
 | Dashboard             | komoplane                    | komoplane                     | Kubernetes resource browser                                                     |
 | Dashboard             | policy-reporter              | policy-reporter               | Policy violation dashboard                                                      |
 | Dashboard             | kiali-operator               | kiali-operator                | Service mesh observability                                                      |
+| Infrastructure        | atlantis                     | atlantis                      | Terraform automation and collaboration tool                                     |
+| Infrastructure        | semaphore                    | semaphore                     | Continuous integration and deployment tool                                      |
 | Data Management       | datahub                      | datahub                       | Metadata platform for data discovery                                            |
 | Data Management       | feast                        | feast                         | Feature store for machine learning                                              |
 | Databases             | atlas-operator               | atlas-operator                | Database schema migration operator                                              |
