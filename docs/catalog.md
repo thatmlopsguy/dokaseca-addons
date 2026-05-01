@@ -19,7 +19,7 @@ This catalog contains **kubernetes addons** organized by category, all deployabl
 | Compliance            | kyverno                      | kyverno                       | Kubernetes native policy management                                             |
 | Compliance            | kyverno-policies             | kyverno                       | Policy collection for Kyverno                                                   |
 | Compliance            | polaris                      | polaris                       | Kubernetes configuration validation                                             |
-| Compliance            | policy-controller            | cosign-system                 | Kubernetes admission controller for Sigstore                                    |
+| Compliance            | policy-controller            | cosign-system                 | Kubernetes admission controller for sigstore                                    |
 | Compute               | spark-operator               | spark                         | Kubernetes operator for Apache Spark                                            |
 | Compute               | kuberay                      | kuberay                       | Kubernetes operator for Ray                                                     |
 | Compute               | slurm-operator               | slinky                        | Kubernetes operator for Slurm                                                   |
@@ -33,6 +33,8 @@ This catalog contains **kubernetes addons** organized by category, all deployabl
 | Dashboard             | komoplane                    | komoplane                     | Kubernetes resource browser                                                     |
 | Dashboard             | policy-reporter              | policy-reporter               | Policy violation dashboard                                                      |
 | Dashboard             | kiali-operator               | kiali-operator                | Service mesh observability                                                      |
+| Dashboard             | velero-ui                    | velero                        | Web UI for Velero backup and restore                                            |
+| Dashboard             | kafbat-ui                    | strimzi-system                | Web UI for Kafka topics and consumers                                           |
 | Infrastructure        | atlantis                     | atlantis                      | Terraform automation and collaboration tool                                     |
 | Infrastructure        | semaphore                    | semaphore                     | Continuous integration and deployment tool                                      |
 | Data Management       | datahub                      | datahub                       | Metadata platform for data discovery                                            |
