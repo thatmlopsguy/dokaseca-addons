@@ -2,7 +2,7 @@
 apiVersion: argoproj.io/v1alpha1
 kind: ApplicationSet
 metadata:
-  name: addons-komoplane
+  name: addons-kafbat-ui
   namespace: argocd
 spec:
   syncPolicy:
@@ -13,16 +13,16 @@ spec:
         generators:
           - clusters:
               values:
-                addonChart: komoplane
-                addonChartVersion: 0.1.6 # helm search repo -l komoplane
-                addonChartRepository: https://helm-charts.komodor.io
-                addonChartNamespace: komoplane
+                addonChart: kafka-ui
+                addonChartVersion: 1.6.4
+                addonChartRepository: https://kafbat.github.io/helm-charts
+                addonChartNamespace: strimzi-system
               selector:
                 matchExpressions:
-                  - key: enable_crossplane
+                  - key: enable_kafka_ui
                     operator: In
                     values: ['true']
-                  - key: enable_komoplane
+                  - key: enable_kafka
                     operator: In
                     values: ['true']
           - clusters:
@@ -30,13 +30,13 @@ spec:
                 matchLabels:
                   environment: dev
               values:
-                addonChartVersion: 0.1.7 # promote this
+                addonChartVersion: 1.6.4 # promote this
           - clusters:
               selector:
                 matchLabels:
                   environment: prod
               values:
-                addonChartVersion: 0.1.6
+                addonChartVersion: 1.6.4
   template:
     metadata:
       name: addon-{{name}}-{{values.addonChart}}
