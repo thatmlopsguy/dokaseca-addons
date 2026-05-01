@@ -169,6 +169,13 @@ dependencies:
       type: rss
       url: https://artifacthub.io/api/v1/packages/helm/policy-reporter/policy-reporter/feed/rss
 
+  - name: kafbat-ui
+    source:
+      file: argocd/appsets/oss/dashboard/addons-kafbat-ui-appset.yaml
+    repository:
+      type: rss
+      url: https://artifacthub.io/api/v1/packages/helm/kafka-ui/kafka-ui/feed/rss
+
   # Databases
   - name: cloudnative-pg
     source:
@@ -804,22 +811,3 @@ dependencies:
     repository:
       type: rss
       url: https://artifacthub.io/api/v1/packages/helm/dagster/dagster/feed/rss
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
