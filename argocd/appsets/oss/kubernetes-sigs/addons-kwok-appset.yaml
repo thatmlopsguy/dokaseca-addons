@@ -2,7 +2,7 @@
 apiVersion: argoproj.io/v1alpha1
 kind: ApplicationSet
 metadata:
-  name: addons-lws
+  name: addons-kwok
   namespace: argocd
 spec:
   syncPolicy:
@@ -13,13 +13,13 @@ spec:
         generators:
           - clusters:
               values:
-                addonChart: lws
-                addonChartVersion: 0.8.0
-                addonChartRepository: registry.k8s.io/lws/charts
-                addonChartNamespace: lws-system
+                addonChart: kwok
+                addonChartVersion: 0.2.0
+                addonChartRepository: https://kwok.sigs.k8s.io/charts
+                addonChartNamespace: kube-system
               selector:
                 matchExpressions:
-                  - key: enable_lws
+                  - key: enable_kwok
                     operator: In
                     values: ['true']
           - clusters:
@@ -27,13 +27,13 @@ spec:
                 matchLabels:
                   environment: dev
               values:
-                addonChartVersion: 0.8.0 # promote this
+                addonChartVersion: 0.2.0 # promote this
           - clusters:
               selector:
                 matchLabels:
                   environment: prod
               values:
-                addonChartVersion: 0.8.0
+                addonChartVersion: 0.2.0
   template:
     metadata:
       name: addon-{{name}}-{{values.addonChart}}
