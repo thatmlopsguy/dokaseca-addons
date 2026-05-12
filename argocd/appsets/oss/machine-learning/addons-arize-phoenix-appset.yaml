@@ -2,7 +2,7 @@
 apiVersion: argoproj.io/v1alpha1
 kind: ApplicationSet
 metadata:
-  name: addons-kubeflow-trainer
+  name: addons-arize-phoenix
   namespace: argocd
 spec:
   syncPolicy:
@@ -13,13 +13,14 @@ spec:
         generators:
           - clusters:
               values:
-                addonChart: kubeflow-trainer
-                addonChartVersion: 2.2.0
-                addonChartRepository: ghcr.io/kubeflow/charts
-                addonChartNamespace: kubeflow-system
+                addonChart: phoenix-helm
+                addonChartVersion: 7.0.6
+                addonChartRepository: registry-1.docker.io/arizephoenix/
+                addonChartNamespace: phoenix
+                addonChartName: phoenix
               selector:
                 matchExpressions:
-                  - key: enable_kubeflow_trainer
+                  - key: enable_arize_phoenix
                     operator: In
                     values: ['true']
           - clusters:
@@ -27,13 +28,13 @@ spec:
                 matchLabels:
                   environment: dev
               values:
-                addonChartVersion: 2.2.0 # promote this
+                addonChartVersion: 7.0.6 # promote this
           - clusters:
               selector:
                 matchLabels:
                   environment: prod
               values:
-                addonChartVersion: 2.2.0
+                addonChartVersion: 7.0.6
   template:
     metadata:
       name: addon-{{name}}-{{values.addonChart}}
@@ -50,10 +51,10 @@ spec:
             releaseName: '{{values.addonChart}}'
             ignoreMissingValueFiles: true
             valueFiles:
-              - $values/configs/addons/environments/default/{{values.addonChart}}/values.yaml
-              - $values/configs/addons/environments/{{metadata.labels.environment}}/{{values.addonChart}}/values.yaml
-              - $values/configs/addons/regions/{{metadata.labels.region}}/{{values.addonChart}}/values.yaml
-              - $values/configs/addons/clusters/{{name}}/{{values.addonChart}}/values.yaml
+              - $values/configs/addons/environments/default/{{values.addonChartName}}/values.yaml
+              - $values/configs/addons/environments/{{metadata.labels.environment}}/{{values.addonChartName}}/values.yaml
+              - $values/configs/addons/regions/{{metadata.labels.region}}/{{values.addonChartName}}/values.yaml
+              - $values/configs/addons/clusters/{{name}}/{{values.addonChartName}}/values.yaml
       destination:
         namespace: '{{values.addonChartNamespace}}'
         name: '{{name}}'
@@ -61,4 +62,3 @@ spec:
         automated: {}
         syncOptions:
           - CreateNamespace=true
-          - ServerSideApply=true # Big CRDs.
