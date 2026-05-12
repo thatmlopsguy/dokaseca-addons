@@ -56,6 +56,7 @@ This catalog contains **kubernetes addons** organized by category, all deployabl
 | Machine Learning      | vllm                         | vllm                          | High-performance LLM serving platform                                           |
 | Machine Learning      | llm-d                        | llm-d                         | LLM deployment and management platform                                          |
 | Machine Learning      | langfuse                     | langfuse                      | LLM engineering platform                                                        |
+| Machine Learning      | arize phoenix                | phoenix                       | Open-source platform for agent development and evaluation                       |
 | Machine Learning      | litellm                      | litellm                       | Unified API for 100+ LLMs                                                       |
 | Machine Learning      | litellm-operator             | litellm-operator              | Kubernetes operator for LiteLLM                                                 |
 | Machine Learning      | ollama                       | ollama                        | Run large language models locally                                               |
