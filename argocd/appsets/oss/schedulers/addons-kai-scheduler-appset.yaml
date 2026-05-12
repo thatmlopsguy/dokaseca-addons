@@ -2,7 +2,7 @@
 apiVersion: argoproj.io/v1alpha1
 kind: ApplicationSet
 metadata:
-  name: addons-volcano
+  name: addons-kai-scheduler
   namespace: argocd
 spec:
   syncPolicy:
@@ -13,13 +13,13 @@ spec:
         generators:
           - clusters:
               values:
-                addonChart: volcano
-                addonChartVersion: 1.14.1
-                addonChartRepository: https://volcano-sh.github.io/helm-charts
-                addonChartNamespace: volcano-system
+                addonChart: kai-scheduler
+                addonChartVersion: v0.9.18
+                addonChartRepository: ghcr.io/kai-scheduler/kai-scheduler/
+                addonChartNamespace: kai-scheduler
               selector:
                 matchExpressions:
-                  - key: enable_volcano
+                  - key: enable_kai_scheduler
                     operator: In
                     values: ['true']
           - clusters:
@@ -27,13 +27,13 @@ spec:
                 matchLabels:
                   environment: dev
               values:
-                addonChartVersion: 1.14.1 # promote this
+                addonChartVersion: v0.9.18 # promote this
           - clusters:
               selector:
                 matchLabels:
                   environment: prod
               values:
-                addonChartVersion: 1.14.1
+                addonChartVersion: v0.9.18
   template:
     metadata:
       name: addon-{{name}}-{{values.addonChart}}
@@ -54,6 +54,8 @@ spec:
               - $values/configs/addons/environments/{{metadata.labels.environment}}/{{values.addonChartName}}/values.yaml
               - $values/configs/addons/regions/{{metadata.labels.region}}/{{values.addonChartName}}/values.yaml
               - $values/configs/addons/clusters/{{name}}/{{values.addonChartName}}/values.yaml
+            values: |
+              kubernetesClusterDomain: '{{metadata.labels.domain}}'
       destination:
         namespace: '{{values.addonChartNamespace}}'
         name: '{{name}}'
