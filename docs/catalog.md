@@ -56,12 +56,14 @@ This catalog contains **kubernetes addons** organized by category, all deployabl
 | Machine Learning      | vllm                         | vllm                          | High-performance LLM serving platform                                           |
 | Machine Learning      | llm-d                        | llm-d                         | LLM deployment and management platform                                          |
 | Machine Learning      | langfuse                     | langfuse                      | LLM engineering platform                                                        |
+| Machine Learning      | langtrace                    | langtrace                     | LLM observability platform                                                      |
 | Machine Learning      | arize phoenix                | phoenix                       | Open-source platform for agent development and evaluation                       |
 | Machine Learning      | litellm                      | litellm                       | Unified API for 100+ LLMs                                                       |
 | Machine Learning      | litellm-operator             | litellm-operator              | Kubernetes operator for LiteLLM                                                 |
 | Machine Learning      | ollama                       | ollama                        | Run large language models locally                                               |
 | Machine Learning      | mlflow                       | mlflow                        | Open source platform for the machine learning lifecycle                         |
 | Machine Learning      | llmkube                      | llmkube-system                | Kubernetes operator for self-hosted LLM inference                               |
+| Machine Learning      | kubeai                       | kubeai-system                 | Kubernetes operator for self-hosted LLM inference                               |
 | Messaging             | nats                         | nats                          | High-performance messaging system                                               |
 | Messaging             | rabbitmq-cluster-operator    | rabbitmq-system               | RabbitMQ cluster operator                                                       |
 | Messaging             | strimzi-kafka-operator       | strimzi-system                | Apache Kafka on Kubernetes                                                      |
