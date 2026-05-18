@@ -103,6 +103,7 @@ This catalog contains **kubernetes addons** organized by category, all deployabl
 | RBAC                  | rbac-manager                 | rbac-manager                  | Kubernetes RBAC management                                                      |
 | RBAC                  | argocd-rbac-operator         | argocd-rbac-operator-system   | Kubernetes RBAC management for ArgoCD                                           |
 | RBAC                  | paralus                      | paralus                       | Kubernetes RBAC management and visualization                                    |
+| RBAC                  | openfga                      | openfga                       | Fine-grained authorization for Kubernetes                                       |
 | Scheduling            | volcano                      | volcano-system                | High-performance batch scheduling system                                        |
 | Scheduling            | yunikorn                     | yunikorn-system               | Kubernetes scheduler for big data workloads                                     |
 | Scheduling            | kueue                        | kueue-system                  | Kubernetes-native job scheduling system                                         |

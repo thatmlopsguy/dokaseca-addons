@@ -2,7 +2,7 @@
 apiVersion: argoproj.io/v1alpha1
 kind: ApplicationSet
 metadata:
-  name: addons-koreo
+  name: addons-openfga
   namespace: argocd
 spec:
   syncPolicy:
@@ -13,13 +13,12 @@ spec:
         generators:
           - clusters:
               values:
-                addonChart: koreo
-                addonChartVersion: 0.1.3
-                addonChartRepository: https://koreo.dev/helm
-                addonChartNamespace: koreo
+                addonChart: openfga
+                addonChartVersion: 0.3.4
+                addonChartRepository: ghcr.io/openfga/helm-charts
               selector:
                 matchExpressions:
-                  - key: enable_koreo
+                  - key: enable_openfga
                     operator: In
                     values: ['true']
           - clusters:
@@ -27,13 +26,13 @@ spec:
                 matchLabels:
                   environment: dev
               values:
-                addonChartVersion: 0.1.3 # promote this
+                addonChartVersion: 0.3.4 # promote this
           - clusters:
               selector:
                 matchLabels:
                   environment: prod
               values:
-                addonChartVersion: 0.1.3
+                addonChartVersion: 0.3.4
   template:
     metadata:
       name: addon-{{name}}-{{values.addonChart}}
@@ -55,7 +54,7 @@ spec:
               - $values/configs/addons/regions/{{metadata.labels.region}}/{{values.addonChart}}/values.yaml
               - $values/configs/addons/clusters/{{name}}/{{values.addonChart}}/values.yaml
       destination:
-        namespace: '{{values.addonChartNamespace}}'
+        namespace: '{{values.addonChart}}'
         name: '{{name}}'
       syncPolicy:
         automated: {}

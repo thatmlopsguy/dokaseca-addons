@@ -653,6 +653,13 @@ dependencies:
       type: rss
       url: https://artifacthub.io/api/v1/packages/helm/argocd-rbac-operator/argocd-rbac-operator/feed/rss
 
+  - name: openfga
+    source:
+      file: argocd/appsets/oss/rbac/addons-openfga-appset.yaml
+    repository:
+      type: rss
+      url: https://artifacthub.io/api/v1/packages/helm/openfga/openfga/feed/rss
+
   # Security
   - name: dependency-track
     source:
