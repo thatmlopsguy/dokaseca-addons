@@ -9,7 +9,7 @@ dependencies = [
   "pyyaml>=6.0.3",
   "requests>=2.32.5",
   "rich>=15.0.0",
-  "typer>=0.20.0",
+  "typer>=0.26.2",
 ]
 
 [dependency-groups]
