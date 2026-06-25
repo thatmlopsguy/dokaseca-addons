@@ -1,0 +1,104 @@
+---
+apiVersion: argoproj.io/v1alpha1
+kind: ApplicationSet
+metadata:
+  name: addons-rustfs
+  namespace: argocd
+spec:
+  syncPolicy:
+    preserveResourcesOnDeletion: false
+  goTemplate: true
+  generators:
+    - merge:
+        mergeKeys: [server]
+        generators:
+          # Priority 1 (lowest): defaults for all rustfs-enabled clusters
+          - clusters:
+              values:
+                addonChart: rustfs
+                addonChartVersion: 0.0.84
+                addonChartRepository: https://charts.rustfs.com
+                addonChartNamespace: rustfs-system
+              selector:
+                matchExpressions:
+                  - key: enable_rustfs
+                    operator: In
+                    values: ['true']
+          # Priority 2 (medium): per-environment overrides from config files
+          - matrix:
+              generators:
+                - git:
+                    repoURL: https://github.com/thatmlopsguy/dokaseca-addons
+                    revision: main
+                    files:
+                      - path: configs/appsets/environments/*/rustfs.json
+                - clusters:
+                    selector:
+                      matchLabels:
+                        env: '{{ .environment }}'
+                    values:
+                      addonChartVersion: '{{ .addonChartVersion }}'
+          # Priority 3 (high): per-region overrides — allows individual region promotion in prod without affecting other regions
+          - matrix:
+              generators:
+                - git:
+                    repoURL: https://github.com/thatmlopsguy/dokaseca-addons
+                    revision: main
+                    files:
+                      - path: configs/appsets/regions/*/rustfs.json
+                - clusters:
+                    selector:
+                      matchLabels:
+                        region: '{{ .cluster_region }}'
+                        env: 'prod'
+                    values:
+                      addonChartVersion: '{{ .addonChartVersion }}'
+          # Priority 4 (highest): per-cluster overrides — allow single-cluster canaries
+          - matrix:
+              generators:
+                - git:
+                    repoURL: https://github.com/thatmlopsguy/dokaseca-addons
+                    revision: main
+                    files:
+                      - path: configs/appsets/clusters/*/addons.json
+                - clusters:
+                    selector:
+                      matchExpressions:
+                        - key: cluster_name
+                          operator: In
+                          values:
+                            - '{{ .cluster_name }}'
+                    values:
+                      addonRustFSChartVersion: '{{ .addonRustFSChartVersion }}'
+  template:
+    metadata:
+      name: "{{ .name }}-{{ .metadata.labels.env }}-{{ .metadata.labels.region }}-addon-{{ .values.addonChart }}"
+      labels:
+        app.kubernetes.io/part-of: addons
+        app.kubernetes.io/component: '{{ .values.addonChart }}'
+        environment: '{{ .metadata.labels.env }}'
+        region: '{{ .metadata.labels.region }}'
+    spec:
+      project: default
+      sourceHydrator:
+        - repoURL: '{{ .metadata.annotations.addons_repo_url }}'
+          targetRevision: '{{ .metadata.annotations.addons_repo_revision }}'
+          ref: values
+        - chart: '{{ .values.addonChart }}'
+          repoURL: '{{ .values.addonChartRepository }}'
+          targetRevision: '{{ default .addonChartVersion .addonRustFSChartVersion }}'
+          helm:
+            releaseName: '{{ .values.addonChart }}'
+            ignoreMissingValueFiles: true
+            valueFiles:
+              - $values/configs/addons/environments/default/{{ .values.addonChart }}/values.yaml
+              - $values/configs/addons/environments/{{ .metadata.labels.environment }}/{{ .values.addonChart }}/values.yaml
+              - $values/configs/addons/regions/{{ .metadata.labels.region }}/{{ .values.addonChart }}/values.yaml
+              - $values/configs/addons/cluster_name/{{ .name }}/{{ .values.addonChart }}/values.yaml
+      destination:
+        namespace: '{{ .values.addonChartNamespace }}'
+        name: '{{ .name }}'
+      syncPolicy:
+        automated: {}
+        syncOptions:
+          - CreateNamespace=true
