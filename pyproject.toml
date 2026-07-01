@@ -15,7 +15,7 @@ dependencies = [
 [dependency-groups]
 dev = [
     "prek>=0.4.5",
-    "ruff>=0.14.7",
+    "ruff>=0.15.19",
 ]
 docs = [
   "mkdocs>=1.6.1",
