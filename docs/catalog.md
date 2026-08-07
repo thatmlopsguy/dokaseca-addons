@@ -49,6 +49,7 @@ This catalog contains **kubernetes addons** organized by category, all deployabl
 | DORA                  | devlake                      | devlake                       | DevOps metrics and analytics                                                    |
 | DORA                  | open-dora                    | open-dora                     | DevOps Research and Assessment (DORA) metrics collection and visualization      |
 | Disaster Recovery     | velero                       | velero                        | Kubernetes backup and disaster recovery                                         |
+| GitOps                | kokumi                       | kokumi                        | OCI-first GitOps delivery tool                                                  |
 | GitOps                | argocd-image-updater         | argocd                        | Automatic container image update for ArgoCD                                     |
 | GitOps                | gitops-promoter              | promoter-system               | Facilitates environment promotion via GitOps                                    |
 | GitOps                | kargo                        | kargo                         | GitOps continuous promotion                                                     |
