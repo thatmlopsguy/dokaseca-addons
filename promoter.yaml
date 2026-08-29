@@ -176,6 +176,13 @@ dependencies:
       type: rss
       url: https://artifacthub.io/api/v1/packages/helm/kafka-ui/kafka-ui/feed/rss
 
+  - name: radar
+    source:
+      file: argocd/appsets/oss/dashboard/addons-radar-appset.yaml
+    repository:
+      type: rss
+      url: https://artifacthub.io/api/v1/packages/helm/skyhook/radar/feed/rss
+
   # Databases
   - name: cloudnative-pg
     source:

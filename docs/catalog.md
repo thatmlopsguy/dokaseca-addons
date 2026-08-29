@@ -35,6 +35,7 @@ This catalog contains **kubernetes addons** organized by category, all deployabl
 | Dashboard             | kiali-operator               | kiali-operator                | Service mesh observability                                                      |
 | Dashboard             | velero-ui                    | velero                        | Web UI for Velero backup and restore                                            |
 | Dashboard             | kafbat-ui                    | strimzi-system                | Web UI for Kafka topics and consumers                                           |
+| Dashboard             | radar                        | radar                         | Kubernetes observability platform for Skyhook                                   |
 | Infrastructure        | atlantis                     | atlantis                      | Terraform automation and collaboration tool                                     |
 | Infrastructure        | semaphore                    | semaphore                     | Continuous integration and deployment tool                                      |
 | Data Management       | datahub                      | datahub                       | Metadata platform for data discovery                                            |

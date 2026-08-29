@@ -2,7 +2,7 @@
 apiVersion: argoproj.io/v1alpha1
 kind: ApplicationSet
 metadata:
-  name: addons-opencost
+  name: addons-ballast
   namespace: argocd
 spec:
   syncPolicy:
@@ -13,12 +13,13 @@ spec:
         generators:
           - clusters:
               values:
-                addonChart: opencost
-                addonChartVersion: 2.1.1
-                addonChartRepository: https://opencost.github.io/opencost-helm-chart
+                addonChart: ballast
+                addonChartVersion: 0.6.0
+                addonChartRepository: ghcr.io/tight-line/charts/
+                addonChartNamespace: ballast-system
               selector:
                 matchExpressions:
-                  - key: enable_opencost
+                  - key: enable_ballast
                     operator: In
                     values: ['true']
           - clusters:
@@ -26,13 +27,13 @@ spec:
                 matchLabels:
                   environment: dev
               values:
-                addonChartVersion: 2.5.28 # promote this
+                addonChartVersion: 0.6.0 # promote this
           - clusters:
               selector:
                 matchLabels:
                   environment: prod
               values:
-                addonChartVersion: 2.1.1
+                addonChartVersion: 0.6.0
   template:
     metadata:
       name: addon-{{name}}-{{values.addonChart}}
@@ -57,7 +58,7 @@ spec:
             values: |
               clusterName: {{metadata.annotations.cluster_name}}
       destination:
-        namespace: '{{values.addonChart}}'
+        namespace: '{{values.addonChartNamespace}}'
         name: '{{name}}'
       syncPolicy:
         automated: {}

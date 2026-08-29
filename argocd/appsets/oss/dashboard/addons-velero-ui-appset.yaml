@@ -18,7 +18,7 @@ spec:
                 addonChartRepository: https://helm.otwld.com/
               selector:
                 matchExpressions:
-                  - key: addon_velero
+                  - key: enable_velero
                     operator: In
                     values: ['true']
                   - key: enable_velero_ui
