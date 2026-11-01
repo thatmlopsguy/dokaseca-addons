@@ -220,3 +220,6 @@ __marimo__/
 **/secret.yaml
 **/*.tgz
 **/*.zip
+
+# octodoctor
+octodoctor-output/
